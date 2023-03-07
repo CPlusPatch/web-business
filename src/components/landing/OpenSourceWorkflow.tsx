@@ -5,27 +5,27 @@ import PrimaryContainer from "../layout/PrimaryContainer";
 const software = [
 	{
 		name: "",
-		img: "https://img.icons8.com/3d-fluency/375/null/python.png",
+		img: "/static/stack/python.webp",
 	},
 	{
 		name: "",
-		img: "https://img.icons8.com/3d-fluency/375/null/document.png",
+		img: "/static/stack/document.webp",
 	},
 	{
 		name: "",
-		img: "https://img.icons8.com/3d-fluency/375/null/folder-invoices--v1.png",
+		img: "/static/stack/folder.webp",
 	},
 	{
 		name: "",
-		img: "https://img.icons8.com/3d-fluency/375/null/keyboard--v2.png",
+		img: "/static/stack/keyboard.webp",
 	},
 	{
 		name: "",
-		img: "https://img.icons8.com/fluency/375/null/console.png",
+		img: "/static/stack/console.webp",
 	},
 	{
 		name: "",
-		img: "https://img.icons8.com/3d-fluency/375/null/picture--v2.png",
+		img: "/static/stack/picture.webp",
 	},
 ];
 
