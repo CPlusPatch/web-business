@@ -17,15 +17,15 @@ export const nav = [
 	},
 	{
 		title: "Devices",
-		href: "/devices",
+		href: "https://cpluspatch.com/devices",
 	},
 	{
 		title: "CMS",
-		href: "/blog",
+		href: "https://cpluspatch.com/blog",
 	},
 	{
 		title: "Projects",
-		href: "/projects",
+		href: "https://cpluspatch.com/projects",
 	},
 ];
 
