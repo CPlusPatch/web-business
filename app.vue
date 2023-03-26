@@ -82,7 +82,7 @@ useServerSeoMeta({
 			<div class="relative px-4 mx-auto max-w-7xl sm:px-6">
 				<nuxt-img preload width="1920" height="1080" v-tilt="{
 					max: 1
-				}" class="rounded-lg shadow-lg duration-150" src="/static/banner.webp" alt="VSCode screenshot" />
+				}" sizes="lg:1920px md:700px sm:400px" class="rounded-lg shadow-lg duration-150" src="/static/banner.webp" alt="VSCode screenshot" />
 			</div>
 			<div class="py-4 sm:py-12"></div>
 		</div>
