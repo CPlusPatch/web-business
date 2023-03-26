@@ -22,12 +22,12 @@
 				:key="language.name"
 				class="flex overflow-hidden col-span-1 rounded-md shadow-sm duration-200 hover:scale-[102%] hover:shadow-2xl hover:shadow-orange-200 hover:rotate-1">
 				<div
-					class="flex overflow-hidden flex-shrink-0 justify-center items-center w-20 h-full text-sm font-medium text-white rounded-l-md border sm:w-24">
+					class="flex overflow-hidden flex-shrink-0 justify-center items-center h-full text-sm font-medium text-white rounded-l-md border">
 					<nuxt-img
-						width="80"
-						height="80"
+						width="100"
+						height="100"
 						loading="lazy"
-						class="object-cover rounded-sm duration-150 aspect-1"
+						class="object-cover rounded-sm duration-150 aspect-1 sm:w-24 h-20 sm:h-24 w-20"
 						:src="`/static/${language.image}`"
 						alt=""
 						placeholder="blur" />

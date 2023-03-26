@@ -14,4 +14,12 @@ export default defineNuxtConfig({
 			htmlAttrs: { lang: "en-us" },
 		},
 	},
+	nitro: {
+		compressPublicAssets: true,
+	},
+	image: {
+		ipx: {
+			maxAge: 60 * 60 * 24 * 365,
+		},
+	},
 });
