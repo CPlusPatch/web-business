@@ -55,11 +55,12 @@ const software = [
 		</div>
 		<div
 			class="hidden relative grid-cols-3 grid-rows-2 gap-3 ml-auto sm:w-1/3 lg:w-1/2 sm:grid">
-			<img
+			<nuxt-img
 				v-for="app of software"
 				:src="app.img"
 				class="p-2 w-full rounded-md md:max-w-xl hover:rotate-3 duration-200"
 				width="150"
+				alt=""
 				height="150" />
 		</div>
 	</PrimaryContainer>

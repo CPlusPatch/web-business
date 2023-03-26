@@ -51,7 +51,7 @@ const testimonials = [
 					<TabList class="flex flex-row gap-x-3 justify-center">
 						<Tab v-for="testi of testimonials">
 							<div class="w-4 h-4 rounded-full border-gray-200 border-2 ring-0">
-
+								<span class="sr-only">Change testimonial</span>
 							</div>
 						</Tab>
 					</TabList>

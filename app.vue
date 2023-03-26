@@ -1,13 +1,24 @@
 <script setup lang="ts">
-import Navbar from "../components/Navbar.vue";
-import Footer from "../components/footer/Footer.vue";
-import Certs from "../components/landing/Certs.vue";
-import Faqs from "../components/landing/Faqs.vue";
-import LighthouseScores from "../components/landing/LighthouseScores.vue";
-import OpenSourceWorkflow from "../components/landing/OpenSourceWorkflow.vue";
-import Skills from "../components/landing/Skills.vue";
-import Testimonials from "../components/landing/Testimonials.vue";
-import Typewriter from "../components/typewriter/Typewriter.vue";
+import "./styles/index.css";
+import Navbar from "./components/Navbar.vue";
+import Footer from "./components/footer/Footer.vue";
+import Certs from "./components/landing/Certs.vue";
+import Faqs from "./components/landing/Faqs.vue";
+import LighthouseScores from "./components/landing/LighthouseScores.vue";
+import OpenSourceWorkflow from "./components/landing/OpenSourceWorkflow.vue";
+import Skills from "./components/landing/Skills.vue";
+import Testimonials from "./components/landing/Testimonials.vue";
+import Typewriter from "./components/typewriter/Typewriter.vue";
+
+useServerSeoMeta({
+	title: "CPlusPatch",
+	ogTitle: "Website for CPlusPatch, aka Gaspard Wierzbinski",
+	description: "My blog, about me and how you can contact me!",
+	ogDescription: "My blog, about me and how you can contact me!",
+	ogImage: "/static/servers.webp",
+	twitterCard: "summary_large_image",
+	author: "Gaspard Wierzbinski",
+})
 </script>
 
 <template>
@@ -69,7 +80,7 @@ import Typewriter from "../components/typewriter/Typewriter.vue";
 					class="flex-1 w-full bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] from-rose-400 via-fuchsia-500 to-indigo-500" />
 			</div>
 			<div class="relative px-4 mx-auto max-w-7xl sm:px-6">
-				<img v-tilt="{
+				<nuxt-img preload width="1920" height="1080" v-tilt="{
 					max: 1
 				}" class="rounded-lg shadow-lg duration-150" src="/static/banner.webp" alt="VSCode screenshot" />
 			</div>
@@ -87,7 +98,7 @@ import Typewriter from "../components/typewriter/Typewriter.vue";
 		<Testimonials />
 
 		<Faqs />
-		
+
 		<Footer />
 	</main>
 </template>

@@ -38,7 +38,9 @@ const handler = () => {
 	if (shrunk.value && bst < 4 && est < 4) shrunk.value = false;
 };
 
-window.addEventListener("scroll", handler, { passive: true });
+onMounted(() => {
+	window.addEventListener("scroll", handler, { passive: true });
+})
 
 onUnmounted(() => {
 	window.removeEventListener("scroll", handler);

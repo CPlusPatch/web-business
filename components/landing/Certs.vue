@@ -34,7 +34,7 @@ import PrimaryContainer from '../layout/PrimaryContainer.vue';
 			<div
 				class="hidden relative -mx-4 mt-10 ml-auto lg:mt-0 lg:flex"
 				aria-hidden="true">
-				<img
+				<nuxt-img
 					width="500"
 					height="500"
 					class="relative w-96 h-96 rounded-lg shadow-md hover:rotate-2 duration-200 hover:shadow-xl"
@@ -49,7 +49,7 @@ import PrimaryContainer from '../layout/PrimaryContainer.vue';
 			<div
 				class="hidden relative -mx-4 mt-10 mr-auto lg:mt-0 lg:flex"
 				aria-hidden="true">
-				<img
+				<nuxt-img
 					width="500"
 					height="500"
 					class="relative w-96 h-96 rounded-lg shadow-md hover:rotate-2 duration-200 hover:shadow-xl"
@@ -73,7 +73,7 @@ import PrimaryContainer from '../layout/PrimaryContainer.vue';
 					hands of field professionals.
 				</p>
 				<a
-					class="text-lg text-blue-400 font-inter"
+					class="text-lg text-blue-600 font-inter"
 					href="https://garef.com"
 					target="_blank"
 					rel="noreferrer">
