@@ -11,7 +11,7 @@ const testimonials = [
 	{
 		name: "Kio",
 		profession: "Systems Administrator, Hosting Provider",
-		text: "CPlusPatch is very intelligent and resourceful when it comes to clear, on-point design. No matter what project he is tasked with, you'll get an honest answer, and a quicker turnaround,"
+		text: "CPlusPatch is very intelligent and resourceful when it comes to clear, on-point design. No matter what project he is tasked with, you'll get an honest answer, and a quicker turnaround."
 	},
 ];
 </script>
