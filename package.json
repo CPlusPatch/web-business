@@ -13,6 +13,7 @@
 	"devDependencies": {
 		"@nuxt/image-edge": "1.0.0-27991759.1a5eea1",
 		"@nuxtjs/eslint-config-typescript": "^12.0.0",
+		"@nuxtjs/google-fonts": "^3.0.0",
 		"@nuxtjs/tailwindcss": "^6.6.4",
 		"@tailwindcss/line-clamp": "^0.4.2",
 		"@typescript-eslint/parser": "^5.56.0",
