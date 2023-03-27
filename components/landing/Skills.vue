@@ -210,8 +210,9 @@ const languages: {
 			name: "Codeberg",
 			type: "Repository",
 			experience: "Recent",
-			image: "languages/codeberg.webp",
+			image: "languages/codeberg.svg",
 			progress: 1.0,
+			padding: 8
 		},
 		{
 			name: "Python",
