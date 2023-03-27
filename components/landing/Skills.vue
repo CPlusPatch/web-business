@@ -20,7 +20,7 @@
 					<nuxt-img :style="{
 						padding: `${language.padding ?? 0}px`
 					}" width="100" height="100" loading="lazy" class="object-contain rounded-sm duration-150 aspect-1 w-full h-full"
-						:src="`/static/${language.image}`" alt="" placeholder="blur" />
+						:src="`/static/${language.image}`" alt="" />
 				</div>
 				<div
 					class="flex relative flex-col flex-1 justify-between items-start truncate bg-white rounded-r-md border-t border-r border-b border-gray-200">

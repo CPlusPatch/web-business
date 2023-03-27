@@ -15,7 +15,7 @@ const nav = [
 	},
 	{
 		title: "Devices",
-		href: "https://cpluspatch.com/devices",
+		href: "/devices",
 	},
 	{
 		title: "CMS",
