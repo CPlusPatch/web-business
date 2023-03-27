@@ -17,6 +17,7 @@ specifiers:
   typescript: ^5.0.2
   uuid: ^9.0.0
   vue-tilt.js: ^1.1.1
+  vue3-carousel: ^0.2.14
 
 dependencies:
   '@headlessui/vue': 1.7.12
@@ -24,6 +25,7 @@ dependencies:
   '@tabler/icons-vue': 2.11.0
   uuid: 9.0.0
   vue-tilt.js: 1.1.1
+  vue3-carousel: 0.2.14
 
 devDependencies:
   '@nuxt/image-edge': 1.0.0-27991759.1a5eea1
@@ -6981,6 +6983,12 @@ packages:
       '@vue/server-renderer': 3.2.47_vue@3.2.47
       '@vue/shared': 3.2.47
     dev: true
+
+  /vue3-carousel/0.2.14:
+    resolution: {integrity: sha512-QLFdD0rOe9vZwlbNwTt0DkC8wjhYnAt4Okxed4tfYRlbegjGFQqu1u9jwwrcBLIaWwE3xTrFREFfSfVoOAvqlw==}
+    peerDependencies:
+      vue: ^3.2.0
+    dev: false
 
   /wcwidth/1.0.1:
     resolution: {integrity: sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg==}

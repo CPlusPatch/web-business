@@ -28,6 +28,7 @@
 		"@nuxtjs/robots": "^3.0.0",
 		"@tabler/icons-vue": "^2.11.0",
 		"uuid": "^9.0.0",
-		"vue-tilt.js": "^1.1.1"
+		"vue-tilt.js": "^1.1.1",
+		"vue3-carousel": "^0.2.14"
 	}
 }
