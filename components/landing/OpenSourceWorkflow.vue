@@ -4,27 +4,27 @@ import PrimaryContainer from '../layout/PrimaryContainer.vue';
 const software = [
 	{
 		name: "",
-		img: "/static/stack/python.webp",
+		img: "/static/stack/desktop-computer.svg",
 	},
 	{
 		name: "",
-		img: "/static/stack/document.webp",
+		img: "/static/stack/globe.svg",
 	},
 	{
 		name: "",
-		img: "/static/stack/folder.webp",
+		img: "/static/stack/folder.svg",
 	},
 	{
 		name: "",
-		img: "/static/stack/keyboard.webp",
+		img: "/static/stack/keyboard.svg",
 	},
 	{
 		name: "",
-		img: "/static/stack/console.webp",
+		img: "/static/stack/high-voltage.svg",
 	},
 	{
 		name: "",
-		img: "/static/stack/picture.webp",
+		img: "/static/stack/computer-mouse.svg",
 	},
 ];
 </script>

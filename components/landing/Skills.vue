@@ -44,7 +44,7 @@
 			</li>
 			<li class="flex overflow-hidden col-span-1 rounded-md shadow-sm">
 				<div
-					class="flex overflow-hidden flex-shrink-0 justify-center items-center w-24 h-full text-sm font-medium text-white rounded-l-md border">
+					class="flex overflow-hidden flex-shrink-0 justify-center items-center sm:w-24 sm:h-24 w-20 h-20 text-sm font-medium text-white rounded-l-md border">
 					<IconDots class="w-10 h-auto text-black" />
 				</div>
 				<div

@@ -15,7 +15,7 @@ const testimonials = [
 	{
 		name: "🇺🇸 Calciume",
 		profession: "Computer Science Student",
-		text: "I got to be witness to CPlusPatchs development of Fedibase, It really showed me how much he can accomplish when he sticks to a project. He was dedicated enough to make a fully featured Fediverse client that I'd argue is on par with other Fediverse clients, and he did it all on his own."
+		text: "I got to be witness to CPlusPatch's development of Fedibase, It really showed me how much he can accomplish when he sticks to a project. He was dedicated enough to make a fully featured Fediverse client that I'd argue is on par with other Fediverse clients, and he did it all on his own."
 	}
 ];
 </script>

@@ -35,6 +35,7 @@ import PrimaryContainer from '../layout/PrimaryContainer.vue';
 				class="hidden relative -mx-4 mt-10 ml-auto lg:mt-0 lg:flex"
 				aria-hidden="true">
 				<nuxt-img
+					format="webp"
 					width="500"
 					height="500"
 					class="relative w-96 h-96 rounded-lg shadow-md hover:rotate-2 duration-200 hover:shadow-xl"
@@ -50,6 +51,7 @@ import PrimaryContainer from '../layout/PrimaryContainer.vue';
 				class="hidden relative -mx-4 mt-10 mr-auto lg:mt-0 lg:flex"
 				aria-hidden="true">
 				<nuxt-img
+					format="webp"
 					width="500"
 					height="500"
 					class="relative w-96 h-96 rounded-lg shadow-md hover:rotate-2 duration-200 hover:shadow-xl"
