@@ -1,42 +1,38 @@
-# Nuxt 3 Minimal Starter
+# Web Business
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## Downloading and running
 
-## Setup
-
-Make sure to install the dependencies:
+This application requires Node.js 19 and the PNPM package manager to be built and deployed.
 
 ```bash
-# yarn
-yarn install
-
-# npm
-npm install
-
-# pnpm
+git clone https://codeberg.org/CPlusPatch/web-business.git
+cd web-business
 pnpm install
 ```
 
-## Development Server
-
-Start the development server on http://localhost:3000
+## Building
 
 ```bash
-npm run dev
+pnpm build # Bundles project into JS files
+
+# EITHER
+pnpm preview # For testing
+pm2 start ecosystem.config.js # For production deployment
 ```
 
-## Production
+## Scripts for development
 
-Build the application for production:
+### Images
 
+Convert all JPEG images to WebP (uses ImageMagick)
 ```bash
-npm run build
+magick mogrify -format webp *.jpeg
 ```
 
-Locally preview production build:
-
+Resize all images to 250x250 (when adding languages to `/public/static/languages/`)
 ```bash
-npm run preview
+mogrify -path . -auto-orient -thumbnail 250x *.png
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+---
+Licensed under GPLv3. Made with 💕
