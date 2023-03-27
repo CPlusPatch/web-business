@@ -8,15 +8,20 @@ const testimonials = [
 		text: "CPlusPatch is very intelligent and resourceful when it comes to clear, on-point design. No matter what project he is tasked with, you'll get an honest answer, and a quicker turnaround."
 	},
 	{
-		name: "🇹🇷 Zemi",
-		profession: "Computer Science Student",
-		text: "CPlusPatch is one of the most skilled and knowledgeable developers I have ever worked with. He is able to take on any task and complete it with ease. He always maintains a positive attitude and a sense of humor, which makes him a joy to work with."
+		name: "🇮🇪 Autumn",
+		profession: "Engineering Student",
+		text: "I'm impressed every time I see CPlusPatch working on something. He is extremely dedicated, and always amazes me with the quality and speed of his work. His enthusiasm for his projects is clear every time I talk with him."
 	},
 	{
 		name: "🇺🇸 Calciume",
 		profession: "Computer Science Student",
 		text: "I got to be witness to CPlusPatch's development of Fedibase, It really showed me how much he can accomplish when he sticks to a project. He was dedicated enough to make a fully featured Fediverse client that I'd argue is on par with other Fediverse clients, and he did it all on his own."
-	}
+	},
+	{
+		name: "🇹🇷 Zemi",
+		profession: "Computer Science Student",
+		text: "CPlusPatch is one of the most skilled and knowledgeable developers I have ever worked with. He is able to take on any task and complete it with ease. He always maintains a positive attitude and a sense of humor, which makes him a joy to work with."
+	},
 ];
 </script>
 
@@ -57,11 +62,6 @@ const testimonials = [
 					</Carousel>
 				
 					</ClientOnly>
-					<!-- <div class="flex flex-row gap-x-3 justify-center">
-						<div v-for="testi of testimonials" class="w-4 h-4 rounded-full border-gray-200 border-2 ring-0">
-							<span class="sr-only">Change testimonial</span>
-						</div>
-					</div> -->
 				</div>
 			</div>
 		</PrimaryContainer>

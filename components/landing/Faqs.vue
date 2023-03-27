@@ -55,9 +55,10 @@ const faq = [
 								</span>
 							</DisclosureButton>
 						</dt>
-						<Transition enter-class="transition duration-100 ease-out"
+						<transition enter-active-class="transition duration-100 ease-in"
 							enter-from-class="transform scale-95 opacity-0" enter-to-class="transform scale-100 opacity-100"
-							leave-class="transition duration-75 ease-out" leave-from-class="transform scale-100 opacity-100"
+							leave-active-class="transition duration-75 ease-out"
+							leave-from-class="transform scale-100 opacity-100"
 							leave-to-class="transform scale-95 opacity-0">
 							<DisclosurePanel>
 								<dd class="pr-12 mt-2">
@@ -66,7 +67,7 @@ const faq = [
 									</p>
 								</dd>
 							</DisclosurePanel>
-						</Transition>
+						</transition>
 					</div>
 				</Disclosure>
 			</dl>
