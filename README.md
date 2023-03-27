@@ -33,6 +33,12 @@ Resize all images to 250x250 (when adding languages to `/public/static/languages
 ```bash
 mogrify -path . -auto-orient -thumbnail 250x *.png
 ```
+### Attributions
+
+I will add more attributions when I find the image sources (mostly logos)
+
+Evan You, https://github.com/yyx990803, CC BY 4.0 
+<https://creativecommons.org/licenses/by/4.0>, via Wikimedia Commons, for the VueJS logo
 
 ---
 Licensed under GPLv3. Made with 💕

@@ -12,6 +12,11 @@ const testimonials = [
 		profession: "Computer Science Student",
 		text: "CPlusPatch is one of the most skilled and knowledgeable developers I have ever worked with. He is able to take on any task and complete it with ease. He always maintains a positive attitude and a sense of humor, which makes him a joy to work with."
 	},
+	{
+		name: "🇺🇸 Calciume",
+		profession: "Computer Science Student",
+		text: "I got to be witness to CPlusPatchs development of Fedibase, It really showed me how much he can accomplish when he sticks to a project. He was dedicated enough to make a fully featured Fediverse client that I'd argue is on par with other Fediverse clients, and he did it all on his own."
+	}
 ];
 </script>
 
