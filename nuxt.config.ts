@@ -3,8 +3,7 @@ export default defineNuxtConfig({
 	modules: [
 		"@nuxtjs/tailwindcss",
 		"@nuxtjs/robots",
-		"@nuxt/image-edge",
-		"@nuxtjs/google-fonts",
+		"@nuxt/image-edge"
 	],
 	app: {
 		head: {

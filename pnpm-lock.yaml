@@ -4,7 +4,6 @@ specifiers:
   '@headlessui/vue': ^1.7.12
   '@nuxt/image-edge': 1.0.0-27991759.1a5eea1
   '@nuxtjs/eslint-config-typescript': ^12.0.0
-  '@nuxtjs/google-fonts': ^3.0.0
   '@nuxtjs/robots': ^3.0.0
   '@nuxtjs/tailwindcss': ^6.6.4
   '@tabler/icons-vue': ^2.11.0
@@ -29,7 +28,6 @@ dependencies:
 devDependencies:
   '@nuxt/image-edge': 1.0.0-27991759.1a5eea1
   '@nuxtjs/eslint-config-typescript': 12.0.0_j4766f7ecgqbon3u7zlxn5zszu
-  '@nuxtjs/google-fonts': 3.0.0
   '@nuxtjs/tailwindcss': 6.6.4
   '@tailwindcss/line-clamp': 0.4.2
   '@typescript-eslint/parser': 5.56.0_j4766f7ecgqbon3u7zlxn5zszu
@@ -994,17 +992,6 @@ packages:
       - '@typescript-eslint/parser'
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
-      - supports-color
-    dev: true
-
-  /@nuxtjs/google-fonts/3.0.0:
-    resolution: {integrity: sha512-knP2CJFkMHGQ9pepVNwquXvqiIHDma/6yZNXiYk7WWatRbbQUPf2423vXiBYu267Mff2KMuDLoAJ1Dsv2ymhdQ==}
-    dependencies:
-      '@nuxt/kit': 3.3.2
-      google-fonts-helper: 3.2.4
-      pathe: 1.1.0
-    transitivePeerDependencies:
-      - rollup
       - supports-color
     dev: true
 
@@ -3606,15 +3593,6 @@ packages:
 
   /globrex/0.1.2:
     resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
-    dev: true
-
-  /google-fonts-helper/3.2.4:
-    resolution: {integrity: sha512-M740UjqBOxmG2qFUW7Lhgak9WDpsT18zxLJuG+MP4r+G1vhqbWm3x3D40xFEzhveQAneaEr8WjPxf+vcx9Xohg==}
-    dependencies:
-      deepmerge: 4.3.1
-      hookable: 5.5.2
-      ofetch: 1.0.1
-      ufo: 1.1.1
     dev: true
 
   /gopd/1.0.1:
