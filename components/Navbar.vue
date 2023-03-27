@@ -19,11 +19,11 @@ const nav = [
 	},
 	{
 		title: "CMS",
-		href: "https://cpluspatch.com/blog",
+		href: "#",
 	},
 	{
 		title: "Projects",
-		href: "https://cpluspatch.com/projects",
+		href: "/projects",
 	},
 ];
 
@@ -68,21 +68,15 @@ onUnmounted(() => {
 			<nav class="hidden justify-center items-center md:flex">
 				<ul class="flex flex-row gap-8 justify-between h-100">
 					<li v-for="n of nav" :key="n.title">
-						<a :href="n.href" class="text-lg text-gray-800">
+						<NuxtLink :to="n.href" class="text-lg text-gray-800">
 							{{ n.title }}
-						</a>
+						</NuxtLink>
 					</li>
-					<!-- <li>
-							<NavbarPopover
-								title="Services"
-								elements={services}
-							/>
-						</li> -->
 				</ul>
 			</nav>
 
 			<a
-				href="https://codeberg.org/CPlusPatch/cpluspatch-cms-next"
+				href="https://codeberg.org/CPlusPatch/web-business"
 				class="px-5 py-3 no-bad-scale font-inter text-white flex-row gap-x-2 items-center bg-orange-700 rounded-lg shadow-md duration-150 ease-in-out hover:scale-[102%] active:scale-95 hidden md:flex">
 				<IconFileCode class="w-5 h-5 no-bad-scale" />
 				Source code

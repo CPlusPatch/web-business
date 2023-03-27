@@ -14,16 +14,15 @@
 		</div>
 		<ul role="list" class="grid grid-cols-1 gap-5 mt-12 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4 font-inter">
 			<li v-for="language of languages" :key="language.name"
-				class="flex overflow-hidden col-span-1 rounded-md shadow-sm duration-200 hover:scale-[102%] hover:shadow-2xl hover:shadow-orange-200 hover:rotate-1">
-				<div
-					class="flex flex-shrink-0 sm:w-24 h-20 sm:h-24 w-20 justify-center items-center text-sm font-medium text-white rounded-l-md border">
-					<nuxt-img :style="{
-						padding: `${language.padding ?? 0}px`
-					}" width="100" height="100" loading="lazy" class="object-contain rounded-sm duration-150 aspect-1 w-full h-full"
-						:src="`/static/${language.image}`" alt="" />
-				</div>
-				<div
-					class="flex relative flex-col flex-1 justify-between items-start truncate bg-white rounded-r-md border-t border-r border-b border-gray-200">
+				class="flex overflow-hidden col-span-1 divide-x divide-gray-300 ring-gray-300 rounded shadow ring-1 duration-200 hover:scale-[102%] no-bad-scale hover:shadow-2xl hover:ring-2 hover:ring-orange-500">
+				
+				<nuxt-img :style="{
+					padding: `${language.padding ?? 0}px`
+				}" width="100" height="100" loading="lazy"
+					class="object-contain rounded-sm duration-150 aspect-1 flex flex-shrink-0 sm:w-24 h-20 sm:h-24 w-20"
+					:src="`/static/${language.image}`" alt="" />
+
+				<div class="flex relative flex-col flex-1 justify-between items-start truncate bg-white">
 					<div class="flex-1 px-4 py-2 text-sm truncate">
 						<a href="#" class="text-lg font-bold text-gray-900">
 							{{ language.name }}
