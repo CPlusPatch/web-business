@@ -57,30 +57,26 @@ import Faqs from '~~/components/landing/Faqs.vue';
 	</div>
 
 	<!-- Main hero -->
-	<div class="relative">
+	<div class="relative" v-memo>
 		<div class="flex absolute inset-0 flex-col" aria-hidden="true">
 			<div class="flex-1" />
 			<div
 				class="flex-1 w-full bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] from-rose-400 via-fuchsia-500 to-indigo-500" />
 		</div>
-		<div class="relative px-4 mx-auto max-w-7xl sm:px-6">
-			<ClientOnly>
-			<nuxt-img preload width="1920" height="1080" v-tilt="{
-				max: 1
-			}" sizes="lg:1920px md:700px sm:400px" class="rounded-lg shadow-lg duration-150" src="/static/banner.webp"
-				alt="VSCode screenshot" />
-			</ClientOnly>
+		<div class="relative px-4 mx-auto max-w-7xl w-full sm:px-6">
+			<nuxt-img preload :width="1920" :height="1080" sizes="lg:1920px md:700px sm:400px" class="rounded-lg aspect-video shadow-lg w-full duration-150" src="/static/banner.webp"
+					alt="VSCode screenshot" />
 		</div>
 		<div class="py-4 sm:py-12"></div>
 	</div>
 
-	<Skills />
+	<Skills v-once/>
 
-	<OpenSourceWorkflow />
+	<OpenSourceWorkflow v-once/>
 
-	<LighthouseScores />
+	<LighthouseScores v-once/>
 
-	<Certs />
+	<Certs v-once/>
 
 	<Testimonials />
 
