@@ -321,7 +321,7 @@ const languages: {
 			name: "Arch Linux",
 			type: "OS",
 			experience: "Two years",
-			image: "languages/rust.svg",
+			image: "languages/archlinux.svg",
 			progress: 0.7,
 			padding: 8
 		},
