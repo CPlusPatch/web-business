@@ -22,6 +22,11 @@ const testimonials = [
 		profession: "Computer Science Student",
 		text: "CPlusPatch is one of the most skilled and knowledgeable developers I have ever worked with. He is able to take on any task and complete it with ease. He always maintains a positive attitude and a sense of humor, which makes him a joy to work with."
 	},
+	{
+		name: "🇬🇧 Noah",
+		profession: "Engineering Student",
+		text: "CPlusPatch is the most talented programmer I have had the pleasure of knowing. He can solve difficult problems using remarkable efficiency and is always happy to assist me with my own projects. Truly a person of all time."
+	}
 ];
 </script>
 

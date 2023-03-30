@@ -3,7 +3,7 @@ export default defineNuxtConfig({
 	modules: [
 		"@nuxtjs/tailwindcss",
 		"@nuxtjs/robots",
-		"@nuxt/image-edge"
+		"@nuxt/image-edge",
 	],
 	app: {
 		head: {
