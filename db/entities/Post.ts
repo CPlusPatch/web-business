@@ -28,9 +28,7 @@ export class Post {
 	@Column("varchar")
 	slug: string;
 
-	@Column({
-		type: "enum",
-		enum: Visibility,
+	@Column("varchar", {
 		default: Visibility.HIDDEN,
 	})
 	visibility: Visibility;

@@ -21,7 +21,7 @@ specifiers:
   prettier: ^2.8.7
   reflect-metadata: ^0.1.13
   sqlite3: ^5.1.6
-  typeorm: ^0.3.12
+  typeorm: 0.4.0-alpha.1
   typescript: ^5.0.2
   uuid: ^9.0.0
   vue-tilt.js: ^1.1.1
@@ -36,7 +36,7 @@ dependencies:
   pg: 8.10.0
   reflect-metadata: 0.1.13
   sqlite3: 5.1.6
-  typeorm: 0.3.12_ctl3invacdk3xj3why7t7s3tce
+  typeorm: 0.4.0-alpha.1_ctl3invacdk3xj3why7t7s3tce
   uuid: 9.0.0
   vue-tilt.js: 1.1.1
   vue3-carousel: 0.2.14
@@ -7091,8 +7091,8 @@ packages:
       is-typed-array: 1.1.10
     dev: true
 
-  /typeorm/0.3.12_ctl3invacdk3xj3why7t7s3tce:
-    resolution: {integrity: sha512-sYSxBmCf1nJLLTcYtwqZ+lQIRtLPyUoO93rHTOKk9vJCyT4UfRtU7oRsJvfvKP3nnZTD1hzz2SEy2zwPEN6OyA==}
+  /typeorm/0.4.0-alpha.1_ctl3invacdk3xj3why7t7s3tce:
+    resolution: {integrity: sha512-/0EYtUK7Y/3U3YsTISw7KM+VmK3yBM1xIxR60EJFFpeMoHijI4GpgvMBFWRwQf7da0foKk1uXmUBVzWUMEpvJA==}
     engines: {node: '>= 12.9.0'}
     hasBin: true
     peerDependencies:
