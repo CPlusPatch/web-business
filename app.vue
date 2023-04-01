@@ -3,16 +3,16 @@ import { AppDataSource } from "./db/data-source";
 import { Post } from "./db/entities/Post";
 import "./styles/index.css";
 
-AppDataSource.initialize().then(async () => {
-	/* const post = new Post();
+/* AppDataSource.initialize().then(async () => {
+	const post = new Post();
 	
 	post.content = "This is a test";
 	post.description = "Hi there! This is a test post!";
 	post.slug = "test-post-ignore",
 	post.title = "SUs sus amogys";
 
-	await AppDataSource.manager.save(post); */
-});
+	await AppDataSource.manager.save(post);
+}); */
 
 useServerSeoMeta({
 	title: "CPlusPatch",

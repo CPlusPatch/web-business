@@ -35,7 +35,7 @@ const handler = () => {
 
 	if (!shrunk.value && (bst > 20 || est > 20)) shrunk.value = true;
 
-	if (shrunk.value && bst < 19 && est < 19) shrunk.value = false;
+	if (shrunk.value && bst < 20 && est < 20) shrunk.value = false;
 };
 
 onMounted(() => {
