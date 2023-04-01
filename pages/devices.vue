@@ -2,7 +2,7 @@
 	<PrimaryContainer class="flex flex-col gap-y-10">
 		<h2 class="mb-3 text-3xl font-black text-gray-800 font-poppins sm:text-5xl">Devices</h2>
 		<div v-for="list of lists" :key="list.name" class="items-center lg:flex lg:flex-row lg:gap-x-24 lg:px-5 even:flex-row-reverse group">
-			<div class="px-4 mx-auto sm:px-6 lg:py-16 lg:mx-0 lg:px-0 w-1/2 group-odd:text-right group-oddn:justify-end flex">
+			<div class="px-4 mx-auto sm:px-6 lg:py-16 lg:mx-0 lg:px-0 w-1/3 group-odd:text-right group-oddn:justify-end flex">
 				<div class="flex flex-col gap-y-4">
 					<h2 class="text-3xl font-extrabold tracking-tight text-gray-900 font-inter">
 						{{ list.name }}
@@ -20,7 +20,7 @@
 				</div>
 			</div>
 
-			<div class="hidden justify-center items-center mt-0 md:flex w-1/2 h-[35rem]">
+			<div class="hidden justify-center items-center mt-0 md:flex w-2/3 h-[35rem]">
 				<img class="h-full w-auto" :src="list.image" format="webp" alt="Laptop"
 						width="416" height="671" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
 			</div>
