@@ -1,6 +1,6 @@
 <template>
-	<PrimaryContainer class="flex flex-col gap-y-10">
-		<h2 class="mb-3 text-3xl font-black text-gray-800 font-poppins sm:text-5xl">Devices</h2>
+	<PrimaryContainer class="flex flex-col gap-y-20">
+		<h2 class="mb-3 text-3xl font-black text-gray-800 font-poppins sm:text-5xl text-center">Devices</h2>
 		<div v-for="list of lists" :key="list.name" class="items-center lg:flex lg:flex-row lg:gap-x-24 lg:px-5 even:flex-row-reverse group">
 			<div class="px-4 mx-auto sm:px-6 lg:py-16 lg:mx-0 lg:px-0 w-1/3 group-odd:text-right group-oddn:justify-end flex">
 				<div class="flex flex-col gap-y-4">
