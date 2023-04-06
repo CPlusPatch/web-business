@@ -25,7 +25,9 @@ export class Post {
 	})
 	description: string;
 
-	@Column("varchar")
+	@Column("varchar", {
+		unique: true
+	})
 	slug: string;
 
 	@Column("varchar", {
@@ -37,4 +39,14 @@ export class Post {
 		nullable: true,
 	})
 	banner?: string;
+
+	@Column("integer", {
+		default: Date.now(),
+	})
+	created_at?: number;
+
+	@Column("integer", {
+		default: Date.now(),
+	})
+	edited_at?: number;
 }

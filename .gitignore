@@ -1,4 +1,3 @@
-node_modules
 *.log*
 .nuxt
 .nitro
@@ -8,3 +7,5 @@ node_modules
 dist
 .DS_Store
 web.sqlite
+node_modules
+*.sqlite-journal

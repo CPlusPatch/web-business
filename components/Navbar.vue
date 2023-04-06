@@ -19,7 +19,7 @@ const nav = [
 	},
 	{
 		title: "CMS",
-		href: "#",
+		href: "/blog",
 	},
 	{
 		title: "Projects",

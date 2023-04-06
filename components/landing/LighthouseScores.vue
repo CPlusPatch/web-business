@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import PrimaryContainer from '../layout/PrimaryContainer.vue';
-
+/* import { Chart, LinearScale, BarController, CategoryScale, BarElement } from "chart.js";
+ */
 const scores = [
 	{
 		name: "cpluspatch.com",
@@ -30,6 +31,29 @@ const scores = [
 		tti: 23.7,
 	},
 ];
+
+/* onMounted(() => {
+	Chart.register(LinearScale, BarController, CategoryScale, BarElement)
+
+	new Chart(document.getElementById("lhchart") as HTMLCanvasElement, {
+		type: "bar",
+		data: {
+			labels: ["This website", "Discord", "New York Times"],
+			datasets: [{
+				label: 'Performance Score',
+				data: [99, 77, 53],
+				backgroundColor: "rgb(220 38 38 / 1)",
+			}]
+		},
+		options: {
+			scales: {
+				y: {
+					beginAtZero: true
+				}
+			}
+		}
+	})
+}) */
 </script>
 
 <style scoped lang="postcss">
@@ -48,6 +72,8 @@ const scores = [
 		<p class="text-gray-800 font-inter">
 			Measured via a Google Lighthouse test on 12/22/22
 		</p>
+
+		<!-- <canvas id="lhchart"></canvas> -->
 		<div
 			class="flex flex-col w-full font-inter relative p-3"
 			v-for="score of scores"
