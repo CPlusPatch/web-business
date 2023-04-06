@@ -13,22 +13,23 @@
 	"devDependencies": {
 		"@nuxt/image-edge": "1.0.0-27991759.1a5eea1",
 		"@nuxtjs/eslint-config-typescript": "^12.0.0",
-		"@nuxtjs/tailwindcss": "^6.6.4",
-		"@tailwindcss/line-clamp": "^0.4.2",
+		"@nuxtjs/tailwindcss": "^6.6.5",
+		"@tailwindcss/line-clamp": "^0.4.4",
 		"@types/marked": "^4.0.8",
-		"@types/node": "^18.15.10",
-		"@typescript-eslint/parser": "^5.56.0",
-		"eslint": "^8.36.0",
+		"@types/node": "^18.15.11",
+		"@typescript-eslint/parser": "^5.57.1",
+		"eslint": "^8.37.0",
 		"eslint-config-prettier": "^8.8.0",
 		"eslint-plugin-prettier": "^4.2.1",
-		"nuxt": "^3.3.2",
+		"nuxt": "^3.3.3",
 		"prettier": "^2.8.7",
-		"typescript": "^5.0.2"
+		"typescript": "^5.0.3"
 	},
 	"dependencies": {
 		"@headlessui/vue": "^1.7.12",
 		"@nuxtjs/robots": "^3.0.0",
-		"@tabler/icons-vue": "^2.11.0",
+		"@tabler/icons-vue": "^2.14.0",
+		"@tailwindcss/typography": "^0.5.9",
 		"better-sqlite3": "^8.2.0",
 		"marked": "^4.3.0",
 		"pg": "^8.10.0",
@@ -37,6 +38,6 @@
 		"typeorm": "0.3.12",
 		"uuid": "^9.0.0",
 		"vue-tilt.js": "^1.1.1",
-		"vue3-carousel": "^0.2.14"
+		"vue3-carousel": "^0.2.16"
 	}
 }

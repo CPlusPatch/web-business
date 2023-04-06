@@ -10,26 +10,26 @@ module.exports = {
 			},
 			animation: {
 				"spin-once": "spin 1s ease-in-out 1",
-				"hithere": "hithere 1s ease infinite"
+				hithere: "hithere 1s ease infinite",
 			},
 			keyframes: {
 				hithere: {
 					"30%": {
-						transform: "scale(1.2)"
+						transform: "scale(1.2)",
 					},
 					"40%, 60%": {
-						transform: "rotate(-20deg) scale(1.2)"
+						transform: "rotate(-20deg) scale(1.2)",
 					},
 					"50%": {
-						transform: "rotate(20deg) scale(1.2)"
+						transform: "rotate(20deg) scale(1.2)",
 					},
 					"70%": {
-						transform: "rotate(0deg) scale(1.2)"
+						transform: "rotate(0deg) scale(1.2)",
 					},
 					"100%": {
-						transform: "scale(1)"
+						transform: "scale(1)",
 					},
-				}
+				},
 			},
 			colors: {
 				dark: {
@@ -53,5 +53,6 @@ module.exports = {
 	},
 	plugins: [
 		require("@tailwindcss/line-clamp"),
+		require("@tailwindcss/typography"),
 	],
 };

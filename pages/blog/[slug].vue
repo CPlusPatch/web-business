@@ -23,7 +23,7 @@ const post = await useFetch<Post>(`/api/post/${route.params.slug}`);
 			<div v-if="post.data.value?.created_at"
 				class="flex gap-x-2 items-center px-4 mx-auto my-5 max-w-2xl font-light text-gray-500 font-inter">
 				<IconCalendar class="w-4 h-4" />
-				Written on&nbsp;
+				Written on
 				{{
 					new Date(post.data.value?.created_at).toLocaleDateString("en-US", {
 						month: "short",
