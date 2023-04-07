@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 export enum Visibility {
 	PUBLIC = "public",
@@ -40,13 +40,13 @@ export class Post {
 	})
 	banner?: string;
 
-	@Column("integer", {
-		default: Date.now(),
+	@CreateDateColumn({
+		default: Date.now()
 	})
-	created_at?: number;
+	created_at?: Date;
 
-	@Column("integer", {
-		default: Date.now(),
+	@UpdateDateColumn({
+		default: Date.now()
 	})
-	edited_at?: number;
+	edited_at?: Date;
 }

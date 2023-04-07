@@ -4,6 +4,10 @@ import { marked } from 'marked';
 import PrimaryContainer from '~~/components/layout/PrimaryContainer.vue';
 import { Post } from '~~/db/entities/Post';
 
+definePageMeta({
+	middleware: "auth"
+});
+
 const route = useRoute();
 
 const post = await useFetch<Post>(`/api/post/${route.params.slug}`);

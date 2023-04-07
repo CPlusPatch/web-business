@@ -9,8 +9,6 @@ export default defineEventHandler(async (event) => {
 			slug: slug,
 		});
 
-		console.log(post);
-
 		AppDataSource.destroy();
 		return post;
 	});
@@ -18,7 +16,9 @@ export default defineEventHandler(async (event) => {
 	if (post) {
 		return post;
 	} else {
-		setResponseStatus(404, "Post not found");
-		return;
+		throw createError({
+			statusCode: 404,
+			statusMessage: "Post not found",
+		});
 	}
 });
