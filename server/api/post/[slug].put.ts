@@ -1,0 +1,41 @@
+import { AppDataSource } from "~~/db/data-source";
+import { Post } from "~~/db/entities/Post";
+
+export default defineEventHandler(async (event) => {
+
+	// Authenticate user (parse Authorization: Bearer TOKEN) header
+	if (event.node.req.headers.authorization?.split(" ")[1] !== process.env.TOKEN) {
+		return abortNavigation({
+			statusCode: 401,
+		});
+	}
+
+	const slug = event.context.params?.slug ?? "";
+
+	const post = await AppDataSource.initialize().then(
+		async (AppDataSource) => {
+			const post = await AppDataSource.getRepository(Post).findOneBy({
+				slug: slug,
+			});
+
+			if (!post) return false;
+
+			const body = await readBody(event);
+
+			post.content = body.content;
+
+			await AppDataSource.getRepository(Post).save(post);
+
+			AppDataSource.destroy();
+			return post;
+		}
+	);
+
+	if (post) {
+		return "";
+	} else {
+		throw createError({
+			statusCode: 404
+		})
+	}
+});
