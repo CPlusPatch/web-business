@@ -21,16 +21,45 @@ const isSaving = ref(false);
 
 const route = useRoute();
 const token = useCookie("token");
+const fileUpload = ref<HTMLInputElement | null>(null);
+let oldPost = post.value;
 
 const close = () => {
 	if (isSaving.value) return;
+	if (oldPost !== post.value) {
+		if (!confirm("Your changes haven't been saved. Are you sure you want to close?")) return;
+	}
 	open.value = false;
 	setTimeout(() => {
 		props.onclose();
 	}, 300);
 };
 
+const upload = (e: Event) => {
+	const target = e.target as HTMLInputElement;
+	if (!target.files) return;
+
+	const file = target.files[0];
+	const url = URL.createObjectURL(file);
+
+	isSaving.value = true;
+	let formData = new FormData();
+	formData.append("file", file);
+
+	fetch(`/api/media/upload`, {
+		method: "POST",
+		body: formData,
+	}).then(async res => {
+		if (res.ok) {
+			post.value.banner = await res.text();
+		}
+	}).finally(() => {
+		isSaving.value = false;
+	})
+};
+
 const save = (e: Event) => {
+	e.preventDefault();
 	isSaving.value = true;
 	post.value.description = (e.target as any)["description"].value;
 	fetch(`/api/post/${route.params.slug}`, {
@@ -41,12 +70,15 @@ const save = (e: Event) => {
 		},
 		body: JSON.stringify({
 			description: post.value.description,
+			banner: post.value.banner
 		}),
 	})
 		.then(data => {
 			switch (data.status) {
 				case 201:
 				case 200: {
+					oldPost = post.value;
+					close();
 					break;
 				}
 			}
@@ -61,6 +93,12 @@ const save = (e: Event) => {
 </script>
 
 <template>
+	<input
+		type="file"
+		class="hidden"
+		ref="fileUpload"
+		@change="upload"
+		:multiple="false" />
 	<TransitionRoot appear :show="open">
 		<Dialog
 			as="div"
@@ -89,7 +127,8 @@ const save = (e: Event) => {
 						class="w-screen max-w-sm pointer-events-auto">
 						<form
 							action="#"
-							@submit.prevent="save"
+							id="bannerUploadForm"
+							@submit="save"
 							class="flex overflow-y-scroll relative flex-col pt-6 h-full bg-white shadow-xl no-scroll px-4 sm:px-6">
 							<div class="flex justify-between items-center">
 								<DialogTitle
@@ -114,7 +153,7 @@ const save = (e: Event) => {
 										<div
 											className="inline-block overflow-hidden w-full h-36 bg-gray-100 rounded-md">
 											<img
-												class="bg-cover"
+												class="bg-contain"
 												:src="post.banner" />
 											<div
 												v-if="!post.banner"
@@ -125,7 +164,9 @@ const save = (e: Event) => {
 										</div>
 
 										<Button
+											:disabled="isSaving"
 											theme="gray"
+											@click="fileUpload?.click()"
 											class="!absolute right-0 bottom-1 !p-2 m-2">
 											<IconFileUpload
 												className="w-5 h-5" />

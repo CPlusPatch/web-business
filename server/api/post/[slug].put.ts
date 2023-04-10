@@ -26,6 +26,7 @@ export default defineEventHandler(async event => {
 		if (body.content) post.content = body.content;
 		if (body.description) post.description = body.description;
 		if (body.title) post.title = body.title;
+		if (body.banner) post.banner = body.banner;
 
 		await AppDataSource.getRepository(Post).save(post);
 
