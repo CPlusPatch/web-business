@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import PrimaryContainer from '../layout/PrimaryContainer.vue';
+import PrimaryContainer from "../layout/PrimaryContainer.vue";
 /* import { Chart, LinearScale, BarController, CategoryScale, BarElement } from "chart.js";
  */
 const scores = [
@@ -63,8 +63,7 @@ const scores = [
 </style>
 
 <template>
-	<PrimaryContainer
-		class="flex flex-col gap-y-10 items-center">
+	<PrimaryContainer class="flex flex-col gap-y-10 items-center">
 		<h2
 			class="mb-3 text-3xl font-black text-gray-800 font-poppins sm:text-5xl">
 			World-class site performance

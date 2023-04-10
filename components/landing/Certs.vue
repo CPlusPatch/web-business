@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import PrimaryContainer from '../layout/PrimaryContainer.vue';
-
+import PrimaryContainer from "../layout/PrimaryContainer.vue";
 </script>
 
 <template>

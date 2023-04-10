@@ -4,8 +4,8 @@ export default defineNuxtRouteMiddleware((to, from) => {
 	if (process.server) {
 		if (cookie.value !== process.env.TOKEN) {
 			return abortNavigation({
-				statusCode: 401
-			})
+				statusCode: 401,
+			});
 		}
 	}
-})
+});

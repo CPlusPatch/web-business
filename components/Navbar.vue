@@ -40,7 +40,7 @@ const handler = () => {
 
 onMounted(() => {
 	window.addEventListener("scroll", handler, { passive: true });
-})
+});
 
 onUnmounted(() => {
 	window.removeEventListener("scroll", handler);

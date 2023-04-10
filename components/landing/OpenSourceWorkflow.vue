@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import PrimaryContainer from '../layout/PrimaryContainer.vue';
+import PrimaryContainer from "../layout/PrimaryContainer.vue";
 
 const software = [
 	{
@@ -30,9 +30,7 @@ const software = [
 </script>
 
 <template>
-	<PrimaryContainer
-		class="flex flex-row items-center"
-		id="workflow">
+	<PrimaryContainer class="flex flex-row items-center" id="workflow">
 		<div class="flex relative z-20 flex-col gap-y-4 sm:w-2/3 lg:w-2/5">
 			<h2
 				class="mb-3 text-3xl font-black text-gray-800 font-poppins sm:text-5xl">

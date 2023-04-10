@@ -1,35 +1,55 @@
 <template>
 	<PrimaryContainer class="flex flex-col gap-y-20">
-		<h2 class="mb-3 text-3xl font-black text-gray-800 font-poppins sm:text-5xl text-center">Devices</h2>
-		<div v-for="list of lists" :key="list.name" class="items-center lg:flex lg:flex-row lg:gap-x-24 lg:px-5 even:flex-row-reverse group">
-			<div class="px-4 mx-auto sm:px-6 lg:py-16 lg:mx-0 lg:px-0 w-1/3 group-odd:text-right group-oddn:justify-end flex">
+		<h2
+			class="mb-3 text-3xl font-black text-gray-800 font-poppins sm:text-5xl text-center">
+			Devices
+		</h2>
+		<div
+			v-for="list of lists"
+			:key="list.name"
+			class="items-center lg:flex lg:flex-row lg:gap-x-24 lg:px-5 even:flex-row-reverse group">
+			<div
+				class="px-4 mx-auto sm:px-6 lg:py-16 lg:mx-0 lg:px-0 w-1/3 group-odd:text-right group-oddn:justify-end flex">
 				<div class="flex flex-col gap-y-4">
-					<h2 class="text-3xl font-extrabold tracking-tight text-gray-900 font-inter">
+					<h2
+						class="text-3xl font-extrabold tracking-tight text-gray-900 font-inter">
 						{{ list.name }}
 					</h2>
 					<dl
 						class="max-w-md text-gray-900 divide-y divide-gray-200 font-inter dark:text-white dark:divide-gray-700">
-
-						<div v-for="item of list.items" :key="item.title" class="flex flex-col py-3">
-							<dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">
+						<div
+							v-for="item of list.items"
+							:key="item.title"
+							class="flex flex-col py-3">
+							<dt
+								class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">
 								{{ item.title }}
 							</dt>
-							<dd class="text-lg font-semibold">{{ item.value }}</dd>
+							<dd class="text-lg font-semibold">
+								{{ item.value }}
+							</dd>
 						</div>
 					</dl>
 				</div>
 			</div>
 
-			<div class="hidden justify-center items-center mt-0 md:flex w-2/3 h-[35rem]">
-				<img class="h-full w-auto" :src="list.image" format="webp" alt="Laptop"
-						width="416" height="671" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+			<div
+				class="hidden justify-center items-center mt-0 md:flex w-2/3 h-[35rem]">
+				<img
+					class="h-full w-auto"
+					:src="list.image"
+					format="webp"
+					alt="Laptop"
+					width="416"
+					height="671"
+					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
 			</div>
 		</div>
 	</PrimaryContainer>
 </template>
 
 <script setup lang="ts">
-import PrimaryContainer from '~~/components/layout/PrimaryContainer.vue';
+import PrimaryContainer from "~~/components/layout/PrimaryContainer.vue";
 
 const lists = [
 	{
@@ -52,7 +72,7 @@ const lists = [
 				title: "Root Provider",
 				value: "Magisk",
 			},
-		]
+		],
 	},
 	{
 		name: "Hacktop",
@@ -72,9 +92,9 @@ const lists = [
 			},
 			{
 				title: "Notes",
-				value: "Used for development and debugging on the go"
-			}
-		]
+				value: "Used for development and debugging on the go",
+			},
+		],
 	},
 	{
 		name: "C H U N K Y",
@@ -100,7 +120,7 @@ const lists = [
 				title: "Storage",
 				value: "240 GB SSD, 512 GB SSD, 2x 2 TB HDD",
 			},
-		]
-	}
+		],
+	},
 ];
 </script>

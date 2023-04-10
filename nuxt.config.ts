@@ -4,6 +4,7 @@ export default defineNuxtConfig({
 		"@nuxtjs/tailwindcss",
 		"@nuxtjs/robots",
 		"@nuxt/image-edge",
+		"@formkit/nuxt"
 	],
 	app: {
 		head: {

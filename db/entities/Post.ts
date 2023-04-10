@@ -1,10 +1,16 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+	Column,
+	CreateDateColumn,
+	Entity,
+	PrimaryGeneratedColumn,
+	UpdateDateColumn,
+} from "typeorm";
 
 export enum Visibility {
 	PUBLIC = "public",
 	UNLISTED = "unlisted",
 	PRIVATE = "private",
-	HIDDEN = "hidden"
+	HIDDEN = "hidden",
 }
 
 @Entity()
@@ -26,7 +32,7 @@ export class Post {
 	description: string;
 
 	@Column("varchar", {
-		unique: true
+		unique: true,
 	})
 	slug: string;
 
@@ -41,12 +47,12 @@ export class Post {
 	banner?: string;
 
 	@CreateDateColumn({
-		default: Date.now()
+		default: Date.now(),
 	})
 	created_at?: Date;
 
 	@UpdateDateColumn({
-		default: Date.now()
+		default: Date.now(),
 	})
 	edited_at?: Date;
 }

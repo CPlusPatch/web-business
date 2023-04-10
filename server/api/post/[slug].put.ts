@@ -1,10 +1,12 @@
 import { AppDataSource } from "~~/db/data-source";
 import { Post } from "~~/db/entities/Post";
 
-export default defineEventHandler(async (event) => {
-
+export default defineEventHandler(async event => {
 	// Authenticate user (parse Authorization: Bearer TOKEN) header
-	if (event.node.req.headers.authorization?.split(" ")[1] !== process.env.TOKEN) {
+	if (
+		event.node.req.headers.authorization?.split(" ")[1] !==
+		process.env.TOKEN
+	) {
 		return abortNavigation({
 			statusCode: 401,
 		});
@@ -12,30 +14,30 @@ export default defineEventHandler(async (event) => {
 
 	const slug = event.context.params?.slug ?? "";
 
-	const post = await AppDataSource.initialize().then(
-		async (AppDataSource) => {
-			const post = await AppDataSource.getRepository(Post).findOneBy({
-				slug: slug,
-			});
+	const post = await AppDataSource.initialize().then(async AppDataSource => {
+		const post = await AppDataSource.getRepository(Post).findOneBy({
+			slug: slug,
+		});
 
-			if (!post) return false;
+		if (!post) return false;
 
-			const body = await readBody(event);
+		const body = (await readBody(event)) as Partial<Post>;
 
-			post.content = body.content;
+		if (body.content) post.content = body.content;
+		if (body.description) post.description = body.description;
+		if (body.title) post.title = body.title;
 
-			await AppDataSource.getRepository(Post).save(post);
+		await AppDataSource.getRepository(Post).save(post);
 
-			AppDataSource.destroy();
-			return post;
-		}
-	);
+		AppDataSource.destroy();
+		return post;
+	});
 
 	if (post) {
-		return "";
+		return post;
 	} else {
 		throw createError({
-			statusCode: 404
-		})
+			statusCode: 404,
+		});
 	}
 });

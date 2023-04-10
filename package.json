@@ -8,7 +8,7 @@
 		"preview": "nuxt preview",
 		"postinstall": "nuxt prepare",
 		"lint": "eslint --ext .js,.ts src",
-		"format": "prettier --write src/"
+		"format": "prettier --write pages/ components/ server/ plugins/ middleware/ app.vue/ db/"
 	},
 	"devDependencies": {
 		"@nuxt/image-edge": "1.0.0-27991759.1a5eea1",
@@ -26,9 +26,11 @@
 		"typescript": "^5.0.3"
 	},
 	"dependencies": {
+		"@formkit/nuxt": "^0.16.4",
 		"@headlessui/vue": "^1.7.12",
 		"@nuxtjs/robots": "^3.0.0",
 		"@tabler/icons-vue": "^2.14.0",
+		"@tailwindcss/forms": "^0.5.3",
 		"@tailwindcss/typography": "^0.5.9",
 		"better-sqlite3": "^8.2.0",
 		"marked": "^4.3.0",
