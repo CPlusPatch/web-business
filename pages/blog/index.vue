@@ -11,9 +11,11 @@ const posts = await useFetch<Post[]>("/api/posts");
 		<ul class="flex flex-col gap-y-5 pb-10">
 			<li v-for="post of posts.data.value" :key="post.id">
 				<article
-					class="w-full rounded shadow-sm lg:max-w-full lg:flex min-h-[12rem]">
+					class="w-full rounded overflow-hidden shadow-sm hover:shadow-xl duration-200 hover:ring-2 ring-orange-500 lg:max-w-full lg:flex min-h-[12rem]">
 					<div
-						class="flex overflow-hidden flex-none items-center h-48 text-center bg-gray-200 bg-center bg-cover rounded-t lg:w-64 lg:rounded-t-none lg:rounded-l lg:h-auto"></div>
+						class="flex overflow-hidden h-48 bg-gray-200 lg:w-64 lg:h-auto">
+						<img v-if="post.banner" :src="post.banner" class="object-cover"/>
+					</div>
 					<div
 						class="flex flex-col justify-between p-4 leading-normal bg-white grow">
 						<NuxtLink class="mb-4" :to="`/blog/${post.slug}`">
