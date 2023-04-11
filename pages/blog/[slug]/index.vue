@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IconCalendar } from "@tabler/icons-vue";
+import { IconCalendar, IconClock } from "@tabler/icons-vue";
 import { marked } from "marked";
 import PrimaryContainer from "~~/components/layout/PrimaryContainer.vue";
 import { Post } from "~~/db/entities/Post";
@@ -25,23 +25,30 @@ const post = await useFetch<Post>(`/api/post/${route.params.slug}`);
 					:src="post.data.value?.banner"
 					class="w-full h-full object-cover align-middle" />
 			</div>
-			<div
-				v-if="post.data.value?.created_at"
-				class="flex gap-x-2 items-center px-4 mx-auto my-5 max-w-2xl font-light text-gray-500 font-inter">
-				<IconCalendar class="w-4 h-4" />
-				Written on
-				{{
-					new Date(post.data.value?.created_at).toLocaleDateString(
-						"en-US",
-						{
-							month: "short",
-							day: "numeric",
-							year: "numeric",
-							hour: "numeric",
-							minute: "numeric",
-						}
-					)
-				}}
+			<div class="flex items-center px-4 justify-center my-5 text-gray-500 font-inter gap-x-4">
+				<span
+					v-if="post.data.value?.created_at"
+					class="flex gap-x-2 items-center">
+					<IconCalendar class="w-4 h-4 mb-1" />
+					{{
+						new Date(post.data.value?.created_at).toLocaleDateString(
+							"en-GB",
+							{
+								month: "short",
+								day: "numeric",
+								year: "numeric",
+								hour: "numeric",
+								minute: "numeric",
+							}
+						)
+					}}
+				</span>
+				<span
+					v-if="post.data.value?.content"
+					class="flex gap-x-2 items-center">
+					<IconClock class="w-4 h-4 mb-1" />
+					{{ Math.ceil(post.data.value?.content.split(" ").length / 183) }}min read
+				</span>
 			</div>
 			<div
 				class="px-4 mx-auto mt-10 max-w-2xl text-gray-700 prose font-inter"

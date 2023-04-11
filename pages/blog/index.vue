@@ -35,8 +35,6 @@ const createNew = async () => {
 		}
 	});
 }
-
-console.log(posts.data.value)
 </script>
 
 <template>
