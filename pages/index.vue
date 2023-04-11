@@ -5,6 +5,16 @@ import LighthouseScores from "~~/components/landing/LighthouseScores.vue";
 import Certs from "~~/components/landing/Certs.vue";
 import Testimonials from "~~/components/landing/Testimonials.vue";
 import Faqs from "~~/components/landing/Faqs.vue";
+
+useServerSeoMeta({
+	title: "CPlusPatch",
+	ogTitle: "Website for CPlusPatch, aka Gaspard Wierzbinski",
+	description: "My blog, about me and how you can contact me!",
+	ogDescription: "My blog, about me and how you can contact me!",
+	ogImage: "/static/servers.webp",
+	twitterCard: "summary_large_image",
+	author: "Gaspard Wierzbinski",
+});
 </script>
 
 <template>

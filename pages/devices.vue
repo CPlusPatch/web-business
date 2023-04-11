@@ -123,4 +123,14 @@ const lists = [
 		],
 	},
 ];
+
+useServerSeoMeta({
+	title: "CPlusPatch · Devices",
+	ogTitle: "CPlusPatch · Devices",
+	description: "My list of devices that I own",
+	ogDescription: "My list of devices that I own",
+	ogImage: "/static/servers.webp",
+	twitterCard: "summary_large_image",
+	author: "Gaspard Wierzbinski",
+});
 </script>

@@ -151,6 +151,16 @@ const projects = [
 		],
 	},
 ];
+
+useServerSeoMeta({
+	title: "CPlusPatch · Projects",
+	ogTitle: "CPlusPatch · Projects",
+	description: "My list of projects that I have completed",
+	ogDescription: "My list of projects that I have completed",
+	ogImage: "/static/servers.webp",
+	twitterCard: "summary_large_image",
+	author: "Gaspard Wierzbinski",
+});
 </script>
 
 <template>

@@ -35,6 +35,16 @@ const createNew = async () => {
 		}
 	});
 }
+
+useServerSeoMeta({
+	title: "CPlusPatch · Blog",
+	ogTitle: "CPlusPatch · Blog",
+	description: "CPlusPatch's personal blog with articles",
+	ogDescription: "CPlusPatch's personal blog with articles",
+	ogImage: "/static/servers.webp",
+	twitterCard: "summary_large_image",
+	author: "Gaspard Wierzbinski",
+});
 </script>
 
 <template>
