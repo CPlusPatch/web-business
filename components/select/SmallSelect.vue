@@ -25,8 +25,6 @@ import {
 	ListboxOptions,
 } from "@headlessui/vue";
 import { ref } from "vue";
-import ScaleFadeSlide from "../transitions/ScaleFadeSlide.vue";
-
 interface SelectProps {
 	items: SelectItem[];
 	defaultValue: number;
@@ -40,6 +38,16 @@ const emit = defineEmits(["update:modelValue"]);
 
 const selected = ref<SelectItem>(props.items[props.defaultValue]);
 </script>
+
+<style scoped lang="postcss">
+.menu-item {
+	@apply text-gray-700 duration-300 w-full dark:text-gray-50 hover:bg-orange-200 rounded-lg text-sm dark:hover:bg-orange-700/20 flex flex-row items-center py-2;
+}
+
+.menu-icon {
+	@apply mx-2 h-[1.2em] w-[1.2em] mb-0.5;
+}
+</style>
 
 <template>
 	<Listbox
@@ -57,10 +65,10 @@ const selected = ref<SelectItem>(props.items[props.defaultValue]);
 				class="w-6 h-6"
 				aria-hidden="true" />
 		</ListboxButton>
-		<ScaleFadeSlide>
+		<TransitionsScaleFadeSlide>
 			<ListboxOptions
 				:class="[
-					'overflow-auto absolute z-30 dark:border-gray-700 shadow-lg mt-1 w-64 text-base rounded-md border font-inter bg-gray-100/75 dark:bg-dark-800/75 backdrop-blur-md',
+					'p-1.5 gap-x-4 outline-none text-base absolute w-44 overflow-hidden sm:text-sm rounded-lg shadow-lg bg-white dark:bg-dark-700/60 backdrop-blur-lg focus:outline-none',
 					direction === SelectDirection.Left &&
 						'right-0 origin-top-right',
 					direction === SelectDirection.Center &&
@@ -71,27 +79,16 @@ const selected = ref<SelectItem>(props.items[props.defaultValue]);
 					v-for="item in items"
 					:key="item.value"
 					:value="item"
-					:class="[
-						item.value === selected.value &&
-							'bg-orange-100 dark:bg-orange-500/10',
-						'm-2 rounded flex relative flex-row gap-x-3 items-center py-2 px-3 text-gray-800 dark:text-gray-100 duration-200 cursor-default select-none hover:bg-gray-200 dark:hover:bg-gray-700',
-					]"
-					:title="item.description">
+					as="button"
+					class="menu-item"
+					>
 					<component
 						:is="item.icon"
-						class="w-5 h-auto text-gray-500"
+						class="menu-icon"
 						aria-hidden="true" />
-					<div class="flex flex-col">
-						<span class="text-sm font-semibold font-poppins">
-							{{ item.text }}
-						</span>
-						<span
-							class="text-sm text-orange-700 dark:text-orange-200">
-							{{ item.description ?? "" }}
-						</span>
-					</div>
+					{{ item.text }}
 				</ListboxOption>
 			</ListboxOptions>
-		</ScaleFadeSlide>
+		</TransitionsScaleFadeSlide>
 	</Listbox>
 </template>

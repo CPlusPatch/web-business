@@ -1,4 +1,8 @@
-import { ListObjectsV2Command, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import {
+	ListObjectsV2Command,
+	PutObjectCommand,
+	S3Client,
+} from "@aws-sdk/client-s3";
 import { randomUUID } from "crypto";
 
 export default defineEventHandler(async event => {
@@ -27,7 +31,6 @@ export default defineEventHandler(async event => {
 	const body = await readMultipartFormData(event);
 	const file = body![0];
 
-
 	const command = new PutObjectCommand({
 		Bucket: process.env.S3_BUCKET_NAME,
 		Key: file.filename,
@@ -41,7 +44,7 @@ export default defineEventHandler(async event => {
 		return `${process.env.CDN_URL}/${file.filename}`;
 	} else {
 		return abortNavigation({
-			statusCode: 500
+			statusCode: 500,
 		});
 	}
 });

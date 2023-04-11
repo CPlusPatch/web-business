@@ -27,7 +27,12 @@ let oldPost = post.value;
 const close = () => {
 	if (isSaving.value) return;
 	if (oldPost !== post.value) {
-		if (!confirm("Your changes haven't been saved. Are you sure you want to close?")) return;
+		if (
+			!confirm(
+				"Your changes haven't been saved. Are you sure you want to close?"
+			)
+		)
+			return;
 	}
 	open.value = false;
 	setTimeout(() => {
@@ -49,13 +54,15 @@ const upload = (e: Event) => {
 	fetch(`/api/media/upload`, {
 		method: "POST",
 		body: formData,
-	}).then(async res => {
-		if (res.ok) {
-			post.value.banner = await res.text();
-		}
-	}).finally(() => {
-		isSaving.value = false;
 	})
+		.then(async res => {
+			if (res.ok) {
+				post.value.banner = await res.text();
+			}
+		})
+		.finally(() => {
+			isSaving.value = false;
+		});
 };
 
 const save = (e: Event) => {
@@ -70,7 +77,7 @@ const save = (e: Event) => {
 		},
 		body: JSON.stringify({
 			description: post.value.description,
-			banner: post.value.banner
+			banner: post.value.banner,
 		}),
 	})
 		.then(data => {
@@ -151,7 +158,7 @@ const save = (e: Event) => {
 									id="avatar-upload">
 									<div className="relative w-full">
 										<div
-											className="inline-block overflow-hidden w-full h-36 bg-gray-100 rounded-md">
+											className="inline-flex overflow-hidden items-center w-full h-36 bg-gray-100 rounded-md">
 											<img
 												class="bg-contain"
 												:src="post.banner" />
