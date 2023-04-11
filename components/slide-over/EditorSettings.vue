@@ -69,7 +69,11 @@ const save = (e: Event) => {
 	post.value.slug = (e.target as any)["slug"].value;
 
 	if (post.value.slug !== oldPost.slug) {
-		history.pushState({}, "", location.pathname.replace(oldPost.slug, post.value.slug))
+		history.pushState(
+			{},
+			"",
+			location.pathname.replace(oldPost.slug, post.value.slug)
+		);
 	}
 
 	fetch(`/api/post/${route.params.slug}`, {
@@ -81,7 +85,7 @@ const save = (e: Event) => {
 		body: JSON.stringify({
 			description: post.value.description,
 			banner: post.value.banner,
-			slug: post.value.slug
+			slug: post.value.slug,
 		}),
 	})
 		.then(data => {

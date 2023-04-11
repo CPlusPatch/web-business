@@ -14,26 +14,28 @@ export default defineEventHandler(async event => {
 
 	const slug = event.context.params?.slug ?? "";
 
-	const post = await AppDataSource.initialize().then(async AppDataSource => {
-		const post = await AppDataSource.getRepository(Post).findOneBy({
-			slug: slug,
+	const post = await AppDataSource.initialize()
+		.then(async AppDataSource => {
+			const post = await AppDataSource.getRepository(Post).findOneBy({
+				slug: slug,
+			});
+
+			if (!post) return false;
+
+			const body = (await readBody(event)) as Partial<Post>;
+
+			if (body.content) post.content = body.content;
+			if (body.description) post.description = body.description;
+			if (body.title) post.title = body.title;
+			if (body.banner) post.banner = body.banner;
+			if (body.slug) post.slug = body.slug;
+
+			await AppDataSource.getRepository(Post).save(post);
+			return post;
+		})
+		.finally(() => {
+			AppDataSource.destroy();
 		});
-
-		if (!post) return false;
-
-		const body = (await readBody(event)) as Partial<Post>;
-
-		if (body.content) post.content = body.content;
-		if (body.description) post.description = body.description;
-		if (body.title) post.title = body.title;
-		if (body.banner) post.banner = body.banner;
-		if (body.slug) post.slug = body.slug;
-
-		await AppDataSource.getRepository(Post).save(post);
-		return post;
-	}).finally(() => {
-		AppDataSource.destroy();
-	})
 
 	if (post) {
 		return post;

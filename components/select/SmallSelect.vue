@@ -57,7 +57,7 @@ const selected = ref<SelectItem>(props.items[props.defaultValue]);
 		class="relative font-inter"
 		@update:modelValue="value => emit('update:modelValue', value)">
 		<ListboxButton
-			title="Open select menu"
+			v-bind="$attrs"
 			class="flex relative flex-row gap-x-1 items-center p-2 text-gray-600 rounded duration-200 cursor-default dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
 			<component
 				:is="selected.icon"
