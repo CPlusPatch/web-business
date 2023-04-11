@@ -2,6 +2,8 @@
 import { Switch } from "@headlessui/vue";
 import { IconLayoutGrid } from "@tabler/icons-vue";
 import { IconLayoutRows } from "@tabler/icons-vue";
+import { IconPlus } from "@tabler/icons-vue";
+import { IconFilePlus } from "@tabler/icons-vue";
 import { IconChevronRight } from "@tabler/icons-vue";
 import { IconArticleFilledFilled } from "@tabler/icons-vue";
 import SmallSelect from "~/components/select/SmallSelect.vue";
@@ -9,9 +11,30 @@ import PrimaryContainer from "~~/components/layout/PrimaryContainer.vue";
 import { Post } from "~~/db/entities/Post";
 
 const posts = await useFetch<Post[]>("/api/posts");
+const isAdmin = await useFetch<boolean>("/api/user/admin");
 
 const mode = ref<"compact" | "large">("compact");
 const enabled = ref(false);
+const token = useCookie("token");
+const router = useRouter();
+const isCreatingPost = ref(false);
+
+const createNew = async () => {
+	isCreatingPost.value = true;
+	fetch("/api/post", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token.value}`,
+		},
+	}).then(async res => {
+		if (res.ok) {
+			const slug = (await res.json() as Post).slug;
+
+			router.push(`/blog/${slug}/edit`);
+		}
+	});
+}
 </script>
 
 <template>
@@ -49,8 +72,9 @@ const enabled = ref(false);
 						Updates from CPlusPatch
 					</h2>
 				</div>
-				<div class="mt-4 flex-shrink-0 md:mt-0 md:ml-4 hidden md:flex">
+				<div class="mt-4 flex-shrink-0 md:mt-0 md:ml-4 flex gap-x-3">
 					<SmallSelect
+						class="hidden md:flex"
 						:default-value="0"
 						:items="[
 							{
@@ -65,6 +89,14 @@ const enabled = ref(false);
 							},
 						]"
 						@update:model-value="(value: any) => mode = value.value" />
+					<Button
+						:loading="isCreatingPost"
+						theme="orange"
+						@click="createNew"
+						v-if="isAdmin.data.value"
+						class="flex gap-x-1 items-center w-full md:w-auto">
+						<IconFilePlus class="h-5 w-5 mb-0.5" />Add new post
+					</Button>
 				</div>
 			</div>
 		</div>
@@ -72,7 +104,9 @@ const enabled = ref(false);
 		<ul
 			:class="[
 				'gap-5 pb-10',
-				mode === 'large' ? 'flex flex-col' : 'grid md:grid-cols-3 sm:grid-cols-1',
+				mode === 'large'
+					? 'flex flex-col'
+					: 'grid md:grid-cols-3 sm:grid-cols-1',
 			]">
 			<li v-for="post of posts.data.value" :key="post.id">
 				<article

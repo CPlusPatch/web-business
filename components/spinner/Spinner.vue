@@ -1,8 +1,21 @@
+<script setup lang="ts">
+const themes: { [key: string]: string } = {
+	gray: "text-gray-200 fill-orange-400",
+	orange: "text-orange-400 fill-white",
+	orangeLight:
+		"text-orange-700 dark:text-orange-200 bg-orange-100 dark:bg-orange-800 hover:bg-orange-200 border-transparent",
+};
+
+const props = defineProps<{
+	theme?: "gray" | "orange" | "orangeLight"
+}>()
+</script>
+
 <template>
 	<svg
 		role="status"
 		v-bind="$attrs"
-		class="animate-spin w-auto h-4 text-gray-200 fill-orange-400"
+		:class="['animate-spin w-4 h-4', theme && themes[theme]]"
 		viewBox="0 0 100 101"
 		fill="none"
 		xmlns="http://www.w3.org/2000/svg">
