@@ -1,5 +1,4 @@
-import * as dotenv from "dotenv"; // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
-dotenv.config();
+require("dotenv").config();
 
 module.exports = {
 	apps: [
@@ -16,7 +15,7 @@ module.exports = {
 				S3_SECRET_ACCESS_KEY: process.env.S3_SECRET_ACCESS_KEY,
 				S3_BUCKET_NAME: process.env.S3_BUCKET_NAME,
 				CDN_URL: process.env.CDN_URL,
-			}
+			},
 		},
 	],
 };
