@@ -8,7 +8,7 @@ import {
 } from "@headlessui/vue";
 import { IconFileUpload, IconX } from "@tabler/icons-vue";
 import { Post } from "~/db/entities/Post";
-import { arrayBufferToWebP } from 'webp-converter-browser';
+import { arrayBufferToWebP } from "webp-converter-browser";
 
 const props = defineProps<{
 	onclose: () => void;
@@ -23,18 +23,10 @@ const isSaving = ref(false);
 const route = useRoute();
 const token = useCookie("token");
 const fileUpload = ref<HTMLInputElement | null>(null);
-let oldPost = post.value;
+let oldPost = JSON.parse(JSON.stringify(post.value)); // To clone the object and prevent it from being a proxy
 
 const close = () => {
 	if (isSaving.value) return;
-	if (oldPost !== post.value) {
-		if (
-			!confirm(
-				"Your changes haven't been saved. Are you sure you want to close?"
-			)
-		)
-			return;
-	}
 	open.value = false;
 	setTimeout(() => {
 		props.onclose();
@@ -45,9 +37,12 @@ const upload = async (e: Event) => {
 	const target = e.target as HTMLInputElement;
 	if (!target.files) return;
 
-	const file: File = 
-		target.files[0].type.includes("webp") ? target.files[0] :
-		new File([await arrayBufferToWebP(await target.files[0].arrayBuffer())], target.files[0].name.split(".").slice(0, -1).join(".") + ".webp");
+	const file: File = target.files[0].type.includes("webp")
+		? target.files[0]
+		: new File(
+				[await arrayBufferToWebP(await target.files[0].arrayBuffer())],
+				target.files[0].name.split(".").slice(0, -1).join(".") + ".webp"
+		  );
 
 	isSaving.value = true;
 	let formData = new FormData();
@@ -71,6 +66,12 @@ const save = (e: Event) => {
 	e.preventDefault();
 	isSaving.value = true;
 	post.value.description = (e.target as any)["description"].value;
+	post.value.slug = (e.target as any)["slug"].value;
+
+	if (post.value.slug !== oldPost.slug) {
+		history.pushState({}, "", location.pathname.replace(oldPost.slug, post.value.slug))
+	}
+
 	fetch(`/api/post/${route.params.slug}`, {
 		method: "PUT",
 		headers: {
@@ -80,23 +81,23 @@ const save = (e: Event) => {
 		body: JSON.stringify({
 			description: post.value.description,
 			banner: post.value.banner,
+			slug: post.value.slug
 		}),
 	})
 		.then(data => {
 			switch (data.status) {
 				case 201:
 				case 200: {
-					oldPost = post.value;
+					oldPost = JSON.parse(JSON.stringify(post.value)); // To clone object
+					isSaving.value = false;
 					close();
 					break;
 				}
 			}
 		})
 		.catch(err => {
-			console.error(err);
-		})
-		.finally(() => {
 			isSaving.value = false;
+			console.error(err);
 		});
 };
 </script>
@@ -156,7 +157,7 @@ const save = (e: Event) => {
 							<div
 								class="relative flex-1 mt-6 flex flex-col gap-y-4 pb-20">
 								<div
-									className="flex flex-col items-center mt-1"
+									className="flex flex-col items-center mt-1 gap-y-4"
 									id="avatar-upload">
 									<div className="relative w-full">
 										<div
@@ -196,6 +197,30 @@ const save = (e: Event) => {
 												id="description"
 												:value="post.description"
 												class="block w-full rounded-md border-gray-300 shadow-sm duration-200 outline-none disabled:bg-gray-100 focus:ring-orange-500 focus:border-orange-500 sm:text-sm" />
+										</div>
+									</div>
+
+									<div class="w-full">
+										<label
+											htmlFor="slug"
+											class="block text-sm font-medium text-gray-700">
+											Post Slug
+										</label>
+										<div class="mt-1 flex flex-col gap-y-1">
+											<input
+												:disabled="isSaving"
+												type="text"
+												name="slug"
+												pattern="^[a-z0-9]+(?:-[a-z0-9]+)*$"
+												required
+												id="slug"
+												:value="post.slug"
+												class="peer first-letter:block w-full rounded-md border-gray-300 shadow-sm duration-200 outline-none disabled:bg-gray-100 focus:valid:ring-orange-500 focus:valid:border-orange-500 invalid:ring-red-600 invalid:ring-1 invalid:border-red-600 sm:text-sm" />
+											<span
+												class="hidden peer-invalid:block text-sm text-red-500"
+												>You may only use alphanumeric
+												characters and dashes.</span
+											>
 										</div>
 									</div>
 

@@ -27,12 +27,13 @@ export default defineEventHandler(async event => {
 		if (body.description) post.description = body.description;
 		if (body.title) post.title = body.title;
 		if (body.banner) post.banner = body.banner;
+		if (body.slug) post.slug = body.slug;
 
 		await AppDataSource.getRepository(Post).save(post);
-
-		AppDataSource.destroy();
 		return post;
-	});
+	}).finally(() => {
+		AppDataSource.destroy();
+	})
 
 	if (post) {
 		return post;

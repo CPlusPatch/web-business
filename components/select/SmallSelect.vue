@@ -80,8 +80,7 @@ const selected = ref<SelectItem>(props.items[props.defaultValue]);
 					:key="item.value"
 					:value="item"
 					as="button"
-					class="menu-item"
-					>
+					class="menu-item">
 					<component
 						:is="item.icon"
 						class="menu-icon"

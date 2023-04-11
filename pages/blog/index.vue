@@ -15,18 +15,21 @@ const enabled = ref(false);
 
 <template>
 	<PrimaryContainer>
-		<SmallSelect :default-value="0" :items="[
-			{
-				value: 'compact',
-				icon: IconLayoutGrid,
-				text: 'Compact'
-			},
-			{
-				value: 'large',
-				icon: IconLayoutRows,
-				text: 'large'
-			}
-		]" @update:model-value="(value: any) => mode = value.value" />
+		<SmallSelect
+			:default-value="0"
+			:items="[
+				{
+					value: 'compact',
+					icon: IconLayoutGrid,
+					text: 'Compact',
+				},
+				{
+					value: 'large',
+					icon: IconLayoutRows,
+					text: 'large',
+				},
+			]"
+			@update:model-value="(value: any) => mode = value.value" />
 
 		<ul
 			:class="[
