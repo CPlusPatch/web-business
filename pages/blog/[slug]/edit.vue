@@ -69,7 +69,7 @@ onUnmounted(() => {
 
 <style scoped lang="postcss">
 .editor-half {
-	@apply p-6 overflow-scroll border-none duration-200 outline-none font-inter focus:outline-none ring-1 ring-gray-300 hover:ring-2 focus:ring-orange-500 rounded;
+	@apply p-6 overflow-scroll max-h-full pb-64 border-none duration-200 outline-none font-inter focus:outline-none ring-1 ring-gray-300 hover:ring-2 focus:ring-orange-500 rounded;
 }
 </style>
 
@@ -122,7 +122,7 @@ onUnmounted(() => {
 			</div>
 		</div>
 	</nav>
-	<div class="min-h-screen flex">
+	<div class="h-screen flex">
 		<div
 			class="grid md:grid-cols-2 grid-cols-1 m-5 pt-16 grow justify-between gap-6">
 			<textarea
