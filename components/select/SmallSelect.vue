@@ -33,7 +33,10 @@ interface SelectProps {
 	name?: string;
 }
 
-const props = defineProps<SelectProps>();
+const props = withDefaults(defineProps<SelectProps>(), {
+	direction: SelectDirection.Right,
+	orientation: SelectOrientation.Down
+});
 const emit = defineEmits(["update:modelValue"]);
 
 const selected = ref<SelectItem>(props.items[props.defaultValue]);
@@ -74,6 +77,7 @@ const selected = ref<SelectItem>(props.items[props.defaultValue]);
 					direction === SelectDirection.Center &&
 						'right-0 origin-top-right translate-x-[50%]',
 					orientation === SelectOrientation.Up && 'bottom-[110%]',
+					orientation === SelectOrientation.Down && 'top-[110%]',
 				]">
 				<ListboxOption
 					v-for="item in items"
