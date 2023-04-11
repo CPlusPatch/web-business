@@ -20,10 +20,10 @@ const post = await useFetch<Post>(`/api/post/${route.params.slug}`);
 			</div>
 			<div
 				v-if="post.data.value?.banner"
-				class="flex overflow-hidden items-center w-full max-h-96 md:rounded-lg">
+				class="block overflow-hidden w-full md:h-96 h-40 rounded-lg">
 				<img
 					:src="post.data.value?.banner"
-					class="relative w-full bg-cover" />
+					class="w-full h-full object-cover align-middle" />
 			</div>
 			<div
 				v-if="post.data.value?.created_at"
