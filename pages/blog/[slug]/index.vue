@@ -9,8 +9,8 @@ const route = useRoute();
 const post = await useFetch<Post>(`/api/post/${route.params.slug}`);
 
 useServerSeoMeta({
-	title: () => post.data.value?.title ?? "Article by CPlusPatch",
-	ogTitle: () => post.data.value?.title ?? "Article by CPlusPatch",
+	title: () => `${post.data.value?.title} · CPlusPatch` ?? "Article by CPlusPatch",
+	ogTitle: () =>  `${post.data.value?.title} · CPlusPatch` ?? "Article by CPlusPatch",
 	description: () => post.data.value?.description ?? "Article by CPlusPatch",
 	ogDescription: () => post.data.value?.description ?? "Article by CPlusPatch",
 	ogImage: "/static/servers.webp",

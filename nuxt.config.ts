@@ -15,7 +15,6 @@ export default defineNuxtConfig({
 					type: "image/png",
 				},
 			],
-			title: "CPlusPatch",
 			htmlAttrs: { lang: "en-us" },
 		},
 	},
