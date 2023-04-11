@@ -35,10 +35,12 @@ const createNew = async () => {
 		}
 	});
 }
+
+console.log(posts.data.value)
 </script>
 
 <template>
-	<PrimaryContainer class="flex flex-col gap-y-4">
+	<PrimaryContainer class="flex flex-col gap-y-6">
 		<div class="">
 			<nav class="hidden sm:flex" aria-label="Breadcrumb">
 				<ol role="list" class="flex items-center space-x-4">
@@ -111,7 +113,7 @@ const createNew = async () => {
 			<li v-for="post of posts.data.value" :key="post.id">
 				<article
 					:class="[
-						'w-full rounded group overflow-hidden lg:flex shadow-sm hover:shadow-xl duration-200 ring-1 hover:ring-2 ring-gray-200 hover:ring-orange-500 min-h-[12rem]',
+						'w-full rounded group overflow-hidden lg:flex shadow-sm hover:shadow-xl duration-200 ring-1 h-full hover:ring-2 ring-gray-200 hover:ring-orange-500 min-h-[12rem]',
 						mode === 'large' ? '' : 'lg:flex-col',
 					]">
 					<div
@@ -151,16 +153,14 @@ const createNew = async () => {
 									Gaspard Wierzbinski
 								</p>
 								<p class="text-gray-600">
-									{{
-										new Date(post.id).toLocaleDateString(
-											"en-US",
-											{
-												month: "short",
-												day: "2-digit",
-												year: "2-digit",
-											}
-										)
-									}}
+									{{ new Date(post.created_at ?? 0).toLocaleDateString(
+										"en-US",
+										{
+											month: "short",
+											day: "2-digit",
+											year: "2-digit",
+										}
+									) }}
 								</p>
 							</div>
 						</div>

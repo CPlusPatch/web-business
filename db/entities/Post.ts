@@ -46,13 +46,9 @@ export class Post {
 	})
 	banner?: string;
 
-	@CreateDateColumn({
-		default: Date.now(),
-	})
+	@CreateDateColumn()
 	created_at?: Date;
 
-	@UpdateDateColumn({
-		default: Date.now(),
-	})
+	@UpdateDateColumn()
 	edited_at?: Date;
 }
