@@ -8,6 +8,7 @@ import {
 } from "@headlessui/vue";
 import { IconFileUpload, IconX } from "@tabler/icons-vue";
 import { Post } from "~/db/entities/Post";
+import { arrayBufferToWebP } from 'webp-converter-browser';
 
 const props = defineProps<{
 	onclose: () => void;
@@ -40,12 +41,13 @@ const close = () => {
 	}, 300);
 };
 
-const upload = (e: Event) => {
+const upload = async (e: Event) => {
 	const target = e.target as HTMLInputElement;
 	if (!target.files) return;
 
-	const file = target.files[0];
-	const url = URL.createObjectURL(file);
+	const file: File = 
+		target.files[0].type.includes("webp") ? target.files[0] :
+		new File([await arrayBufferToWebP(await target.files[0].arrayBuffer())], target.files[0].name.split(".").slice(0, -1).join(".") + ".webp");
 
 	isSaving.value = true;
 	let formData = new FormData();

@@ -41,6 +41,7 @@
 		"typeorm": "0.3.12",
 		"uuid": "^9.0.0",
 		"vue-tilt.js": "^1.1.1",
-		"vue3-carousel": "^0.2.16"
+		"vue3-carousel": "^0.2.16",
+		"webp-converter-browser": "^1.0.3"
 	}
 }
