@@ -4,14 +4,16 @@ import { Post } from "~~/db/entities/Post";
 export default defineEventHandler(async event => {
 	const slug = event.context.params?.slug ?? "";
 
-	const post = await AppDataSource.initialize().then(async AppDataSource => {
-		const post = await AppDataSource.getRepository(Post).findOneBy({
-			slug: slug,
+	const post = await AppDataSource.initialize()
+		.then(async AppDataSource => {
+			const post = await AppDataSource.getRepository(Post).findOneBy({
+				slug: slug,
+			});
+			return post;
+		})
+		.finally(() => {
+			AppDataSource.destroy();
 		});
-
-		AppDataSource.destroy();
-		return post;
-	});
 
 	if (post) {
 		return post;
