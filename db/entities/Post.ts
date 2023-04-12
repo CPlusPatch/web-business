@@ -37,7 +37,7 @@ export class Post {
 	slug: string;
 
 	@Column("varchar", {
-		default: Visibility.HIDDEN,
+		default: Visibility.PRIVATE,
 	})
 	visibility: Visibility;
 

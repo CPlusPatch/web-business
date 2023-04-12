@@ -3,19 +3,25 @@ import { Switch } from "@headlessui/vue";
 import { IconLayoutGrid } from "@tabler/icons-vue";
 import { IconLayoutRows } from "@tabler/icons-vue";
 import { IconPlus } from "@tabler/icons-vue";
+import { IconLock } from "@tabler/icons-vue";
 import { IconFilePlus } from "@tabler/icons-vue";
 import { IconChevronRight } from "@tabler/icons-vue";
 import { IconArticleFilledFilled } from "@tabler/icons-vue";
 import SmallSelect from "~/components/select/SmallSelect.vue";
 import PrimaryContainer from "~~/components/layout/PrimaryContainer.vue";
-import { Post } from "~~/db/entities/Post";
+import { Post, Visibility } from "~~/db/entities/Post";
 
-const posts = await useFetch<Post[]>("/api/posts");
+const token = useCookie("token");
+const posts = await useFetch<Post[]>("/api/posts", {
+	headers: {
+		"Content-Type": "application/json",
+		Authorization: `Bearer ${token.value}`,
+	},
+});
 const isAdmin = await useFetch<boolean>("/api/user/admin");
 
 const mode = ref<"compact" | "large">("compact");
 const enabled = ref(false);
-const token = useCookie("token");
 const router = useRouter();
 const isCreatingPost = ref(false);
 
@@ -126,9 +132,12 @@ useServerSeoMeta({
 					]">
 					<div
 						:class="[
-							'overflow-hidden h-48 bg-gray-200',
+							'overflow-hidden h-48 bg-gray-200 relative',
 							mode === 'large' ? 'lg:w-64' : 'lg:w-full',
 						]">
+						<Button v-if="post.visibility !== Visibility.PUBLIC" class="!absolute !p-2 top-3 right-3 z-10" theme="gray">
+							<IconLock />
+						</Button>
 						<img
 							v-if="post.banner"
 							:src="post.banner"

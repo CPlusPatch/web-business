@@ -7,8 +7,26 @@ import {
 	TransitionRoot,
 } from "@headlessui/vue";
 import { IconFileUpload, IconX } from "@tabler/icons-vue";
-import { Post } from "~/db/entities/Post";
+import { Post, Visibility } from "~/db/entities/Post";
 import { arrayBufferToWebP } from "webp-converter-browser";
+
+const privacySettings = [
+	{
+		name: "Public access",
+		value: Visibility.PUBLIC,
+		description: "Everyone can see this post.",
+	},
+	{
+		name: "Unlisted",
+		value: Visibility.UNLISTED,
+		description: "Everyone with the link will see this post.",
+	},
+	{
+		name: "Private",
+		value: Visibility.PRIVATE,
+		description: "Only you can see this post.",
+	},
+];
 
 const props = defineProps<{
 	onclose: () => void;
@@ -67,6 +85,7 @@ const save = (e: Event) => {
 	isSaving.value = true;
 	post.value.description = (e.target as any)["description"].value;
 	post.value.slug = (e.target as any)["slug"].value;
+	post.value.visibility = (e.target as any)["visibility"].value;
 
 	if (post.value.slug !== oldPost.slug) {
 		history.pushState(
@@ -86,6 +105,7 @@ const save = (e: Event) => {
 			description: post.value.description,
 			banner: post.value.banner,
 			slug: post.value.slug,
+			visibility: post.value.visibility
 		}),
 	})
 		.then(data => {
@@ -161,17 +181,17 @@ const save = (e: Event) => {
 							<div
 								class="relative flex-1 mt-6 flex flex-col gap-y-4 pb-20">
 								<div
-									className="flex flex-col items-center mt-1 gap-y-4"
+									class="flex flex-col items-center mt-1 gap-y-4"
 									id="avatar-upload">
-									<div className="relative w-full">
+									<div class="relative w-full">
 										<div
-											className="inline-flex overflow-hidden items-center w-full h-36 bg-gray-100 rounded-md">
+											class="inline-flex overflow-hidden items-center w-full h-36 bg-gray-100 rounded-md">
 											<img
 												class="bg-contain"
 												:src="post.banner" />
 											<div
 												v-if="!post.banner"
-												className="flex justify-center items-center w-full h-full text-sm text-center text-gray-600">
+												class="flex justify-center items-center w-full h-full text-sm text-center text-gray-600">
 												Add a new banner<br />
 												Wide aspect ratio recommended
 											</div>
@@ -183,7 +203,7 @@ const save = (e: Event) => {
 											@click="fileUpload?.click()"
 											class="!absolute right-0 bottom-1 !p-2 m-2">
 											<IconFileUpload
-												className="w-5 h-5" />
+												class="w-5 h-5" />
 										</Button>
 									</div>
 
@@ -227,6 +247,42 @@ const save = (e: Event) => {
 											>
 										</div>
 									</div>
+
+									<fieldset class="w-full">
+										<legend class="text-sm font-medium text-gray-900">
+											Privacy
+											</legend>
+
+											<div role="group" class="mt-2 space-y-5">
+													<div
+														v-for="option of privacySettings"
+														:key="option.value"
+														class="flex relative items-start">
+														<div class="flex absolute items-center h-5">
+															<input
+																name="visibility"
+																type="radio"
+																:value="option.value"
+																:disabled="isSaving"
+																:checked="post.visibility === option.value"
+																class="w-4 h-4 text-orange-600 border-gray-300 ring-0 outline-none focus:outline-none focus:ring-0"
+															/>
+														</div>
+														<div class="pl-7 text-sm">
+															<label
+																htmlFor="privacy-public"
+																class="font-medium text-gray-900">
+																{{ option.name }}
+															</label>
+															<p
+																id="privacy-public-description"
+																class="text-gray-500">
+																{{ option.description }}
+															</p>
+														</div>
+													</div>
+											</div>
+										</fieldset>
 
 									<!-- <div class="col-span-3 sm:col-span-2">
 											<label

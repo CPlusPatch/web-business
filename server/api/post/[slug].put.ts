@@ -29,6 +29,7 @@ export default defineEventHandler(async event => {
 			if (body.title) post.title = body.title;
 			if (body.banner) post.banner = body.banner;
 			if (body.slug) post.slug = body.slug;
+			if (body.visibility) post.visibility = body.visibility;
 
 			await AppDataSource.getRepository(Post).save(post);
 			return post;
