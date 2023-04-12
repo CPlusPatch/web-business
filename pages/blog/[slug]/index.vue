@@ -5,8 +5,17 @@ import PrimaryContainer from "~~/components/layout/PrimaryContainer.vue";
 import { Post } from "~~/db/entities/Post";
 
 const route = useRoute();
+const token = useCookie("token");
 
-const post = await useFetch<Post>(`/api/post/${route.params.slug}`);
+const post = await useFetch<Post>(`/api/post/${route.params.slug}`, {
+	headers: {
+		"Content-Type": "application/json",
+		Authorization: `Bearer ${token.value}`,
+	},
+});
+
+if (!post.data.value)
+	throw createError({ statusCode: post.error.value?.statusCode, statusMessage: post.error.value?.statusMessage})
 
 useServerSeoMeta({
 	title: () => `${post.data.value?.title} · CPlusPatch` ?? "Article by CPlusPatch",
