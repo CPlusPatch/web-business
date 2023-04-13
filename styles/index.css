@@ -494,3 +494,17 @@ a {
 .button {
 	@apply inline-flex justify-center relative ease-in-out items-center no-bad-scale px-4 py-2 text-base font-medium rounded-md border shadow-sm duration-200 font-inter focus:outline-none sm:text-sm;
 }
+
+.prose :where(img):not(:where([class~=\"not-prose\"] *)) {
+	margin-top: 0;
+	margin-bottom: 0;
+	@apply rounded-md border border-gray-300 shadow-md
+}
+
+.prose :where(h1, h2, h3, h4, h5, h6):not(:where([class~=\"not-prose\"] *)) {
+	color: inherit;
+}
+
+.prose :where(code):not(:where([class~="not-prose"] *))::before, .prose :where(code):not(:where([class~="not-prose"] *))::after {
+  content: "";
+}
