@@ -9,3 +9,4 @@ dist
 web.sqlite
 node_modules
 *.sqlite-journal
+.unlighthouse
