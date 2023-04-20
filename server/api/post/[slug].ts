@@ -10,10 +10,13 @@ export default defineEventHandler(async event => {
 	const post = await AppDataSource.initialize()
 		.then(async AppDataSource => {
 			const post = await AppDataSource.getRepository(Post).findOneBy({
-				slug: slug,
+				slug,
 			});
 
-			if ((post?.visibility === Visibility.PRIVATE) || (post?.visibility === Visibility.HIDDEN)) {
+			if (
+				post?.visibility === Visibility.PRIVATE ||
+				post?.visibility === Visibility.HIDDEN
+			) {
 				if (!isAdmin) return false;
 			}
 			return post;
@@ -21,6 +24,8 @@ export default defineEventHandler(async event => {
 		.finally(() => {
 			AppDataSource.destroy();
 		});
+
+	console.log(isAdmin);
 
 	if (post) {
 		return post;

@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { Switch } from "@headlessui/vue";
-import { IconLayoutGrid } from "@tabler/icons-vue";
-import { IconLayoutRows } from "@tabler/icons-vue";
-import { IconPlus } from "@tabler/icons-vue";
-import { IconLock } from "@tabler/icons-vue";
-import { IconFilePlus } from "@tabler/icons-vue";
-import { IconChevronRight } from "@tabler/icons-vue";
-import { IconArticleFilledFilled } from "@tabler/icons-vue";
+import {
+	IconLayoutGrid,
+	IconLayoutRows,
+	IconLock,
+	IconFilePlus,
+	IconChevronRight,
+	IconArticleFilledFilled,
+} from "@tabler/icons-vue";
+import { me } from "~/app.vue";
 import SmallSelect from "~/components/select/SmallSelect.vue";
 import PrimaryContainer from "~~/components/layout/PrimaryContainer.vue";
 import { Post, Visibility } from "~~/db/entities/Post";
@@ -21,11 +22,10 @@ const posts = await useFetch<Post[]>("/api/posts", {
 const isAdmin = await useFetch<boolean>("/api/user/admin");
 
 const mode = ref<"compact" | "large">("compact");
-const enabled = ref(false);
 const router = useRouter();
 const isCreatingPost = ref(false);
 
-const createNew = async () => {
+const createNew = () => {
 	isCreatingPost.value = true;
 	fetch("/api/post", {
 		method: "POST",
@@ -35,18 +35,18 @@ const createNew = async () => {
 		},
 	}).then(async res => {
 		if (res.ok) {
-			const slug = (await res.json() as Post).slug;
+			const slug = ((await res.json()) as Post).slug;
 
 			router.push(`/blog/${slug}/edit`);
 		}
 	});
-}
+};
+
+useSchemaOrg([me]);
 
 useServerSeoMeta({
-	title: "CPlusPatch · Blog",
-	ogTitle: "CPlusPatch · Blog",
+	title: "Blog",
 	description: "CPlusPatch's personal blog with articles",
-	ogDescription: "CPlusPatch's personal blog with articles",
 	ogImage: "/static/servers.webp",
 	twitterCard: "summary_large_image",
 	author: "Gaspard Wierzbinski",
@@ -62,8 +62,8 @@ useServerSeoMeta({
 						<div class="flex">
 							<NuxtLink
 								to="/"
-								class="text-sm font-medium text-gray-500 hover:text-gray-700"
-								>Home
+								class="text-sm font-medium text-gray-500 hover:text-gray-700">
+								Home
 							</NuxtLink>
 						</div>
 					</li>
@@ -74,9 +74,9 @@ useServerSeoMeta({
 								aria-hidden="true" />
 							<NuxtLink
 								to="/blog"
-								class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
-								>Blog</NuxtLink
-							>
+								class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700">
+								Blog
+							</NuxtLink>
 						</div>
 					</li>
 				</ol>
@@ -106,11 +106,11 @@ useServerSeoMeta({
 						]"
 						@update:model-value="(value: any) => mode = value.value" />
 					<Button
+						v-if="isAdmin.data.value"
 						:loading="isCreatingPost"
 						theme="orange"
-						@click="createNew"
-						v-if="isAdmin.data.value"
-						class="flex gap-x-1 items-center w-full md:w-auto">
+						class="flex gap-x-1 items-center w-full md:w-auto"
+						@click="createNew">
 						<IconFilePlus class="h-5 w-5 mb-0.5" />Add new post
 					</Button>
 				</div>
@@ -135,12 +135,16 @@ useServerSeoMeta({
 							'overflow-hidden h-48 bg-gray-200 relative',
 							mode === 'large' ? 'lg:w-64' : 'lg:w-full',
 						]">
-						<Button v-if="post.visibility !== Visibility.PUBLIC" class="!absolute !p-2 top-3 right-3 z-10" theme="gray">
+						<Button
+							v-if="post.visibility !== Visibility.PUBLIC"
+							class="!absolute !p-2 top-3 right-3 z-10"
+							theme="gray">
 							<IconLock />
 						</Button>
 						<img
 							v-if="post.banner"
 							:src="post.banner"
+							alt=""
 							class="object-cover object-center w-full h-full group-hover:scale-110 duration-500 ease-in-out group-hover:rotate-3" />
 					</div>
 					<div
@@ -170,14 +174,15 @@ useServerSeoMeta({
 									Gaspard Wierzbinski
 								</p>
 								<p class="text-gray-600">
-									{{ new Date(post.created_at ?? 0).toLocaleDateString(
-										"en-US",
-										{
+									{{
+										new Date(
+											post.created_at ?? 0
+										).toLocaleDateString("en-US", {
 											month: "short",
 											day: "2-digit",
 											year: "2-digit",
-										}
-									) }}
+										})
+									}}
 								</p>
 							</div>
 						</div>

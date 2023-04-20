@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { IconMail } from "@tabler/icons-vue";
-import { IconBrandMatrix } from "@tabler/icons-vue";
-import { IconCopyleft } from "@tabler/icons-vue";
-import { IconBrandStackoverflow } from "@tabler/icons-vue";
-import { IconCode } from "@tabler/icons-vue";
-import { IconBrandGithub } from "@tabler/icons-vue";
+import {
+	IconMail,
+	IconBrandMatrix,
+	IconCopyleft,
+	IconBrandStackoverflow,
+	IconCode,
+	IconBrandGithub,
+} from "@tabler/icons-vue";
 
 const socials = [
 	{

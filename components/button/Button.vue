@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import {
-	ButtonHTMLAttributes,
-	HTMLAttributes,
-} from "nuxt/dist/app/compat/capi";
-import { Props } from "nuxt/dist/head/runtime/types";
+import { ButtonHTMLAttributes } from "nuxt/dist/app/compat/capi";
 import Spinner from "../spinner/Spinner.vue";
 
 const themes: { [key: string]: string } = {
@@ -19,7 +15,8 @@ interface ButtonProps extends ButtonHTMLAttributes {
 	spinnerClasses?: string;
 	disabled?: boolean;
 }
-const props = defineProps<ButtonProps>();
+
+defineProps<ButtonProps>();
 </script>
 
 <template>
@@ -31,7 +28,10 @@ const props = defineProps<ButtonProps>();
 		]"
 		:disabled="disabled || loading"
 		type="button">
-			<Spinner :theme="theme" v-if="loading" :class="[spinnerClasses, 'absolute']"/>
-			<slot />
+		<Spinner
+			v-if="loading"
+			:theme="theme"
+			:class="[spinnerClasses, 'absolute']" />
+		<slot />
 	</button>
 </template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import PrimaryContainer from "../layout/PrimaryContainer.vue";
 import { Carousel, Slide, Navigation, Pagination } from "vue3-carousel";
+import PrimaryContainer from "../layout/PrimaryContainer.vue";
 const testimonials = [
 	{
 		name: "🇨🇦 Kio",
@@ -32,7 +32,7 @@ const testimonials = [
 
 <template>
 	<div
-		class="my-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-pink-500 via-red-500 to-yellow-500 lg:py-0 lg:z-10 lg:relative">
+		class="my-10 bg-gradient-to-tl from-fuchsia-500 via-red-600 !to-orange-400 lg:py-0 lg:z-10 lg:relative">
 		<PrimaryContainer>
 			<div class="lg:mx-auto lg:max-w-7xl lg:px-8">
 				<div class="flex lg:m-0 gap-y-6 duration-200">

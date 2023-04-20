@@ -27,6 +27,6 @@ export default defineEventHandler(async event => {
 		.finally(() => {
 			AppDataSource.destroy();
 		});
-	
+
 	return post;
-})
+});

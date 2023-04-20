@@ -21,7 +21,9 @@ let timeout: ReturnType<typeof setTimeout> | null = null;
 
 const updateText = () => {
 	const text = props.textArray[currentIndex.value];
-	if (!text) return;
+	if (!text) {
+		return;
+	}
 	const length = text.length;
 
 	let i = 0;
@@ -50,7 +52,9 @@ const updateText = () => {
 };
 
 onUnmounted(() => {
-	if (timeout) clearInterval(timeout);
+	if (timeout) {
+		clearInterval(timeout);
+	}
 });
 
 updateText();

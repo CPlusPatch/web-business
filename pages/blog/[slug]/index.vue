@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { IconCalendar, IconClock } from "@tabler/icons-vue";
 import { marked } from "marked";
+import { me } from "~/app.vue";
 import PrimaryContainer from "~~/components/layout/PrimaryContainer.vue";
 import { Post } from "~~/db/entities/Post";
 
@@ -14,16 +15,30 @@ const post = await useFetch<Post>(`/api/post/${route.params.slug}`, {
 	},
 });
 
-if (!post.data.value)
-	throw createError({ statusCode: post.error.value?.statusCode, statusMessage: post.error.value?.statusMessage})
+if (!post.data.value) {
+	throw createError({
+		statusCode: post.error.value?.statusCode,
+		statusMessage: post.error.value?.statusMessage,
+	});
+}
+
+useSchemaOrg([
+	defineArticle({
+		image: post.data.value?.banner ?? undefined,
+		dateModified: new Date(post.data.value.edited_at ?? 0),
+		datePublished: new Date(post.data.value.created_at ?? 0),
+		headline: post.data.value.title,
+		description: post.data.value.description,
+		wordCount: post.data.value?.content.split(" ").length,
+		"@type": "BlogPosting",
+	}),
+	me,
+]);
 
 useServerSeoMeta({
-	title: () => `${post.data.value?.title} · CPlusPatch` ?? "Article by CPlusPatch",
-	ogTitle: () =>  `${post.data.value?.title} · CPlusPatch` ?? "Article by CPlusPatch",
+	title: () => `${post.data.value?.title}` ?? "Article by CPlusPatch",
 	description: () => post.data.value?.description ?? "Article by CPlusPatch",
-	ogDescription: () => post.data.value?.description ?? "Article by CPlusPatch",
 	ogImage: () => post.data.value?.banner ?? "/static/servers.webp",
-	twitterCard: "summary_large_image",
 	author: "Gaspard Wierzbinski",
 });
 </script>
@@ -44,34 +59,38 @@ useServerSeoMeta({
 					:src="post.data.value?.banner"
 					class="w-full h-full object-cover align-middle" />
 			</div>
-			<div class="flex items-center px-4 justify-center my-5 text-gray-500 font-inter gap-x-4">
+			<div
+				class="flex items-center px-4 justify-center my-5 text-gray-500 font-inter gap-x-4">
 				<span
 					v-if="post.data.value?.created_at"
 					class="flex gap-x-2 items-center">
 					<IconCalendar class="w-4 h-4 mb-1" />
 					{{
-						new Date(post.data.value?.created_at).toLocaleDateString(
-							"en-GB",
-							{
-								month: "short",
-								day: "numeric",
-								year: "numeric",
-								hour: "numeric",
-								minute: "numeric",
-							}
-						)
+						new Date(
+							post.data.value?.created_at
+						).toLocaleDateString("en-GB", {
+							month: "short",
+							day: "numeric",
+							year: "numeric",
+							hour: "numeric",
+							minute: "numeric",
+						})
 					}}
 				</span>
 				<span
 					v-if="post.data.value?.content"
 					class="flex gap-x-2 items-center">
 					<IconClock class="w-4 h-4 mb-1" />
-					{{ Math.ceil(post.data.value?.content.split(" ").length / 183) }}min read
+					{{
+						Math.ceil(
+							post.data.value?.content.split(" ").length / 183
+						)
+					}}min read
 				</span>
 			</div>
 			<div
-				class="px-4 mx-auto mt-10 max-w-2xl text-gray-700 prose font-inter"
-				v-html="marked(post.data.value?.content ?? '')"></div>
+				class="px-4 mx-auto mt-10 prose-truegray max-w-2xl text-gray-700 prose font-inter"
+				v-html="marked(post.data.value?.content ?? '')" />
 		</article>
 	</PrimaryContainer>
 </template>

@@ -1,5 +1,5 @@
 <template>
-	<PrimaryContainer id="skills">
+	<PrimaryContainer>
 		<div class="space-y-12">
 			<div class="space-y-5 sm:space-y-4">
 				<h2
@@ -37,12 +37,14 @@
 						<a href="#" class="text-lg font-bold text-gray-900">
 							{{ language.name }}
 						</a>
-						<p class="text-gray-500">{{ language.experience }}</p>
+						<p class="text-gray-500">
+							{{ language.experience }}
+						</p>
 					</div>
 					<div
 						class="flex absolute inset-x-0 bottom-0 flex-col mt-auto w-full">
 						<span
-							class="px-1 ml-auto text-sm text-gray-600 rounded-tl-md border-t border-l font-inter">
+							class="px-1 ml-auto text-sm text-gray-600 font-inter">
 							{{ language.progress * 100 }}%
 						</span>
 						<div class="h-2 bg-gray-200">
@@ -50,18 +52,19 @@
 								:style="{
 									width: `${language.progress * 100}%`,
 								}"
-								class="h-full bg-red-700 bg-gradient-to-r from-yellow-600 to-red-600"></div>
+								class="h-full bg-red-700 bg-gradient-to-r from-yellow-600 to-red-600" />
 						</div>
 					</div>
 				</div>
 			</li>
-			<li class="flex overflow-hidden col-span-1 rounded-md shadow-sm">
+			<li
+				class="flex overflow-hidden col-span-1 divide-x divide-gray-300 ring-gray-300 rounded shadow ring-1 duration-200 hover:scale-[102%] no-bad-scale hover:shadow-2xl hover:ring-2 hover:ring-orange-500">
 				<div
-					class="flex overflow-hidden flex-shrink-0 justify-center items-center sm:w-24 sm:h-24 w-20 h-20 text-sm font-medium text-white rounded-l-md border">
+					class="flex overflow-hidden flex-shrink-0 justify-center items-center sm:w-24 sm:h-24 w-20 h-20 text-sm font-medium text-white rounded-l-md">
 					<IconDots class="w-10 h-auto text-black" />
 				</div>
 				<div
-					class="flex flex-1 justify-between items-start truncate bg-white rounded-r-md border-t border-r border-b border-gray-200">
+					class="flex flex-1 justify-between items-start truncate bg-white rounded-r-md">
 					<div class="flex-1 px-4 py-2 text-sm truncate">
 						<a href="#" class="text-lg font-bold text-gray-900">
 							And more!

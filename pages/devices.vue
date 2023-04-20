@@ -49,6 +49,7 @@
 </template>
 
 <script setup lang="ts">
+import { me } from "~/app.vue";
 import PrimaryContainer from "~~/components/layout/PrimaryContainer.vue";
 
 const lists = [
@@ -124,11 +125,11 @@ const lists = [
 	},
 ];
 
+useSchemaOrg([me]);
+
 useServerSeoMeta({
-	title: "CPlusPatch · Devices",
-	ogTitle: "CPlusPatch · Devices",
+	title: "CPlusPatch",
 	description: "My list of devices that I own",
-	ogDescription: "My list of devices that I own",
 	ogImage: "/static/servers.webp",
 	twitterCard: "summary_large_image",
 	author: "Gaspard Wierzbinski",

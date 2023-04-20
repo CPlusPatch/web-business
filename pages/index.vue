@@ -41,14 +41,15 @@ useServerSeoMeta({
 							width="4"
 							height="4"
 							class="text-gray-200"
-							fill="currentColor"></rect>
+							fill="currentColor" />
 					</pattern>
 				</defs>
 				<rect
 					width="404"
 					height="284"
-					fill="url(#e229dbec-10e9-49ee-8ec3-0286ca089edf)"></rect></svg
-			><svg
+					fill="url(#e229dbec-10e9-49ee-8ec3-0286ca089edf)" />
+			</svg>
+			<svg
 				class="absolute left-full transform -translate-x-1/4 -translate-y-3/4 sm:-translate-x-1/2 md:-translate-y-1/2 lg:-translate-x-3/4"
 				width="404"
 				height="784"
@@ -68,13 +69,13 @@ useServerSeoMeta({
 							width="4"
 							height="4"
 							class="text-gray-200"
-							fill="currentColor"></rect>
+							fill="currentColor" />
 					</pattern>
 				</defs>
 				<rect
 					width="404"
 					height="784"
-					fill="url(#d2a68204-c383-44b1-b99f-42ccff4e5365)"></rect>
+					fill="url(#d2a68204-c383-44b1-b99f-42ccff4e5365)" />
 			</svg>
 		</div>
 	</div>
@@ -87,7 +88,7 @@ useServerSeoMeta({
 					class="text-4xl font-black text-gray-900 dark:text-gray-300 sm:text-5xl md:text-6xl">
 					<span class="block">Hey,</span>
 					<span
-						class="block pb-2 text-transparent bg-clip-text bg-gradient-to-tl from-fuchsia-500 via-red-600 to-orange-400">
+						class="pb-2 text-transparent bg-clip-text bg-gradient-to-tr from-pink-500 !to-yellow-500 via-red-500">
 						I&apos;m
 
 						<Typewriter
@@ -107,12 +108,7 @@ useServerSeoMeta({
 	</div>
 
 	<!-- Main hero -->
-	<div class="relative" v-memo>
-		<div class="flex absolute inset-0 flex-col" aria-hidden="true">
-			<div class="flex-1" />
-			<div
-				class="flex-1 w-full bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] from-rose-400 via-fuchsia-500 to-indigo-500" />
-		</div>
+	<div class="relative">
 		<div class="relative px-4 mx-auto max-w-7xl w-full sm:px-6">
 			<nuxt-img
 				preload
@@ -123,7 +119,7 @@ useServerSeoMeta({
 				src="/static/banner.webp"
 				alt="VSCode screenshot" />
 		</div>
-		<div class="py-4 sm:py-12"></div>
+		<div class="py-4 sm:py-12" />
 	</div>
 
 	<Skills v-once />

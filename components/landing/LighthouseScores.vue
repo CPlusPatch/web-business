@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import PrimaryContainer from "../layout/PrimaryContainer.vue";
-/* import { Chart, LinearScale, BarController, CategoryScale, BarElement } from "chart.js";
- */
+
 const scores = [
 	{
 		name: "cpluspatch.com",
@@ -14,7 +13,7 @@ const scores = [
 	},
 	{
 		name: "discord.com",
-		color: "bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-orange-600 to-orange-500",
+		color: "bg-gradient-to-t from-orange-600 !ato-orange-500",
 		desktop: 77,
 		mobile: 40,
 		fcp: 2.6,
@@ -31,36 +30,7 @@ const scores = [
 		tti: 23.7,
 	},
 ];
-
-/* onMounted(() => {
-	Chart.register(LinearScale, BarController, CategoryScale, BarElement)
-
-	new Chart(document.getElementById("lhchart") as HTMLCanvasElement, {
-		type: "bar",
-		data: {
-			labels: ["This website", "Discord", "New York Times"],
-			datasets: [{
-				label: 'Performance Score',
-				data: [99, 77, 53],
-				backgroundColor: "rgb(220 38 38 / 1)",
-			}]
-		},
-		options: {
-			scales: {
-				y: {
-					beginAtZero: true
-				}
-			}
-		}
-	})
-}) */
 </script>
-
-<style scoped lang="postcss">
-.score {
-	@apply mb-1 text-gray-700 uppercase text-sm;
-}
-</style>
 
 <template>
 	<PrimaryContainer class="flex flex-col gap-y-10 items-center">
@@ -72,31 +42,29 @@ const scores = [
 			Measured via a Google Lighthouse test on 12/22/22
 		</p>
 
-		<!-- <canvas id="lhchart"></canvas> -->
 		<div
-			class="flex flex-col w-full font-inter relative p-3"
 			v-for="score of scores"
-			:key="score.name">
+			:key="score.name"
+			class="flex flex-col w-full font-inter relative p-3">
 			<div
-				:class="[
-					'absolute inset-y-0 left-0 -z-10 rounded',
-					score.color,
-				]"
+				:class="['absolute inset-y-0 left-0 z-1 rounded', score.color]"
 				:style="{
 					width: `${score.desktop}%`,
-				}"></div>
+				}" />
 			<a
-				href="https://i.imgur.com/IpJk93c.png"
+				href="https://i.imgur.com/IpJk93c.png z-2"
 				class="text-sm font-bold text-black uppercase">
 				{{ score.name }}
 			</a>
 			<dl
 				:class="[
-					'flex-col md:flex-row flex justify-between w-full text-gray-900 font-inter dark:divide-gray-700',
+					'z-2 flex-col md:flex-row flex justify-between w-full text-gray-900 font-inter dark:divide-gray-700',
 				]">
 				<div class="flex flex-col py-3">
 					<dt class="score">Score (Desktop)</dt>
-					<dd class="text-lg font-semibold">{{ score.desktop }}</dd>
+					<dd class="text-lg font-semibold">
+						{{ score.desktop }}
+					</dd>
 				</div>
 
 				<div class="flex flex-col py-3">
@@ -130,3 +98,9 @@ const scores = [
 		</div>
 	</PrimaryContainer>
 </template>
+
+<style scoped lang="postcss">
+.score {
+	@apply mb-1 text-gray-700 uppercase text-sm;
+}
+</style>

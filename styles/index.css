@@ -1,10 +1,14 @@
 /* Import fonts */
-@import "poppins.css";
 @import "inter.css";
+@import "poppins.css";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+.font-poppins {
+	font-family: "Poppins";
+}
+
+.font-inter {
+	font-family: "Inter";
+}
 
 * {
 	box-sizing: border-box;
@@ -26,10 +30,6 @@ body,
 
 .button {
 	@apply inline-flex justify-center items-center px-4 py-2 text-base font-medium rounded-md border shadow-sm duration-200 font-inter focus:outline-none sm:text-sm;
-}
-
-.modal-overlay {
-	@apply fixed inset-0 bg-gray-500/40 transition-opacity backdrop-blur-md;
 }
 
 a {

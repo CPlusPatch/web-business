@@ -1,3 +1,5 @@
+<!-- eslint-disable vue/no-v-html -->
+<!-- eslint-disable vue/no-textarea-mustache -->
 <script setup lang="ts">
 import { IconDots } from "@tabler/icons-vue";
 import { marked } from "marked";
@@ -16,9 +18,21 @@ const showSidebar = ref(false);
 const token = useCookie("token");
 const titleInput = ref<HTMLInputElement | null>(null);
 
-const post = await useFetch<Post>(`/api/post/${route.params.slug}`);
+const post = await useFetch<Post>(`/api/post/${route.params.slug}`, {
+	headers: {
+		"Content-Type": "application/json",
+		Authorization: `Bearer ${token.value}`,
+	},
+});
 
-const content = ref(post.data.value?.content ?? "");
+if (!post.data.value) {
+	throw createError({
+		statusCode: post.error.value?.statusCode,
+		statusMessage: post.error.value?.statusMessage,
+	});
+}
+
+const content = ref();
 
 const save = () => {
 	isSaving.value = true;
@@ -51,14 +65,18 @@ const save = () => {
 
 const handleKeydown = (e: KeyboardEvent) => {
 	// Save document on Ctrl + S
-	if (e.key == "s" && e.ctrlKey) {
+	if (e.key === "s" && e.ctrlKey) {
 		e.preventDefault();
 		save();
 	}
 };
 
 onMounted(() => {
-	if (titleInput.value) titleInput.value.value = post.data.value?.title ?? "";
+	if (titleInput.value) {
+		titleInput.value.value = post.data.value?.title ?? "";
+	}
+
+	content.value = post.data.value?.content;
 	document.addEventListener("keydown", handleKeydown);
 });
 
@@ -67,14 +85,8 @@ onUnmounted(() => {
 });
 </script>
 
-<style scoped lang="postcss">
-.editor-half {
-	@apply p-6 overflow-scroll max-h-full pb-64 border-none duration-200 outline-none font-inter focus:outline-none ring-1 ring-gray-300 hover:ring-2 focus:ring-orange-500 rounded;
-}
-</style>
-
 <template>
-	<nav class="fixed inset-x-0 top-0 z-30 bg-white shadow">
+	<nav class="fixed inset-x-0 top-0 z-30 bg-white shadow font-inter">
 		<div
 			class="flex relative justify-between h-16 px-2 mx-auto sm:px-6 lg:px-8">
 			<div class="flex flex-1 justify-start items-center">
@@ -86,9 +98,9 @@ onUnmounted(() => {
 				<div
 					class="hidden items-center sm:ml-6 sm:flex sm:space-x-8 font-inter relative">
 					<input
+						ref="titleInput"
 						type="text"
 						:disabled="isSaving"
-						ref="titleInput"
 						class="block px-3 py-2 focus:shadow w-full pt-[0.6rem] placeholder-gray-500 bg-white rounded-md border border-gray-300 shadow-sm duration-200 appearance-none outline-none dark:text-gray-100 dark:bg-dark-800 dark:border-dark-700 disabled:bg-gray-100 focus:ring-orange-500 focus:ring-1 focus:outline-none sm:text-sm"
 						placeholder="Title for your post" />
 				</div>
@@ -122,18 +134,16 @@ onUnmounted(() => {
 			</div>
 		</div>
 	</nav>
-	<div class="h-screen flex">
+	<div v-if="post" class="h-screen flex">
 		<div
 			class="grid md:grid-cols-2 grid-cols-1 m-5 pt-16 grow justify-between gap-6">
 			<textarea
-				@input="content = ($event.target as any).value"
-				class="editor-half no-scroll"
-				:disabled="isSaving"
-				>{{ post.data.value?.content }}</textarea
-			>
+				v-model="content"
+				class="editor-half no-scroll p-6 overflow-scroll max-h-full pb-64 border-none duration-200 outline-none font-inter focus:outline-none ring-1 ring-gray-300 hover:ring-2 focus:ring-orange-500 rounded"
+				:disabled="isSaving"></textarea>
 			<article
-				class="editor-half no-scroll prose !max-w-none"
-				v-html="marked(content)"></article>
+				class="editor-half prose-truegray no-scroll prose !max-w-none p-6 overflow-scroll max-h-full pb-64 border-none duration-200 outline-none font-inter focus:outline-none ring-1 ring-gray-300 hover:ring-2 focus:ring-orange-500 rounded"
+				v-html="marked(content)" />
 		</div>
 	</div>
 	<EditorSettings

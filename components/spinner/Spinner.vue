@@ -6,9 +6,9 @@ const themes: { [key: string]: string } = {
 		"text-orange-700 dark:text-orange-200 bg-orange-100 dark:bg-orange-800 hover:bg-orange-200 border-transparent",
 };
 
-const props = defineProps<{
-	theme?: "gray" | "orange" | "orangeLight"
-}>()
+defineProps<{
+	theme?: "gray" | "orange" | "orangeLight";
+}>();
 </script>
 
 <template>

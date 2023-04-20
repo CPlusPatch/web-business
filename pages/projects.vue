@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { me } from "~/app.vue";
 import PrimaryContainer from "~~/components/layout/PrimaryContainer.vue";
 
 const projects = [
@@ -152,11 +153,11 @@ const projects = [
 	},
 ];
 
+useSchemaOrg([me]);
+
 useServerSeoMeta({
-	title: "CPlusPatch · Projects",
-	ogTitle: "CPlusPatch · Projects",
+	title: "CPlusPatch",
 	description: "My list of projects that I have completed",
-	ogDescription: "My list of projects that I have completed",
 	ogImage: "/static/servers.webp",
 	twitterCard: "summary_large_image",
 	author: "Gaspard Wierzbinski",

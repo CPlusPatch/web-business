@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/require-default-prop -->
 <script lang="ts">
 export enum SelectDirection {
 	Right = "right",
@@ -17,14 +18,8 @@ export interface SelectItem {
 	description?: string;
 }
 </script>
+
 <script setup lang="ts">
-import {
-	Listbox,
-	ListboxButton,
-	ListboxOption,
-	ListboxOptions,
-} from "@headlessui/vue";
-import { ref } from "vue";
 interface SelectProps {
 	items: SelectItem[];
 	defaultValue: number;
@@ -35,41 +30,31 @@ interface SelectProps {
 
 const props = withDefaults(defineProps<SelectProps>(), {
 	direction: SelectDirection.Right,
-	orientation: SelectOrientation.Down
+	orientation: SelectOrientation.Down,
 });
 const emit = defineEmits(["update:modelValue"]);
 
 const selected = ref<SelectItem>(props.items[props.defaultValue]);
 </script>
 
-<style scoped lang="postcss">
-.menu-item {
-	@apply text-gray-700 duration-300 w-full dark:text-gray-50 hover:bg-orange-200 rounded-lg text-sm dark:hover:bg-orange-700/20 flex flex-row items-center py-2;
-}
-
-.menu-icon {
-	@apply mx-2 h-[1.2em] w-[1.2em] mb-0.5;
-}
-</style>
-
 <template>
-	<Listbox
-		:name="name"
+	<HeadlessListbox
 		v-model="selected"
+		:name="name"
 		as="div"
 		class="relative font-inter"
-		@update:modelValue="value => emit('update:modelValue', value)">
-		<ListboxButton
+		@update:model-value="(value: any) => emit('update:modelValue', value)">
+		<HeadlessListboxButton
 			v-bind="$attrs"
 			class="flex relative flex-row gap-x-1 items-center p-2 text-gray-600 rounded duration-200 cursor-default dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
 			<component
 				:is="selected.icon"
-				:strokeWidth="2"
+				:stroke-width="2"
 				class="w-6 h-6"
 				aria-hidden="true" />
-		</ListboxButton>
+		</HeadlessListboxButton>
 		<TransitionsScaleFadeSlide>
-			<ListboxOptions
+			<HeadlessListboxOptions
 				:class="[
 					'p-1.5 gap-x-4 outline-none text-base absolute w-44 overflow-hidden sm:text-sm rounded-lg shadow-lg bg-white dark:bg-dark-700/60 backdrop-blur-lg focus:outline-none',
 					direction === SelectDirection.Left &&
@@ -79,7 +64,7 @@ const selected = ref<SelectItem>(props.items[props.defaultValue]);
 					orientation === SelectOrientation.Up && 'bottom-[110%]',
 					orientation === SelectOrientation.Down && 'top-[110%]',
 				]">
-				<ListboxOption
+				<HeadlessListboxOption
 					v-for="item in items"
 					:key="item.value"
 					:value="item"
@@ -90,8 +75,18 @@ const selected = ref<SelectItem>(props.items[props.defaultValue]);
 						class="menu-icon"
 						aria-hidden="true" />
 					{{ item.text }}
-				</ListboxOption>
-			</ListboxOptions>
+				</HeadlessListboxOption>
+			</HeadlessListboxOptions>
 		</TransitionsScaleFadeSlide>
-	</Listbox>
+	</HeadlessListbox>
 </template>
+
+<style scoped lang="postcss">
+.menu-item {
+	@apply text-gray-700 duration-300 w-full dark:text-gray-50 hover:bg-orange-200 rounded-lg text-sm dark:hover:bg-orange-700/20 flex flex-row items-center py-2;
+}
+
+.menu-icon {
+	@apply mx-2 h-[1.2em] w-[1.2em] mb-0.5;
+}
+</style>

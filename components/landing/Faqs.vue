@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import PrimaryContainer from "../layout/PrimaryContainer.vue";
-import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import { IconChevronDown } from "@tabler/icons-vue";
-import { Transition } from "vue";
+import PrimaryContainer from "../layout/PrimaryContainer.vue";
 
 const faq = [
 	{
@@ -39,14 +37,14 @@ const faq = [
 				class="text-3xl font-extrabold text-center text-gray-900 dark:text-gray-200 sm:text-4xl font-poppins">
 				Frequently asked questions
 			</h2>
-			<dl class="gap-y-3 flex flex-col">
-				<Disclosure
-					:key="group.question"
+			<dl class="gap-y-3 flex flex-col divide-y divide-gray-300">
+				<HeadlessDisclosure
 					v-for="group of faq"
+					:key="group.question"
 					v-slot="{ open }">
-					<div class="px-3 py-4 space-y-3 border-t-2">
+					<div class="px-3 py-4 space-y-3">
 						<dt class="text-lg font-poppins">
-							<DisclosureButton
+							<HeadlessDisclosureButton
 								class="flex justify-between items-start w-full text-left text-gray-400 font-inter">
 								<span
 									class="font-medium text-gray-900 dark:text-gray-300">
@@ -55,12 +53,13 @@ const faq = [
 								<span class="flex items-center ml-6 h-7">
 									<IconChevronDown
 										:class="[
+											// @ts-expect-error
 											open ? '-rotate-180' : 'rotate-0',
 											'w-6 h-6 duration-300 ease-in-out transform',
 										]"
 										aria-hidden="true" />
 								</span>
-							</DisclosureButton>
+							</HeadlessDisclosureButton>
 						</dt>
 						<transition
 							enter-active-class="transition duration-100 ease-in"
@@ -69,17 +68,17 @@ const faq = [
 							leave-active-class="transition duration-75 ease-out"
 							leave-from-class="transform scale-100 opacity-100"
 							leave-to-class="transform scale-95 opacity-0">
-							<DisclosurePanel>
+							<HeadlessDisclosurePanel>
 								<dd class="pr-12 mt-2">
 									<p
-										class="text-base text-gray-600 whitespace-pre-line">
+										class="text-base text-gray-600 whitespace-pre-line font-inter">
 										{{ group.answer }}
 									</p>
 								</dd>
-							</DisclosurePanel>
+							</HeadlessDisclosurePanel>
 						</transition>
 					</div>
-				</Disclosure>
+				</HeadlessDisclosure>
 			</dl>
 		</div>
 	</PrimaryContainer>

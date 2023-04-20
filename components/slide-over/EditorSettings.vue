@@ -1,14 +1,7 @@
 <script setup lang="ts">
-import {
-	Dialog,
-	DialogOverlay,
-	DialogTitle,
-	TransitionChild,
-	TransitionRoot,
-} from "@headlessui/vue";
 import { IconFileUpload, IconX } from "@tabler/icons-vue";
-import { Post, Visibility } from "~/db/entities/Post";
 import { arrayBufferToWebP } from "webp-converter-browser";
+import { Post, Visibility } from "~/db/entities/Post";
 
 const privacySettings = [
 	{
@@ -44,7 +37,9 @@ const fileUpload = ref<HTMLInputElement | null>(null);
 let oldPost = JSON.parse(JSON.stringify(post.value)); // To clone the object and prevent it from being a proxy
 
 const close = () => {
-	if (isSaving.value) return;
+	if (isSaving.value) {
+		return;
+	}
 	open.value = false;
 	setTimeout(() => {
 		props.onclose();
@@ -53,7 +48,9 @@ const close = () => {
 
 const upload = async (e: Event) => {
 	const target = e.target as HTMLInputElement;
-	if (!target.files) return;
+	if (!target.files) {
+		return;
+	}
 
 	const file: File = target.files[0].type.includes("webp")
 		? target.files[0]
@@ -63,10 +60,10 @@ const upload = async (e: Event) => {
 		  );
 
 	isSaving.value = true;
-	let formData = new FormData();
+	const formData = new FormData();
 	formData.append("file", file);
 
-	fetch(`/api/media/upload`, {
+	fetch("/api/media/upload", {
 		method: "POST",
 		body: formData,
 	})
@@ -83,9 +80,9 @@ const upload = async (e: Event) => {
 const save = (e: Event) => {
 	e.preventDefault();
 	isSaving.value = true;
-	post.value.description = (e.target as any)["description"].value;
-	post.value.slug = (e.target as any)["slug"].value;
-	post.value.visibility = (e.target as any)["visibility"].value;
+	post.value.description = (e.target as any).description.value;
+	post.value.slug = (e.target as any).slug.value;
+	post.value.visibility = (e.target as any).visibility.value;
 
 	if (post.value.slug !== oldPost.slug) {
 		history.pushState(
@@ -105,7 +102,7 @@ const save = (e: Event) => {
 			description: post.value.description,
 			banner: post.value.banner,
 			slug: post.value.slug,
-			visibility: post.value.visibility
+			visibility: post.value.visibility,
 		}),
 	})
 		.then(data => {
@@ -128,51 +125,52 @@ const save = (e: Event) => {
 
 <template>
 	<input
+		ref="fileUpload"
 		type="file"
 		class="hidden"
-		ref="fileUpload"
-		@change="upload"
-		:multiple="false" />
-	<TransitionRoot appear :show="open">
-		<Dialog
+		:multiple="false"
+		@change="upload" />
+	<HeadlessTransitionRoot appear :show="open">
+		<HeadlessDialog
 			as="div"
 			class="overflow-hidden fixed inset-0 z-50"
 			@close="close">
 			<div class="overflow-hidden absolute inset-0">
-				<TransitionChild
+				<HeadlessTransitionChild
 					enter="ease-in-out duration-300"
-					enterFrom="opacity-0"
-					enterTo="opacity-100"
+					enter-from="opacity-0"
+					enter-to="opacity-100"
 					leave="ease-in-out duration-300"
-					leaveFrom="opacity-100"
-					leaveTo="opacity-0">
-					<DialogOverlay class="modal-overlay" />
-				</TransitionChild>
+					leave-from="opacity-100"
+					leave-to="opacity-0">
+					<HeadlessDialogOverlay
+						class="fixed inset-0 bg-gray-500/40 transition-opacity backdrop-blur-md" />
+				</HeadlessTransitionChild>
 
 				<div
 					class="flex fixed inset-y-0 right-0 pl-10 max-w-full pointer-events-none font-inter">
-					<TransitionChild
+					<HeadlessTransitionChild
 						enter="transform transition ease-in-out duration-300 sm:duration-300"
-						enterFrom="translate-x-full"
-						enterTo="translate-x-0"
+						enter-from="translate-x-full"
+						enter-to="translate-x-0"
 						leave="transform transition ease-in-out duration-300 sm:duration-300"
-						leaveFrom="translate-x-0"
-						leaveTo="translate-x-full"
+						leave-from="translate-x-0"
+						leave-to="translate-x-full"
 						class="w-screen max-w-sm pointer-events-auto">
 						<form
-							action="#"
 							id="bannerUploadForm"
-							@submit="save"
-							class="flex overflow-y-scroll relative flex-col pt-6 h-full bg-white shadow-xl no-scroll px-4 sm:px-6">
+							action="#"
+							class="flex overflow-y-scroll relative flex-col pt-6 h-full bg-white shadow-xl no-scroll px-4 sm:px-6"
+							@submit="save">
 							<div class="flex justify-between items-center">
-								<DialogTitle
+								<HeadlessDialogTitle
 									class="text-lg font-bold text-gray-900">
 									Post
-								</DialogTitle>
+								</HeadlessDialogTitle>
 								<button
 									type="button"
-									@click="close"
-									class="text-gray-400 bg-white rounded-md duration-200 outline-none hover:text-gray-500 focus:outline-none active:scale-95">
+									class="text-gray-400 bg-white rounded-md duration-200 outline-none hover:text-gray-500 focus:outline-none active:scale-95"
+									@click="close">
 									<span class="sr-only">Close panel</span>
 									<IconX class="w-5 h-5" aria-hidden="true" />
 								</button>
@@ -181,8 +179,8 @@ const save = (e: Event) => {
 							<div
 								class="relative flex-1 mt-6 flex flex-col gap-y-4 pb-20">
 								<div
-									class="flex flex-col items-center mt-1 gap-y-4"
-									id="avatar-upload">
+									id="avatar-upload"
+									class="flex flex-col items-center mt-1 gap-y-4">
 									<div class="relative w-full">
 										<div
 											class="inline-flex overflow-hidden items-center w-full h-36 bg-gray-100 rounded-md">
@@ -200,10 +198,9 @@ const save = (e: Event) => {
 										<Button
 											:disabled="isSaving"
 											theme="gray"
-											@click="fileUpload?.click()"
-											class="!absolute right-0 bottom-1 !p-2 m-2">
-											<IconFileUpload
-												class="w-5 h-5" />
+											class="!absolute right-0 bottom-1 !p-2 m-2"
+											@click="fileUpload?.click()">
+											<IconFileUpload class="w-5 h-5" />
 										</Button>
 									</div>
 
@@ -215,12 +212,12 @@ const save = (e: Event) => {
 										</label>
 										<div class="mt-1">
 											<textarea
+												id="description"
 												:disabled="isSaving"
 												rows="4"
 												name="description"
-												id="description"
 												:value="post.description"
-												class="block w-full rounded-md border-gray-300 shadow-sm duration-200 outline-none disabled:bg-gray-100 focus:ring-orange-500 focus:border-orange-500 sm:text-sm" />
+												class="block p-3 w-full rounded-md border-gray-300 shadow-sm duration-200 outline-none disabled:bg-gray-100 focus:ring-orange-500 focus:border-orange-500 sm:text-sm" />
 										</div>
 									</div>
 
@@ -232,12 +229,12 @@ const save = (e: Event) => {
 										</label>
 										<div class="mt-1 flex flex-col gap-y-1">
 											<input
+												id="slug"
 												:disabled="isSaving"
 												type="text"
 												name="slug"
 												pattern="^[a-z0-9]+(?:-[a-z0-9]+)*$"
 												required
-												id="slug"
 												:value="post.slug"
 												class="peer first-letter:block w-full rounded-md border-gray-300 shadow-sm duration-200 outline-none disabled:bg-gray-100 focus:valid:ring-orange-500 focus:valid:border-orange-500 invalid:ring-red-600 invalid:ring-1 invalid:border-red-600 sm:text-sm" />
 											<span
@@ -249,40 +246,46 @@ const save = (e: Event) => {
 									</div>
 
 									<fieldset class="w-full">
-										<legend class="text-sm font-medium text-gray-900">
+										<legend
+											class="text-sm font-medium text-gray-900">
 											Privacy
-											</legend>
+										</legend>
 
-											<div role="group" class="mt-2 space-y-5">
-													<div
-														v-for="option of privacySettings"
-														:key="option.value"
-														class="flex relative items-start">
-														<div class="flex absolute items-center h-5">
-															<input
-																name="visibility"
-																type="radio"
-																:value="option.value"
-																:disabled="isSaving"
-																:checked="post.visibility === option.value"
-																class="w-4 h-4 text-orange-600 border-gray-300 ring-0 outline-none focus:outline-none focus:ring-0"
-															/>
-														</div>
-														<div class="pl-7 text-sm">
-															<label
-																htmlFor="privacy-public"
-																class="font-medium text-gray-900">
-																{{ option.name }}
-															</label>
-															<p
-																id="privacy-public-description"
-																class="text-gray-500">
-																{{ option.description }}
-															</p>
-														</div>
-													</div>
+										<div
+											role="group"
+											class="mt-2 space-y-5">
+											<div
+												v-for="option of privacySettings"
+												:key="option.value"
+												class="flex relative items-start">
+												<div
+													class="flex absolute items-center h-5">
+													<input
+														name="visibility"
+														type="radio"
+														:value="option.value"
+														:disabled="isSaving"
+														:checked="
+															post.visibility ===
+															option.value
+														"
+														class="w-4 h-4 text-orange-600 border-gray-300 ring-0 outline-none focus:outline-none focus:ring-0" />
+												</div>
+												<div class="pl-7 text-sm">
+													<label
+														htmlFor="privacy-public"
+														class="font-medium text-gray-900">
+														{{ option.name }}
+													</label>
+													<p
+														id="privacy-public-description"
+														class="text-gray-500">
+														{{ option.description }}
+													</p>
+												</div>
 											</div>
-										</fieldset>
+										</div>
+									</fieldset>
 
 									<!-- <div class="col-span-3 sm:col-span-2">
 											<label
@@ -354,7 +357,7 @@ const save = (e: Event) => {
 							</div>
 
 							<div
-								class="flex absolute inset-x-0 bottom-0 flex-shrink-0 justify-end bg-white border-t py-3 px-4 gap-x-4">
+								class="flex absolute inset-x-0 bottom-0 flex-shrink-0 justify-end bg-white border-t border-gray-300 py-3 px-4 gap-x-4">
 								<Button
 									:loading="isSaving"
 									type="submit"
@@ -364,9 +367,9 @@ const save = (e: Event) => {
 								</Button>
 							</div>
 						</form>
-					</TransitionChild>
+					</HeadlessTransitionChild>
 				</div>
 			</div>
-		</Dialog>
-	</TransitionRoot>
+		</HeadlessDialog>
+	</HeadlessTransitionRoot>
 </template>
