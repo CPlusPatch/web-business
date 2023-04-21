@@ -1,106 +1,41 @@
 <script setup lang="ts">
 import PrimaryContainer from "../layout/PrimaryContainer.vue";
 
-const scores = [
-	{
-		name: "cpluspatch.com",
-		color: "bg-gradient-to-tr from-emerald-500 to-lime-600",
-		desktop: 99,
-		mobile: 97,
-		fcp: 0.4,
-		cls: 0.005,
-		tti: 0.5,
-	},
-	{
-		name: "discord.com",
-		color: "bg-gradient-to-t from-orange-600 !ato-orange-500",
-		desktop: 77,
-		mobile: 40,
-		fcp: 2.6,
-		cls: 0.036,
-		tti: 19.7,
-	},
-	{
-		name: "nytimes.com",
-		color: "bg-gradient-to-r from-rose-700 to-pink-600",
-		desktop: 53,
-		mobile: 29,
-		fcp: 4.0,
-		cls: 0.031,
-		tti: 23.7,
-	},
-];
+const stats = ref([
+	{ id: 1, name: "Transferred data on this website", value: "394 kB" },
+	{ id: 2, name: "Percentile in site performance", value: "98th" },
+	{ id: 3, name: "Google Lighthouse score", value: "100.00" },
+]);
 </script>
 
 <template>
-	<PrimaryContainer class="flex flex-col gap-y-10 items-center">
-		<h2
-			class="mb-3 text-3xl font-black text-gray-800 font-poppins sm:text-5xl">
-			World-class site performance
-		</h2>
-		<p class="text-gray-800 font-inter">
-			Measured via a Google Lighthouse test on 12/22/22
-		</p>
-
-		<div
-			v-for="score of scores"
-			:key="score.name"
-			class="flex flex-col w-full font-inter relative p-3">
-			<div
-				:class="['absolute inset-y-0 left-0 z-1 rounded', score.color]"
-				:style="{
-					width: `${score.desktop}%`,
-				}" />
-			<a
-				href="https://i.imgur.com/IpJk93c.png z-2"
-				class="text-sm font-bold text-black uppercase">
-				{{ score.name }}
-			</a>
-			<dl
-				:class="[
-					'z-2 flex-col md:flex-row flex justify-between w-full text-gray-900 font-inter dark:divide-gray-700',
-				]">
-				<div class="flex flex-col py-3">
-					<dt class="score">Score (Desktop)</dt>
-					<dd class="text-lg font-semibold">
-						{{ score.desktop }}
-					</dd>
-				</div>
-
-				<div class="flex flex-col py-3">
-					<dt class="score">Score (Mobile)</dt>
-					<dd class="text-lg font-semibold">
-						{{ score.mobile }}
-					</dd>
-				</div>
-
-				<div class="flex flex-col py-3">
-					<dt class="score">FCP</dt>
-					<dd class="text-lg font-semibold">
-						{{ score.fcp }}
-					</dd>
-				</div>
-
-				<div class="flex flex-col py-3">
-					<dt class="score">CLS</dt>
-					<dd class="text-lg font-semibold">
-						{{ score.cls }}
-					</dd>
-				</div>
-
-				<div class="flex flex-col py-3">
-					<dt class="score">Time To Interactive</dt>
-					<dd class="text-lg font-semibold">
-						{{ score.tti }}
-					</dd>
-				</div>
-			</dl>
+	<PrimaryContainer class="flex flex-col gap-y-10 items-start">
+		<div class="mx-auto max-w-2xl lg:mx-0">
+			<h2
+				class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+				Fast, powerful websites
+			</h2>
+			<p class="mt-6 text-lg leading-8 text-gray-700">
+				My websites and web applications are fast, responsive,
+				well-designed and great with SEO. I am able to leverage the very
+				latest in web technologies such as WASM, PWAs, JS Frameworks and
+				more to create a great website.
+			</p>
 		</div>
+		<dl
+			class="grid grid-cols-1 gap-x-4 gap-y-6 text-center lg:grid-cols-3 w-full">
+			<div
+				v-for="stat in stats"
+				:key="stat.id"
+				class="w-full flex flex-col gap-y-4 ring-2 rounded-lg shadow hover:ring-orange-400 ease-in-out duration-500 ring-gray-200 p-6">
+				<dt class="text-base leading-7 text-gray-600">
+					{{ stat.name }}
+				</dt>
+				<dd
+					class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
+					{{ stat.value }}
+				</dd>
+			</div>
+		</dl>
 	</PrimaryContainer>
 </template>
-
-<style scoped lang="postcss">
-.score {
-	@apply mb-1 text-gray-700 uppercase text-sm;
-}
-</style>
