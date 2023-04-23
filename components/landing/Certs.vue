@@ -1,5 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
+import { IconExternalLink } from "@tabler/icons-vue";
 import PrimaryContainer from "../layout/PrimaryContainer.vue";
 
 const certs = [
@@ -9,6 +10,10 @@ const certs = [
 			"Winner of the 2016-2017 international Astro Pi challenge organized by the European Space Agency.The code written for this challenge was executed aboard the International Space Station.",
 		],
 		image: "/static/astropi.webp",
+		link: {
+			text: "Contest Results",
+			href: "https://www.esa.int/Education/AstroPI/2016_17_European_Astro_Pi_Challenge_Winners",
+		},
 	},
 	{
 		title: "GAREF Aerospace Member",
@@ -27,22 +32,16 @@ const certs = [
 
 <template>
 	<PrimaryContainer>
-		<div class="relative">
-			<h2
-				class="text-3xl font-extrabold tracking-tight leading-8 text-center text-gray-900 sm:text-4xl">
-				Certifications
-			</h2>
-			<p
-				class="mx-auto mt-4 max-w-3xl text-xl text-center text-gray-500 font-inter">
-				List of official certifications / experience
-			</p>
-		</div>
+		<p
+			class="text-center mt-1 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+			Achievements
+		</p>
 
 		<div
 			v-for="cert of certs"
 			:key="cert.title"
-			class="relative flex-row flex justify-between odd:flex-row-reverse mt-12 lg:mt-24 gap-8 lg:items-center">
-			<div class="relative flex flex-col gap-y-4 md:w-1/2">
+			class="relative flex-row flex justify-between odd:flex-row-reverse max-w-5xl mx-auto gap-6 mt-12 lg:mt-24 gap-8 lg:items-center">
+			<div class="relative flex flex-col gap-y-4 md:w-2/3">
 				<h3
 					class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
 					{{ cert.title }}
@@ -62,6 +61,7 @@ const certs = [
 					target="_blank"
 					rel="noreferrer">
 					{{ cert.link.text }}
+					<IconExternalLink class="inline mb-1 w-5 h-5" />
 				</a>
 			</div>
 
@@ -69,10 +69,9 @@ const certs = [
 				class="hidden relative -mx-4 mt-10 lg:mt-0 lg:flex"
 				aria-hidden="true">
 				<nuxt-img
-					format="webp"
 					width="500"
 					height="500"
-					class="relative w-96 h-96 rounded-lg shadow-md hover:rotate-2 duration-200 hover:shadow-xl"
+					class="relative h-72 w-72 rounded-lg shadow-md hover:rotate-2 duration-200 hover:shadow-xl"
 					:src="cert.image"
 					loading="lazy"
 					alt="Photograph of an Astro Pi" />
