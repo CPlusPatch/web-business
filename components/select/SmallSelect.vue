@@ -69,10 +69,10 @@ const selected = ref<SelectItem>(props.items[props.defaultValue]);
 					:key="item.value"
 					:value="item"
 					as="button"
-					class="menu-item">
+					class="text-gray-700 duration-300 w-full dark:text-gray-50 hover:bg-orange-200 rounded-lg text-sm dark:hover:bg-orange-700/20 flex flex-row items-center py-2">
 					<component
 						:is="item.icon"
-						class="menu-icon"
+						class="mx-2 h-[1.2em] w-[1.2em] mb-0.5"
 						aria-hidden="true" />
 					{{ item.text }}
 				</HeadlessListboxOption>
@@ -80,13 +80,3 @@ const selected = ref<SelectItem>(props.items[props.defaultValue]);
 		</TransitionsScaleFadeSlide>
 	</HeadlessListbox>
 </template>
-
-<style scoped lang="postcss">
-.menu-item {
-	@apply text-gray-700 duration-300 w-full dark:text-gray-50 hover:bg-orange-200 rounded-lg text-sm dark:hover:bg-orange-700/20 flex flex-row items-center py-2;
-}
-
-.menu-icon {
-	@apply mx-2 h-[1.2em] w-[1.2em] mb-0.5;
-}
-</style>

@@ -143,7 +143,7 @@ onUnmounted(() => {
 				:disabled="isSaving"></textarea>
 			<article
 				class="editor-half prose-truegray no-scroll prose !max-w-none p-6 overflow-scroll max-h-full pb-64 border-none duration-200 outline-none font-inter focus:outline-none ring-1 ring-gray-300 hover:ring-2 focus:ring-orange-500 rounded"
-				v-html="marked(content)" />
+				v-html="marked(content ?? '')" />
 		</div>
 	</div>
 	<EditorSettings
