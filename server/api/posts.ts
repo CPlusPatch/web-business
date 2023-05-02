@@ -4,7 +4,7 @@ import { Post, Visibility } from "~~/db/entities/Post";
 export default defineEventHandler(async event => {
 	const isAdmin =
 		event.node.req.headers.authorization?.split(" ")[1] ===
-		process.env.TOKEN;
+		process.env.TOKEN; 
 
 	return await AppDataSource.initialize()
 		.then(async AppDataSource => {
