@@ -3,8 +3,7 @@ FROM docker.io/node:19-alpine AS builder
 RUN apk add --update \
   python3 \
   make \
-  gcc \
-  libc-dev
+  build-base
 
 RUN npm install --global pnpm
 
