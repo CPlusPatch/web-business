@@ -1,0 +1,12 @@
+pipeline:
+   publish:
+    image: woodpeckerci/plugin-docker-buildx
+    settings:
+      platforms: linux/amd64
+      repo: codeberg.org/cpluspatch/web-business
+      registry: codeberg.org
+      tags: latest
+      username: cpluspatch
+      compress: true
+      password:
+        from_secret: codeberg_token
