@@ -81,7 +81,7 @@ useServerSeoMeta({
 	</div>
 
 	<!-- Big landing title -->
-	<div class="relative pb-16 sm:pb-24">
+	<div class="relative pb-16 sm:pb-24 mt-40">
 		<div class="px-4 mx-auto mt-16 max-w-7xl ssm:mt-12 sm:px-6 font-inter">
 			<div class="text-left">
 				<h1

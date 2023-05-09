@@ -28,7 +28,8 @@ const nav = [
 	},
 ];
 
-const shrunk = ref<boolean>(false);
+const route = useRoute();
+const shrunk = ref<boolean>(!!route.meta.smallNavbar);
 const open = ref(false);
 
 type DebounceFunc<T extends any[]> = (...args: T) => void;
@@ -60,7 +61,8 @@ const handler = debounce(() => {
 }, 100);
 
 onMounted(() => {
-	window.addEventListener("scroll", handler, { passive: true });
+	if (!route.meta.smallNavbar)
+		window.addEventListener("scroll", handler, { passive: true });
 });
 
 onUnmounted(() => {
@@ -71,7 +73,7 @@ onUnmounted(() => {
 <template>
 	<header
 		:class="[
-			'sticky inset-x-0 top-0 z-30 backdrop-blur-lg duration-200 font-poppins',
+			'fixed inset-x-0 top-0 z-30 backdrop-blur-lg duration-200 font-poppins',
 			shrunk ? 'bg-gray-50/30 px-5 py-4' : 'bg-transparent p-8',
 		]">
 		<div

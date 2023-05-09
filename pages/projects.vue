@@ -165,7 +165,7 @@ useServerSeoMeta({
 </script>
 
 <template>
-	<PrimaryContainer class="flex flex-col gap-y-10">
+	<PrimaryContainer class="flex flex-col gap-y-10 mt-20">
 		<h1
 			class="mb-3 text-3xl font-black text-gray-800 font-poppins sm:text-5xl">
 			Projects

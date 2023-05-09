@@ -54,7 +54,7 @@ useServerSeoMeta({
 </script>
 
 <template>
-	<PrimaryContainer class="flex flex-col gap-y-6">
+	<PrimaryContainer class="flex flex-col gap-y-6 mt-20">
 		<div class="">
 			<nav class="hidden sm:flex" aria-label="Breadcrumb">
 				<ol role="list" class="flex items-center space-x-4">
@@ -165,7 +165,7 @@ useServerSeoMeta({
 						</NuxtLink>
 						<div class="flex items-center font-inter">
 							<img
-								src=""
+								src="/images/avatars/with_background.webp"
 								class="mr-4 w-10 h-10 rounded-md"
 								alt="Avatar of Writer" />
 							<div

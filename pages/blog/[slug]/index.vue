@@ -41,12 +41,36 @@ useServerSeoMeta({
 	ogImage: () => post.data.value?.banner ?? "/static/servers.webp",
 	author: "Gaspard Wierzbinski",
 });
+
+definePageMeta({
+	smallNavbar: true,
+});
 </script>
 
 <template>
+	<div class="w-full h-screen md:h-[70vh] relative">
+		<!-- <img
+			:src="post.data.value?.banner"
+			class="w-full h-full object-cover align-middle" /> -->
+		<div
+			class="bg-cover w-full h-full bg-fixed bg-center"
+			:style="{
+				backgroundImage: `url(${post.data.value?.banner})`,
+			}"></div>
+		<!-- Floor fade overlay that-->
+		<div
+			class="absolute inset-0 bg-gradient-to-b from-[rgba(0,0,0,0.1)] to-[rgba(0,0,0,0.6)]"></div>
+		<div
+			class="absolute max-w-5xl inset-0 mx-auto flex items-center justify-center">
+			<h1
+				class="mb-4 rounded p-2 text-3xl inline font-extrabold text-center text-white md:text-5xl">
+				{{ post.data.value?.title }}
+			</h1>
+		</div>
+	</div>
 	<PrimaryContainer>
 		<article class="px-0 pb-16 w-full h-full">
-			<div class="container px-4 mb-12 md:mb-24">
+			<!-- <div class="container px-4 mb-12 md:mb-24">
 				<h1
 					class="mb-4 text-3xl font-extrabold text-center text-black md:text-5xl">
 					{{ post.data.value?.title }}
@@ -58,7 +82,7 @@ useServerSeoMeta({
 				<img
 					:src="post.data.value?.banner"
 					class="w-full h-full object-cover align-middle" />
-			</div>
+			</div> -->
 			<div
 				class="flex items-center px-4 justify-center my-5 text-gray-500 font-inter gap-x-4">
 				<span
