@@ -4,6 +4,7 @@ import { marked } from "marked";
 import { me } from "~/app.vue";
 import PrimaryContainer from "~~/components/layout/PrimaryContainer.vue";
 import { Post } from "~~/db/entities/Post";
+import { Comment } from "~/db/entities/Comment";
 
 const route = useRoute();
 const token = useCookie("token");
@@ -14,6 +15,15 @@ const post = await useFetch<Post>(`/api/post/${route.params.slug}`, {
 		Authorization: `Bearer ${token.value}`,
 	},
 });
+const comments = await useFetch<Comment[]>(
+	`/api/comments/${route.params.slug}`,
+	{
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token.value}`,
+		},
+	}
+);
 
 if (!post.data.value) {
 	throw createError({
@@ -45,6 +55,27 @@ useServerSeoMeta({
 definePageMeta({
 	smallNavbar: true,
 });
+
+const postComment = () => {
+	const instanceUrl = new URL("https://fedi.cpluspatch.dev");
+
+	const formData = new FormData();
+
+	formData.append("client_name", "CPlusPatch CMS");
+	formData.append(
+		"redirect_uris",
+		`https://${window.location.host}/api/comments/`
+	);
+	formData.append("scopes", "read:accounts");
+
+	fetch(`https://${instanceUrl.host}/api/v1/apps`, {
+		method: "POST",
+		body: formData,
+	}).then(async res => {
+		const data = await res.json();
+		console.log(data);
+	});
+};
 </script>
 
 <template>
@@ -116,5 +147,40 @@ definePageMeta({
 				class="px-4 mx-auto mt-10 prose-truegray max-w-2xl text-gray-700 prose font-inter"
 				v-html="marked(post.data.value?.content ?? '')" />
 		</article>
+
+		<div class="mx-auto max-w-2xl flex flex-col gap-y-4">
+			<Button theme="gray" @click="postComment">Sign in with Fedi</Button>
+			<div
+				v-for="comment of comments.data.value ?? []"
+				:key="comment.id"
+				class="flex">
+				<div class="flex-shrink-0 mr-3">
+					<img
+						class="mt-2 rounded-md w-8 h-8 sm:w-10 sm:h-10"
+						:src="comment.avatar"
+						alt="" />
+				</div>
+				<div
+					class="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
+					<div class="flex gap-x-2 items-center">
+						<strong>{{ comment.name }}</strong>
+						<span class="text-xs text-gray-400 mt-0.5">{{
+							new Date(
+								comment.created_at ?? new Date(0)
+							).toLocaleDateString("en-GB", {
+								month: "short",
+								day: "numeric",
+								year: "numeric",
+								hour: "numeric",
+								minute: "numeric",
+							})
+						}}</span>
+					</div>
+					<p class="text-sm">
+						{{ comment.content }}
+					</p>
+				</div>
+			</div>
+		</div>
 	</PrimaryContainer>
 </template>

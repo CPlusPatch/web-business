@@ -1,6 +1,5 @@
 <script lang="ts">
 import "./styles/index.css";
-import "reflect-metadata";
 import "@unocss/reset/tailwind.css";
 
 export const me = definePerson({

@@ -1,5 +1,6 @@
 import { AppDataSource } from "~~/db/data-source";
 import { Post, Visibility } from "~~/db/entities/Post";
+import { Comment } from "~/db/entities/Comment";
 
 export default defineEventHandler(async event => {
 	const slug = event.context.params?.slug ?? "";
@@ -7,7 +8,7 @@ export default defineEventHandler(async event => {
 		event.node.req.headers.authorization?.split(" ")[1] ===
 		process.env.TOKEN;
 
-	const post = await AppDataSource.initialize()
+	const comments = await AppDataSource.initialize()
 		.then(async AppDataSource => {
 			const post = await AppDataSource.getRepository(Post).findOneBy({
 				slug,
@@ -19,14 +20,20 @@ export default defineEventHandler(async event => {
 			) {
 				if (!isAdmin) return false;
 			}
-			return post;
+
+			if (!post) return false;
+
+			const comments = await AppDataSource.getRepository(Comment).findBy({
+				post_id: post.id,
+			});
+			return comments;
 		})
 		.finally(() => {
 			AppDataSource.destroy();
 		});
 
-	if (post) {
-		return post;
+	if (comments) {
+		return comments;
 	} else {
 		throw createError({
 			statusCode: 404,
