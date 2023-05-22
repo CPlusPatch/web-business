@@ -57,7 +57,7 @@ definePageMeta({
 });
 
 const postComment = () => {
-	const instanceUrl = new URL("https://fedi.cpluspatch.dev");
+	/* const instanceUrl = new URL("https://fedi.cpluspatch.dev");
 
 	const formData = new FormData();
 
@@ -73,8 +73,7 @@ const postComment = () => {
 		body: formData,
 	}).then(async res => {
 		const data = await res.json();
-		console.log(data);
-	});
+	}); */
 };
 </script>
 

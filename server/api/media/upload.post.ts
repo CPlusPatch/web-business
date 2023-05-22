@@ -1,11 +1,18 @@
-import {
-	ListObjectsV2Command,
-	PutObjectCommand,
-	S3Client,
-} from "@aws-sdk/client-s3";
-import { randomUUID } from "crypto";
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { Role } from "~/db/entities/User";
+import { getUserByToken } from "~/utils/tokens";
 
 export default defineEventHandler(async event => {
+	const user = await getUserByToken(
+		event.node.req.headers.authorization?.split(" ")[1] ?? ""
+	);
+
+	if (user?.role !== Role.ADMIN) {
+		throw createError({
+			statusCode: 401,
+		});
+	}
+
 	if (
 		!process.env.S3_ENDPOINT ||
 		!process.env.S3_ACCESS_KEY ||

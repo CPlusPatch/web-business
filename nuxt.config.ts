@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { nodePolyfills } from "vite-plugin-node-polyfills";
 
 export default defineNuxtConfig({
 	modules: [
@@ -9,6 +10,7 @@ export default defineNuxtConfig({
 		"@nuxtjs/eslint-module",
 		"nuxt-delay-hydration",
 		"nuxt-headlessui",
+		"nuxt-icon",
 	],
 	extends: ["nuxt-seo-kit"],
 	app: {
@@ -61,5 +63,17 @@ export default defineNuxtConfig({
 			language: "en-US", // prefer more explicit language codes like `en-AU` over `en`,
 			titleSeparator: "·",
 		},
+	},
+	vite: {
+		plugins: [
+			nodePolyfills({
+				// To exclude specific polyfills, add them to this list.
+				exclude: [
+					"fs", // Excludes the polyfill for `fs` and `node:fs`.
+				],
+				// Whether to polyfill `node:` protocol imports.
+				protocolImports: true,
+			}),
+		],
 	},
 });

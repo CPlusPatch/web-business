@@ -1,12 +1,16 @@
 import { AppDataSource } from "~~/db/data-source";
 import { Post, Visibility } from "~~/db/entities/Post";
 import { Comment } from "~/db/entities/Comment";
+import { Role } from "~/db/entities/User";
+import { getUserByToken } from "~/utils/tokens";
 
 export default defineEventHandler(async event => {
 	const slug = event.context.params?.slug ?? "";
-	const isAdmin =
-		event.node.req.headers.authorization?.split(" ")[1] ===
-		process.env.TOKEN;
+	const user = await getUserByToken(
+		event.node.req.headers.authorization?.split(" ")[1] ?? ""
+	);
+
+	const isAdmin = user?.role === Role.ADMIN;
 
 	const comments = await AppDataSource.initialize()
 		.then(async AppDataSource => {

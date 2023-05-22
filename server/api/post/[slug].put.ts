@@ -17,7 +17,7 @@ export default defineEventHandler(async event => {
 	const post = await AppDataSource.initialize()
 		.then(async AppDataSource => {
 			const post = await AppDataSource.getRepository(Post).findOneBy({
-				slug: slug,
+				slug,
 			});
 
 			if (!post) return false;

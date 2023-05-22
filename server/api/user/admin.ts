@@ -1,5 +1,10 @@
-export default defineEventHandler(event => {
+import { Role } from "~/db/entities/User";
+import { getUserByToken } from "~/utils/tokens";
+
+export default defineEventHandler(async event => {
 	const cookie = parseCookies(event).token ?? "";
 
-	return cookie === process.env.TOKEN;
+	const user = await getUserByToken(cookie);
+
+	return user?.role !== Role.ADMIN;
 });
