@@ -1,6 +1,7 @@
 import { Role } from "~/db/entities/User";
 import { AppDataSource } from "~~/db/data-source";
 import { Post, Visibility } from "~~/db/entities/Post";
+import { getUserByToken } from "~/utils/tokens";
 
 export default defineEventHandler(async event => {
 	const slug = event.context.params?.slug ?? "";

@@ -1,13 +1,16 @@
+import { Role } from "~/db/entities/User";
 import { AppDataSource } from "~~/db/data-source";
 import { Post } from "~~/db/entities/Post";
+import { getUserByToken } from "~/utils/tokens";
 
 export default defineEventHandler(async event => {
 	// Authenticate user (parse Authorization: Bearer TOKEN) header
-	if (
-		event.node.req.headers.authorization?.split(" ")[1] !==
-		process.env.TOKEN
-	) {
-		return abortNavigation({
+	const user = await getUserByToken(
+		event.node.req.headers.authorization?.split(" ")[1] ?? ""
+	);
+
+	if (user?.role !== Role.ADMIN) {
+		throw createError({
 			statusCode: 401,
 		});
 	}

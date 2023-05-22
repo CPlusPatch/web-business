@@ -22,7 +22,7 @@ defineProps<ButtonProps>();
 <template>
 	<button
 		:class="[
-			'inline-flex justify-center relative ease-in-out items-center no-bad-scale px-4 py-2 text-base font-medium rounded-md border shadow-sm duration-200 font-inter focus:outline-none sm:text-sm',
+			'inline-flex justify-center relative ease-in-out items-center no-bad-scale rounded-md border px-3 py-1.5 text-sm font-semibold leading-6 shadow-sm duration-200 font-inter focus:outline-none',
 			theme && themes[theme],
 			loading && '!text-transparent',
 		]"

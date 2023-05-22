@@ -2,7 +2,7 @@ import {
 	Column,
 	Entity,
 	JoinColumn,
-	OneToOne,
+	ManyToOne,
 	PrimaryGeneratedColumn,
 } from "typeorm";
 import { User } from "./User";
@@ -12,7 +12,7 @@ export class Token {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@OneToOne(() => User)
+	@ManyToOne(() => User)
 	@JoinColumn()
 	user: User;
 
