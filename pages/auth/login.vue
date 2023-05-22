@@ -21,7 +21,16 @@ const submit = async (e: Event) => {
 
 	if (response.status === 200) {
 		token.value = (await response.json()).token;
-		useRouter().push("/");
+
+		if (new URLSearchParams(window.location.search).get("next")) {
+			useRouter().push(
+				new URLSearchParams(window.location.search)
+					.get("next")
+					?.toString() ?? ""
+			);
+		} else {
+			useRouter().push("/");
+		}
 	}
 
 	loading.value = false;
@@ -58,6 +67,7 @@ definePageMeta({
 					<div class="mt-2">
 						<Input
 							name="username"
+							placeholder="Your username"
 							required
 							class="block w-full rounded-md"
 							:loading="loading" />
@@ -76,6 +86,7 @@ definePageMeta({
 						<Input
 							name="password"
 							type="password"
+							placeholder="Your password"
 							required
 							:loading="loading"
 							class="block w-full rounded-md !ring-0 !border-gray-300" />

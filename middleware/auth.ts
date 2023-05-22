@@ -1,16 +1,18 @@
-import { Role } from "~/db/entities/User";
-import { getUserByToken } from "~/utils/tokens";
-
-export default defineNuxtRouteMiddleware(async () => {
-	const cookie = useCookie("token");
-
+export default defineNuxtRouteMiddleware(async middleware => {
 	if (process.client) return;
 
 	if (process.server) {
-		const user = await getUserByToken(cookie.value ?? "");
+		const isAdmin = await useFetch<boolean>("/api/user/admin").data.value;
 
-		if (user?.role !== Role.ADMIN) {
-			return navigateTo("/auth/login");
+		console.log(isAdmin);
+
+		if (!isAdmin) {
+			return navigateTo(
+				"/auth/login?" +
+					new URLSearchParams({
+						next: middleware.fullPath,
+					})
+			);
 		}
 	}
 });
