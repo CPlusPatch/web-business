@@ -8,6 +8,18 @@ export async function getUserByToken(value: string) {
 				relations: {
 					user: true,
 				},
+				select: {
+					user: {
+						avatar: true,
+						banner: true,
+						created_at: true,
+						edited_at: true,
+						id: true,
+						role: true,
+						username: true,
+						display_name: true,
+					},
+				},
 				where: {
 					token: value,
 				},
