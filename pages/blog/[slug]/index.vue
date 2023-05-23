@@ -4,7 +4,6 @@ import { marked } from "marked";
 import { me } from "~/app.vue";
 import PrimaryContainer from "~~/components/layout/PrimaryContainer.vue";
 import { Post } from "~~/db/entities/Post";
-import { Comment } from "~/db/entities/Comment";
 
 const route = useRoute();
 const token = useCookie("token");
@@ -15,7 +14,7 @@ const post = await useFetch<Post>(`/api/post/${route.params.slug}`, {
 		Authorization: `Bearer ${token.value}`,
 	},
 });
-const comments = await useFetch<Comment[]>(
+/* const comments = await useFetch<Comment[]>(
 	`/api/comments/${route.params.slug}`,
 	{
 		headers: {
@@ -23,7 +22,7 @@ const comments = await useFetch<Comment[]>(
 			Authorization: `Bearer ${token.value}`,
 		},
 	}
-);
+); */
 
 if (!post.data.value) {
 	throw createError({
@@ -56,8 +55,8 @@ definePageMeta({
 	smallNavbar: true,
 });
 
-const postComment = () => {
-	/* const instanceUrl = new URL("https://fedi.cpluspatch.dev");
+// const postComment = () => {
+/* const instanceUrl = new URL("https://fedi.cpluspatch.dev");
 
 	const formData = new FormData();
 
@@ -74,7 +73,7 @@ const postComment = () => {
 	}).then(async res => {
 		const data = await res.json();
 	}); */
-};
+// };
 </script>
 
 <template>
@@ -147,7 +146,7 @@ const postComment = () => {
 				v-html="marked(post.data.value?.content ?? '')" />
 		</article>
 
-		<div class="mx-auto max-w-2xl flex flex-col gap-y-4">
+		<!-- <div class="mx-auto max-w-2xl flex flex-col gap-y-4">
 			<Button theme="gray" @click="postComment">Sign in with Fedi</Button>
 			<div
 				v-for="comment of comments.data.value ?? []"
@@ -180,6 +179,6 @@ const postComment = () => {
 					</p>
 				</div>
 			</div>
-		</div>
+		</div> -->
 	</PrimaryContainer>
 </template>
