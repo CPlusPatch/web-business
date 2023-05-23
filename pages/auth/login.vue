@@ -39,13 +39,13 @@ const submit = async (e: Event) => {
 };
 
 definePageMeta({
-	layout: false,
+	smallNavbar: true,
 });
 </script>
 
 <template>
 	<div
-		class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 h-screen">
+		class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
 		<div class="sm:mx-auto sm:w-full sm:max-w-sm">
 			<LogosSmallLogo class="!w-10 !h-10 mx-auto" />
 			<h2
