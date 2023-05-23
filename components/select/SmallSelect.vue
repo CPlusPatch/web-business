@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/require-default-prop -->
 <script lang="ts">
 export enum SelectDirection {
 	Right = "right",
@@ -14,7 +13,7 @@ export enum SelectOrientation {
 export interface SelectItem {
 	text: string;
 	value: string;
-	icon: any;
+	icon: string;
 	description?: string;
 }
 </script>
@@ -28,11 +27,8 @@ interface SelectProps {
 	name?: string;
 }
 
-const props = withDefaults(defineProps<SelectProps>(), {
-	direction: SelectDirection.Right,
-	orientation: SelectOrientation.Down,
-});
-const emit = defineEmits(["update:modelValue"]);
+const props = defineProps<SelectProps>();
+const emit = defineEmits(["update:model-value"]);
 
 const selected = ref<SelectItem>(props.items[props.defaultValue]);
 </script>
@@ -42,21 +38,27 @@ const selected = ref<SelectItem>(props.items[props.defaultValue]);
 		v-model="selected"
 		:name="name"
 		as="div"
-		class="relative font-inter"
-		@update:model-value="(value: any) => emit('update:modelValue', value)">
+		class="relative"
+		@update:model-value="value => emit('update:model-value', value)">
 		<HeadlessListboxButton
-			v-bind="$attrs"
-			class="flex relative flex-row gap-x-1 items-center p-2 text-gray-600 rounded duration-200 cursor-default dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
-			<component
-				:is="selected.icon"
+			class="flex relative flex-row gap-x-1 items-center p-2 text-gray-600 rounded duration-200 cursor-default dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-700">
+			<Icon
+				:name="selected.icon"
 				:stroke-width="2"
 				class="w-6 h-6"
 				aria-hidden="true" />
 		</HeadlessListboxButton>
-		<TransitionsScaleFadeSlide>
+		<Transition
+			appear
+			enter-from-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+			enter-to-class="opacity-100 translate-y-0 sm:scale-100"
+			enter-active-class="ease-out duration-100"
+			leave-active-class="ease-in duration-100"
+			leave-from-class="opacity-100 translate-y-0 sm:scale-100"
+			leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
 			<HeadlessListboxOptions
 				:class="[
-					'p-1.5 gap-x-4 outline-none text-base absolute w-44 overflow-hidden sm:text-sm rounded-lg shadow-lg bg-white dark:bg-dark-700/60 backdrop-blur-lg focus:outline-none',
+					'absolute z-30 shadow-lg mt-1 text-base rounded-md overflow-hidden bg-gray-100/75 dark:bg-dark-800/75 backdrop-blur-md',
 					direction === SelectDirection.Left &&
 						'right-0 origin-top-right',
 					direction === SelectDirection.Center &&
@@ -68,15 +70,27 @@ const selected = ref<SelectItem>(props.items[props.defaultValue]);
 					v-for="item in items"
 					:key="item.value"
 					:value="item"
-					as="button"
-					class="text-gray-700 duration-300 w-full dark:text-gray-50 hover:bg-orange-200 rounded-lg text-sm dark:hover:bg-orange-700/20 flex flex-row items-center py-2">
-					<component
-						:is="item.icon"
-						class="mx-2 h-[1.2em] w-[1.2em] mb-0.5"
+					:class="[
+						item.value === selected.value &&
+							'bg-orange-100 dark:bg-orange-500/10',
+						'flex relative flex-row gap-x-3 items-center py-2 px-3 text-gray-800 dark:text-gray-100 duration-200 cursor-default select-none hover:bg-gray-200 dark:hover:bg-dark-700/75',
+					]">
+					<Icon
+						:name="item.icon"
+						class="w-5 h-auto text-gray-500"
 						aria-hidden="true" />
-					{{ item.text }}
+					<div class="flex flex-col">
+						<span class="text-sm font-semibold font-poppins">
+							{{ item.text }}
+						</span>
+						<span
+							v-if="item.description"
+							class="text-sm min-w-40 text-orange-700 dark:text-orange-200">
+							{{ item.description ?? "" }}
+						</span>
+					</div>
 				</HeadlessListboxOption>
 			</HeadlessListboxOptions>
-		</TransitionsScaleFadeSlide>
+		</Transition>
 	</HeadlessListbox>
 </template>

@@ -13,8 +13,25 @@ export default defineEventHandler(async event => {
 
 	const post = await AppDataSource.initialize()
 		.then(async AppDataSource => {
-			const post = await AppDataSource.getRepository(Post).findOneBy({
-				slug,
+			const post = await AppDataSource.getRepository(Post).findOne({
+				relations: {
+					creator: true,
+				},
+				select: {
+					creator: {
+						avatar: true,
+						banner: true,
+						created_at: true,
+						edited_at: true,
+						id: true,
+						role: true,
+						username: true,
+						display_name: true,
+					},
+				},
+				where: {
+					slug,
+				},
 			});
 
 			if (
@@ -23,7 +40,13 @@ export default defineEventHandler(async event => {
 			) {
 				if (!isAdmin) return false;
 			}
-			return post;
+			return {
+				...post,
+				creator: {
+					...post?.creator,
+					password: undefined, // Don't leak password hashes to client, even if they're secure
+				},
+			};
 		})
 		.finally(() => {
 			AppDataSource.destroy();

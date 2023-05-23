@@ -4,8 +4,6 @@ export default defineNuxtRouteMiddleware(async middleware => {
 	if (process.server) {
 		const isAdmin = await useFetch<boolean>("/api/user/admin").data.value;
 
-		console.log(isAdmin);
-
 		if (!isAdmin) {
 			return navigateTo(
 				"/auth/login?" +

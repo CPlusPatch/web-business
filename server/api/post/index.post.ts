@@ -23,6 +23,7 @@ export default defineEventHandler(async event => {
 			post.visibility = Visibility.PRIVATE;
 			post.content = "";
 			post.description = "";
+			post.creator = user;
 			post.slug = Math.floor(Math.random() * 10000000).toString();
 
 			return await AppDataSource.manager.save(post);

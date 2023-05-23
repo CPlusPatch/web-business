@@ -1,19 +1,20 @@
 <script setup lang="ts">
 import {
-	IconLayoutGrid,
-	IconLayoutRows,
 	IconLock,
 	IconFilePlus,
 	IconChevronRight,
 	IconArticleFilledFilled,
 } from "@tabler/icons-vue";
 import { me } from "~/app.vue";
-import SmallSelect from "~/components/select/SmallSelect.vue";
+import SmallSelect, {
+	SelectDirection,
+	SelectOrientation,
+} from "~/components/select/SmallSelect.vue";
 import PrimaryContainer from "~~/components/layout/PrimaryContainer.vue";
 import { Post, Visibility } from "~~/db/entities/Post";
 
 const token = useCookie("token");
-const posts = await useFetch<Post[]>("/api/posts", {
+const posts = await useFetch("/api/posts", {
 	headers: {
 		"Content-Type": "application/json",
 		Authorization: `Bearer ${token.value}`,
@@ -41,6 +42,8 @@ const createNew = () => {
 		}
 	});
 };
+
+console.log(posts.data.value);
 
 useSchemaOrg([me]);
 
@@ -95,16 +98,19 @@ useServerSeoMeta({
 						:items="[
 							{
 								value: 'compact',
-								icon: IconLayoutGrid,
+								icon: 'ic:round-grid-view',
 								text: 'Compact',
 							},
 							{
 								value: 'large',
-								icon: IconLayoutRows,
-								text: 'large',
+								icon: 'ic:round-table-rows',
+								text: 'Large',
 							},
 						]"
-						@update:model-value="(value: any) => mode = value.value" />
+						:direction="SelectDirection.Left"
+						:orientation="SelectOrientation.Down"
+						@update:model-value="(value: any) =>
+					mode = value.value" />
 					<Button
 						v-if="isAdmin.data.value"
 						:loading="isCreatingPost"
@@ -171,7 +177,7 @@ useServerSeoMeta({
 							<div
 								class="flex flex-col justify-between h-full text-sm">
 								<p class="pt-1 leading-none text-gray-900">
-									Gaspard Wierzbinski
+									{{ post.creator.display_name }}
 								</p>
 								<p class="text-gray-600">
 									{{

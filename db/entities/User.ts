@@ -20,6 +20,9 @@ export class User {
 	username: string;
 
 	@Column("varchar")
+	display_name: string;
+
+	@Column("varchar")
 	password: string; // In the format hashedpassword:salt
 
 	@Column("varchar", {

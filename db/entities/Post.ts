@@ -2,9 +2,12 @@ import {
 	Column,
 	CreateDateColumn,
 	Entity,
+	JoinColumn,
+	ManyToOne,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
 } from "typeorm";
+import { User } from "./User";
 
 export enum Visibility {
 	PUBLIC = "public",
@@ -45,6 +48,10 @@ export class Post {
 		nullable: true,
 	})
 	banner?: string;
+
+	@ManyToOne(() => User)
+	@JoinColumn()
+	creator: User;
 
 	@CreateDateColumn()
 	created_at?: Date;

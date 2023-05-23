@@ -19,6 +19,11 @@ export class Token {
 	@Column("varchar")
 	token: string;
 
+	@Column("varchar", {
+		nullable: true,
+	})
+	client_name: string;
+
 	@Column("datetime")
 	expireDate: Date; // In UTC time, should be 7 days by default
 }
