@@ -4,6 +4,8 @@ const token = useCookie("token", {
 	secure: true,
 });
 
+const showingPassword = ref(false);
+
 const loading = ref(false);
 
 const submit = async (e: Event) => {
@@ -66,6 +68,7 @@ definePageMeta({
 					>
 					<div class="mt-2">
 						<Input
+							icon="ic:round-perm-identity"
 							name="username"
 							placeholder="Your username"
 							required
@@ -81,15 +84,24 @@ definePageMeta({
 							class="block text-sm font-medium leading-6 text-gray-900"
 							>Password</label
 						>
+						<div class="text-sm">
+							<a
+								href="#"
+								class="font-semibold text-orange-600 hover:text-orange-500"
+								@click="showingPassword = !showingPassword"
+								>{{ showingPassword ? "Hide" : "Show" }}</a
+							>
+						</div>
 					</div>
 					<div class="mt-2">
 						<Input
 							name="password"
-							type="password"
+							:type="showingPassword ? 'text' : 'password'"
+							icon="ic:round-password"
 							placeholder="Your password"
 							required
 							:loading="loading"
-							class="block w-full rounded-md !ring-0 !border-gray-300" />
+							class="block w-full rounded-md !ring-orange-500 !border-gray-300" />
 					</div>
 				</div>
 
