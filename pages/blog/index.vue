@@ -171,7 +171,7 @@ useServerSeoMeta({
 						</NuxtLink>
 						<div class="flex items-center font-inter">
 							<img
-								src="/images/avatars/with_background.webp"
+								:src="post.creator.avatar"
 								class="mr-4 w-10 h-10 rounded-md"
 								alt="Avatar of Writer" />
 							<div
