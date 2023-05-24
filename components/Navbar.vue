@@ -32,8 +32,6 @@ const nav = [
 
 const user = (await useFetch("/api/user/get")).data.value;
 
-console.log(user);
-
 const route = useRoute();
 const shrunk = ref<boolean>(!!route.meta.smallNavbar);
 const open = ref(false);

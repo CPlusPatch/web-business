@@ -43,8 +43,6 @@ const createNew = () => {
 	});
 };
 
-console.log(posts.data.value);
-
 useSchemaOrg([me]);
 
 useServerSeoMeta({

@@ -1,10 +1,12 @@
+import { Role } from "~/db/entities/User";
+
 export default defineNuxtRouteMiddleware(async middleware => {
 	if (process.client) return;
 
 	if (process.server) {
-		const isAdmin = await useFetch<boolean>("/api/user/admin").data.value;
+		const user = (await useFetch("/api/user/get")).data.value;
 
-		if (!isAdmin) {
+		if (user?.role !== Role.ADMIN) {
 			return navigateTo(
 				"/auth/login?" +
 					new URLSearchParams({
