@@ -30,6 +30,7 @@ useSchemaOrg([me, myOrg]);
 	<OgImageScreenshot />
 	<OgImageStatic />
 	<NuxtLayout>
+		<NuxtLoadingIndicator />
 		<NuxtPage />
 	</NuxtLayout>
 </template>
