@@ -6,6 +6,7 @@ import {
 	IconArticleFilledFilled,
 } from "@tabler/icons-vue";
 import { me } from "~/app.vue";
+import Button from "~/components/button/Button.vue";
 import SmallSelect, {
 	SelectDirection,
 	SelectOrientation,
@@ -55,8 +56,8 @@ useServerSeoMeta({
 </script>
 
 <template>
-	<PrimaryContainer class="flex flex-col gap-y-6 mt-20">
-		<div class="">
+	<PrimaryContainer class="flex flex-col gap-y-6 mt-20 max-w-7xl">
+		<div>
 			<nav class="hidden sm:flex" aria-label="Breadcrumb">
 				<ol role="list" class="flex items-center space-x-4">
 					<li>
@@ -173,7 +174,7 @@ useServerSeoMeta({
 								class="mr-4 w-10 h-10 rounded-md"
 								alt="Avatar of Writer" />
 							<div
-								class="flex flex-col justify-between h-full text-sm">
+								class="flex flex-col justify-between h-full grow text-sm">
 								<p class="pt-1 leading-none text-gray-900">
 									{{ post.creator.display_name }}
 								</p>
@@ -189,6 +190,14 @@ useServerSeoMeta({
 									}}
 								</p>
 							</div>
+							<NuxtLink
+								v-if="isAdmin.data.value"
+								class="h-full"
+								:to="`/blog/${post.slug}/edit`">
+								<Button theme="orange" class="h-full !p-2.5"
+									><Icon class="w-5 h-5" name="ic:round-edit"
+								/></Button>
+							</NuxtLink>
 						</div>
 					</div>
 				</article>

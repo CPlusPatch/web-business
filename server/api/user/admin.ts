@@ -6,5 +6,5 @@ export default defineEventHandler(async event => {
 
 	const user = await getUserByToken(cookie);
 
-	return user?.role !== Role.ADMIN;
+	return user?.role === Role.ADMIN;
 });

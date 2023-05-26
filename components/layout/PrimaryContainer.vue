@@ -3,7 +3,7 @@
 <template>
 	<div
 		v-bind="$attrs"
-		class="px-4 lg:px-8 sm:px-6 py-12 lg:py-16 mx-auto max-w-7xl">
+		class="px-4 lg:px-8 sm:px-6 py-12 lg:py-16 mx-auto max-w-7xl w-full">
 		<slot />
 	</div>
 </template>
