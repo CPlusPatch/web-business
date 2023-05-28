@@ -1,4 +1,10 @@
 <script setup lang="ts">
+import {
+	getMastodonAccessToken,
+	getMastodonAccount,
+	signInWithMastodon,
+} from "~/utils/oauth";
+
 const token = useCookie("token", {
 	sameSite: "strict",
 	secure: true,
@@ -43,102 +49,9 @@ definePageMeta({
 	smallNavbar: true,
 });
 
-async function signInWithMastodon() {
-	loading.value = true;
-	let instanceUrl = new URL("https://placeholder.com");
-	try {
-		const prompted = prompt("Instance domain:");
-		instanceUrl = new URL(
-			prompted?.includes("http") ? prompted : `https://${prompted}`
-		);
-	} catch {
-		return alert("Invalid URL!");
-	}
-
-	// Create a new Mastodon application
-	const app = await createMastodonApp(instanceUrl);
-
-	// Store in localStorage for use later during the auth process
-	localStorage.setItem("oauth_provider", "mastodon");
-	localStorage.setItem("oauth_mastodon_client", JSON.stringify(app));
-
-	// Redirect the user to the Mastodon authorization URL
-	const authorizationUrl = `${instanceUrl}/oauth/authorize?client_id=${app.clientId}&response_type=code&redirect_uri=${app.redirectUri}`;
-	window.location.href = authorizationUrl;
-}
-
-async function createMastodonApp(instanceUrl: URL) {
-	const appName = "CPlusPatch CMS";
-	const redirectUri = `${window.location.origin}/auth/login/`;
-	const scopes = "read";
-	const website = window.location.origin;
-
-	// Create a new Mastodon application
-	const response = await fetch(`${instanceUrl}/api/v1/apps`, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({
-			client_name: appName,
-			redirect_uris: redirectUri,
-			scopes,
-			website,
-		}),
-	});
-
-	const data = await response.json();
-	return {
-		clientId: data.client_id,
-		clientSecret: data.client_secret,
-		redirectUri,
-		instanceUrl: instanceUrl.origin,
-	};
-}
-
-async function getMastodonAccessToken(code: string) {
-	const { clientId, clientSecret, redirectUri, instanceUrl } = JSON.parse(
-		localStorage.getItem("oauth_mastodon_client") ?? "{}"
-	);
-	const tokenUrl = `${instanceUrl}/oauth/token`;
-
-	const response = await fetch(tokenUrl, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/x-www-form-urlencoded",
-		},
-		body: new URLSearchParams({
-			client_id: clientId,
-			client_secret: clientSecret,
-			code,
-			grant_type: "authorization_code",
-			redirect_uri: redirectUri,
-		}),
-	});
-
-	const data = await response.json();
-	return data.access_token;
-}
-
-async function getMastodonAccount(accessToken: string) {
-	const { instanceUrl } = JSON.parse(
-		localStorage.getItem("oauth_mastodon_client") ?? "{}"
-	);
-
-	const accountUrl = `${instanceUrl}/api/v1/accounts/verify_credentials`;
-
-	const response = await fetch(accountUrl, {
-		headers: {
-			Authorization: `Bearer ${accessToken}`,
-		},
-	});
-
-	const data = await response.json();
-	return data;
-}
-
 onMounted(async () => {
 	if (route.query.code) {
+		// Initiate sign in with Mastodon
 		loading.value = true;
 		const mastodonToken = await getMastodonAccessToken(
 			route.query.code as string
@@ -243,14 +156,39 @@ onMounted(async () => {
 						Sign in
 					</Button>
 				</div>
-
-				<div>
+				<div
+					class="relative flex flex-row justify-center items-center text-sm">
+					<div class="h-0.5 bg-gray-200 w-1/3 rounded"></div>
+					<span class="px-2 text-gray-500 w-1/3">
+						Or continue with
+					</span>
+					<div class="h-0.5 bg-gray-200 w-1/3 rounded"></div>
+				</div>
+				<div class="flex-row flex w-full gap-x-2">
 					<Button
 						:loading="loading"
-						class="!bg-blue-800 !text-white w-full"
-						@click="signInWithMastodon">
-						<Icon name="logos:mastodon-icon" class="mr-2" />
-						Sign in with Mastodon
+						theme="gray"
+						class="w-full"
+						@click="
+							() => {
+								loading = true;
+								signInWithMastodon();
+							}
+						">
+						<Icon name="logos:mastodon-icon" class="mr-2 w-4 h-4" />
+						Mastodon
+					</Button>
+					<Button
+						:disabled="true"
+						class="w-full !opacity-40"
+						theme="gray"
+						@click="
+							() => {
+								loading = true;
+								signInWithMastodon();
+							}
+						">
+						More soon
 					</Button>
 				</div>
 			</form>
