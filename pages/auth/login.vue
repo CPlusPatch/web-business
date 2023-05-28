@@ -192,11 +192,11 @@ onMounted(async () => {
 				</div>
 				<div
 					class="relative flex flex-row justify-center items-center text-sm">
-					<div class="h-0.5 bg-gray-200 w-1/3 rounded"></div>
-					<span class="px-2 text-gray-500 w-1/3">
+					<div class="h-0.5 bg-gray-200 w-1/4 rounded"></div>
+					<span class="px-2 text-gray-500 w-1/2 text-center">
 						Or continue with
 					</span>
-					<div class="h-0.5 bg-gray-200 w-1/3 rounded"></div>
+					<div class="h-0.5 bg-gray-200 w-1/4 rounded"></div>
 				</div>
 				<div class="grid grid-cols-2 w-full gap-2">
 					<Button
