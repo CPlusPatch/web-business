@@ -45,7 +45,16 @@ definePageMeta({
 
 async function signInWithMastodon() {
 	loading.value = true;
-	const instanceUrl = new URL("https://social.linux.pizza");
+	let instanceUrl = new URL("https://placeholder.com");
+	try {
+		const prompted = prompt("Instance domain:");
+		instanceUrl = new URL(
+			prompted?.includes("http") ? prompted : `https://${prompted}`
+		);
+	} catch {
+		return alert("Invalid URL!");
+	}
+
 	// Create a new Mastodon application
 	const app = await createMastodonApp(instanceUrl);
 
@@ -83,14 +92,15 @@ async function createMastodonApp(instanceUrl: URL) {
 		clientId: data.client_id,
 		clientSecret: data.client_secret,
 		redirectUri,
+		instanceUrl: instanceUrl.origin,
 	};
 }
 
 async function getMastodonAccessToken(code: string) {
-	const { clientId, clientSecret, redirectUri } = JSON.parse(
+	const { clientId, clientSecret, redirectUri, instanceUrl } = JSON.parse(
 		localStorage.getItem("oauth_mastodon_client") ?? "{}"
 	);
-	const tokenUrl = "https://social.linux.pizza/oauth/token";
+	const tokenUrl = `${instanceUrl}/oauth/token`;
 
 	const response = await fetch(tokenUrl, {
 		method: "POST",
@@ -111,8 +121,11 @@ async function getMastodonAccessToken(code: string) {
 }
 
 async function getMastodonAccount(accessToken: string) {
-	const accountUrl =
-		"https://social.linux.pizza/api/v1/accounts/verify_credentials";
+	const { instanceUrl } = JSON.parse(
+		localStorage.getItem("oauth_mastodon_client") ?? "{}"
+	);
+
+	const accountUrl = `${instanceUrl}/api/v1/accounts/verify_credentials`;
 
 	const response = await fetch(accountUrl, {
 		headers: {
@@ -131,11 +144,6 @@ onMounted(async () => {
 			route.query.code as string
 		);
 		const account = await getMastodonAccount(mastodonToken);
-
-		console.log({
-			provider: localStorage.getItem("oauth_provider"),
-			userId: account.id,
-		});
 
 		const response = await fetch("/api/auth/login-oauth", {
 			method: "POST",
