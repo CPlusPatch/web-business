@@ -50,11 +50,16 @@ export async function createMastodonApp(instanceUrl: URL) {
 	};
 }
 
-export async function getMastodonAccessToken(code: string) {
-	const { clientId, clientSecret, redirectUri, instanceUrl } = JSON.parse(
-		localStorage.getItem("oauth_mastodon_client") ?? "{}"
-	);
-	const tokenUrl = `${instanceUrl}/oauth/token`;
+export async function getMastodonAccessToken(
+	code: string,
+	oauthData: {
+		clientSecret: string;
+		instanceUrl: string;
+		redirectUri: string;
+		clientId: string;
+	}
+) {
+	const tokenUrl = `${oauthData.instanceUrl}/oauth/token`;
 
 	const response = await fetch(tokenUrl, {
 		method: "POST",
@@ -62,11 +67,11 @@ export async function getMastodonAccessToken(code: string) {
 			"Content-Type": "application/x-www-form-urlencoded",
 		},
 		body: new URLSearchParams({
-			client_id: clientId,
-			client_secret: clientSecret,
+			client_id: oauthData.clientId,
+			client_secret: oauthData.clientSecret,
 			code,
 			grant_type: "authorization_code",
-			redirect_uri: redirectUri,
+			redirect_uri: oauthData.redirectUri,
 		}),
 	});
 
@@ -74,12 +79,16 @@ export async function getMastodonAccessToken(code: string) {
 	return data.access_token;
 }
 
-export async function getMastodonAccount(accessToken: string) {
-	const { instanceUrl } = JSON.parse(
-		localStorage.getItem("oauth_mastodon_client") ?? "{}"
-	);
-
-	const accountUrl = `${instanceUrl}/api/v1/accounts/verify_credentials`;
+export async function getMastodonAccount(
+	accessToken: string,
+	oauthData: {
+		clientSecret: string;
+		instanceUrl: string;
+		redirectUri: string;
+		clientId: string;
+	}
+) {
+	const accountUrl = `${oauthData.instanceUrl}/api/v1/accounts/verify_credentials`;
 
 	const response = await fetch(accountUrl, {
 		headers: {
@@ -153,11 +162,16 @@ export async function createMisskeyApp(instanceUrl: URL) {
 	};
 }
 
-export async function getMisskeyAccessToken(code: string) {
-	const { clientSecret, instanceUrl } = JSON.parse(
-		localStorage.getItem("oauth_misskey_client") ?? "{}"
-	);
-	const tokenUrl = `${instanceUrl}/api/auth/session/userkey`;
+export async function getMisskeyAccessToken(
+	code: string,
+	oauthData: {
+		clientSecret: string;
+		instanceUrl: string;
+		redirectUri: string;
+		clientId: string;
+	}
+) {
+	const tokenUrl = `${oauthData.instanceUrl}/api/auth/session/userkey`;
 
 	const response = await fetch(tokenUrl, {
 		method: "POST",
@@ -165,7 +179,7 @@ export async function getMisskeyAccessToken(code: string) {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
-			appSecret: clientSecret,
+			appSecret: oauthData.clientSecret,
 			token: code,
 		}),
 	});
@@ -174,12 +188,16 @@ export async function getMisskeyAccessToken(code: string) {
 	return data.accessToken;
 }
 
-export async function getMisskeyAccount(accessToken: string) {
-	const { instanceUrl } = JSON.parse(
-		localStorage.getItem("oauth_misskey_client") ?? "{}"
-	);
-
-	const accountUrl = `${instanceUrl}/api/i`;
+export async function getMisskeyAccount(
+	accessToken: string,
+	oauthData: {
+		clientSecret: string;
+		instanceUrl: string;
+		redirectUri: string;
+		clientId: string;
+	}
+) {
+	const accountUrl = `${oauthData.instanceUrl}/api/i`;
 
 	const response = await fetch(accountUrl, {
 		method: "POST",

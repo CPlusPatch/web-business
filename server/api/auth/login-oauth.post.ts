@@ -2,18 +2,61 @@ import { randomBytes } from "crypto";
 import { AppDataSource } from "~/db/data-source";
 import { Token } from "~/db/entities/Token";
 import { User } from "~/db/entities/User";
+import {
+	getMisskeyAccessToken,
+	getMisskeyAccount,
+	getMastodonAccessToken,
+	getMastodonAccount,
+} from "~/utils/oauth";
 
 export default defineEventHandler(async event => {
 	const body: {
 		provider: string;
-		userId: string;
+		token: string;
+		oauthData: {
+			clientSecret: string;
+			instanceUrl: string;
+			redirectUri: string;
+			clientId: string;
+		};
 	} = await readBody(event);
 
-	if (!body.provider || !body.userId)
+	if (!body.provider || !body.token || !body.oauthData)
 		throw createError({
 			statusCode: 400,
-			statusMessage: "Missing fields: provider and/or userId",
+			statusMessage: "Missing fields: provider, oauthData and/or token",
 		});
+
+	let id = "";
+
+	switch (body.provider) {
+		case "misskey": {
+			const misskeyToken = await getMisskeyAccessToken(
+				body.token as string,
+				body.oauthData
+			);
+			const account = await getMisskeyAccount(
+				misskeyToken,
+				body.oauthData
+			);
+			id = account.id;
+			break;
+		}
+		case "mastodon": {
+			const mastodonToken = await getMastodonAccessToken(
+				body.token,
+				body.oauthData
+			);
+			const account = await getMastodonAccount(
+				mastodonToken,
+				body.oauthData
+			);
+
+			console.log(account);
+			id = account.id;
+			break;
+		}
+	}
 
 	const user = await AppDataSource.initialize()
 		.then(async AppDataSource => {
@@ -26,7 +69,7 @@ export default defineEventHandler(async event => {
 						WHERE json_extract(value, '$.provider') = :provider
 						AND json_extract(value, '$.id') = :userId
 					)`,
-					{ provider: body.provider, userId: body.userId }
+					{ provider: body.provider, userId: id }
 				)
 				.getOne();
 

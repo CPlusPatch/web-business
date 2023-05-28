@@ -1,12 +1,5 @@
 <script setup lang="ts">
-import {
-	getMastodonAccessToken,
-	getMastodonAccount,
-	signInWithMastodon,
-	getMisskeyAccessToken,
-	getMisskeyAccount,
-	signInWithMisskey,
-} from "~/utils/oauth";
+import { signInWithMastodon, signInWithMisskey } from "~/utils/oauth";
 
 const token = useCookie("token", {
 	sameSite: "strict",
@@ -57,16 +50,14 @@ onMounted(async () => {
 		// Initiate sign in with Mastodon
 		loading.value = true;
 
-		const misskeyToken = await getMisskeyAccessToken(
-			route.query.token as string
-		);
-		const account = await getMisskeyAccount(misskeyToken);
-
 		const response = await fetch("/api/auth/login-oauth", {
 			method: "POST",
 			body: JSON.stringify({
 				provider: "misskey",
-				userId: account.id,
+				token: route.query.token,
+				oauthData: JSON.parse(
+					localStorage.getItem("oauth_misskey_client") ?? "{}"
+				),
 			}),
 		});
 
@@ -87,16 +78,14 @@ onMounted(async () => {
 		// Initiate sign in with Mastodon
 		loading.value = true;
 
-		const mastodonToken = await getMastodonAccessToken(
-			route.query.code as string
-		);
-		const account = await getMastodonAccount(mastodonToken);
-
 		const response = await fetch("/api/auth/login-oauth", {
 			method: "POST",
 			body: JSON.stringify({
 				provider: "mastodon",
-				userId: account.id,
+				token: route.query.code,
+				oauthData: JSON.parse(
+					localStorage.getItem("oauth_mastodon_client") ?? "{}"
+				),
 			}),
 		});
 
