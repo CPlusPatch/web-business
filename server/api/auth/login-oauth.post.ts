@@ -52,7 +52,6 @@ export default defineEventHandler(async event => {
 				body.oauthData
 			);
 
-			console.log(account);
 			id = account.id;
 			break;
 		}

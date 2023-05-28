@@ -153,7 +153,6 @@ export async function createMisskeyApp(instanceUrl: URL) {
 	});
 
 	const data = await response.json();
-	console.log(data);
 	return {
 		clientId: data.id,
 		clientSecret: data.secret,
