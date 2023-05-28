@@ -3,6 +3,9 @@ import {
 	getMastodonAccessToken,
 	getMastodonAccount,
 	signInWithMastodon,
+	getMisskeyAccessToken,
+	getMisskeyAccount,
+	signInWithMisskey,
 } from "~/utils/oauth";
 
 const token = useCookie("token", {
@@ -50,18 +53,19 @@ definePageMeta({
 });
 
 onMounted(async () => {
-	if (route.query.code) {
+	if (route.query.token) {
 		// Initiate sign in with Mastodon
 		loading.value = true;
-		const mastodonToken = await getMastodonAccessToken(
-			route.query.code as string
+
+		const misskeyToken = await getMisskeyAccessToken(
+			route.query.token as string
 		);
-		const account = await getMastodonAccount(mastodonToken);
+		const account = await getMisskeyAccount(misskeyToken);
 
 		const response = await fetch("/api/auth/login-oauth", {
 			method: "POST",
 			body: JSON.stringify({
-				provider: localStorage.getItem("oauth_provider"),
+				provider: "misskey",
 				userId: account.id,
 			}),
 		});
@@ -79,9 +83,39 @@ onMounted(async () => {
 				useRouter().push("/");
 			}
 		}
+	} else if (route.query.code) {
+		// Initiate sign in with Mastodon
+		loading.value = true;
 
-		loading.value = false;
+		const mastodonToken = await getMastodonAccessToken(
+			route.query.code as string
+		);
+		const account = await getMastodonAccount(mastodonToken);
+
+		const response = await fetch("/api/auth/login-oauth", {
+			method: "POST",
+			body: JSON.stringify({
+				provider: "mastodon",
+				userId: account.id,
+			}),
+		});
+
+		if (response.status === 200) {
+			token.value = (await response.json()).token;
+
+			if (new URLSearchParams(window.location.search).get("next")) {
+				useRouter().push(
+					new URLSearchParams(window.location.search)
+						.get("next")
+						?.toString() ?? ""
+				);
+			} else {
+				useRouter().push("/");
+			}
+		}
 	}
+
+	loading.value = false;
 });
 </script>
 
@@ -164,7 +198,7 @@ onMounted(async () => {
 					</span>
 					<div class="h-0.5 bg-gray-200 w-1/3 rounded"></div>
 				</div>
-				<div class="flex-row flex w-full gap-x-2">
+				<div class="grid grid-cols-2 w-full gap-2">
 					<Button
 						:loading="loading"
 						theme="gray"
@@ -177,6 +211,19 @@ onMounted(async () => {
 						">
 						<Icon name="logos:mastodon-icon" class="mr-2 w-4 h-4" />
 						Mastodon
+					</Button>
+					<Button
+						:loading="loading"
+						theme="gray"
+						class="w-full"
+						@click="
+							() => {
+								loading = true;
+								signInWithMisskey();
+							}
+						">
+						<Icon name="MisskeyIcon" class="mr-2 w-4 h-4" />
+						Misskey
 					</Button>
 					<Button
 						:disabled="true"

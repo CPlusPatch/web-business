@@ -90,3 +90,105 @@ export async function getMastodonAccount(accessToken: string) {
 	const data = await response.json();
 	return data;
 }
+
+export async function signInWithMisskey() {
+	let instanceUrl = new URL("https://placeholder.com");
+	try {
+		const prompted = prompt("Instance domain:");
+		instanceUrl = new URL(
+			prompted?.includes("http") ? prompted : `https://${prompted}`
+		);
+	} catch {
+		return alert("Invalid URL!");
+	}
+
+	// Create a new Misskey application
+	const app = await createMisskeyApp(instanceUrl);
+
+	// Store in localStorage for use later during the auth process
+	localStorage.setItem("oauth_provider", "misskey");
+	localStorage.setItem("oauth_misskey_client", JSON.stringify(app));
+
+	const response = await fetch(`${instanceUrl}api/auth/session/generate`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			appSecret: app.clientSecret,
+		}),
+	});
+
+	// Redirect the user to the Misskey authorization URL
+	window.location.href = (await response.json()).url;
+}
+
+export async function createMisskeyApp(instanceUrl: URL) {
+	const appName = "CPlusPatch CMS";
+	const appDescription = "CPlusPatch CMS";
+	const redirectUri = `${window.location.origin}/auth/login/`;
+	const permission = ["read:account"];
+
+	// Create a new Misskey application
+	const response = await fetch(`${instanceUrl}api/app/create`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			name: appName,
+			description: appDescription,
+			callbackUrl: redirectUri,
+			permission,
+		}),
+	});
+
+	const data = await response.json();
+	console.log(data);
+	return {
+		clientId: data.id,
+		clientSecret: data.secret,
+		redirectUri,
+		instanceUrl: instanceUrl.origin,
+	};
+}
+
+export async function getMisskeyAccessToken(code: string) {
+	const { clientSecret, instanceUrl } = JSON.parse(
+		localStorage.getItem("oauth_misskey_client") ?? "{}"
+	);
+	const tokenUrl = `${instanceUrl}/api/auth/session/userkey`;
+
+	const response = await fetch(tokenUrl, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			appSecret: clientSecret,
+			token: code,
+		}),
+	});
+
+	const data = await response.json();
+	return data.accessToken;
+}
+
+export async function getMisskeyAccount(accessToken: string) {
+	const { instanceUrl } = JSON.parse(
+		localStorage.getItem("oauth_misskey_client") ?? "{}"
+	);
+
+	const accountUrl = `${instanceUrl}/api/i`;
+
+	const response = await fetch(accountUrl, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${accessToken}`,
+		},
+	});
+
+	const data = await response.json();
+	return { id: data.id, username: data.username };
+}
