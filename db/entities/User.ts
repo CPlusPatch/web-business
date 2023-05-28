@@ -45,4 +45,7 @@ export class User {
 
 	@UpdateDateColumn()
 	edited_at?: Date;
+
+	@Column("simple-json", { nullable: true })
+	oauthAccounts?: { provider: string; id: string }[];
 }
