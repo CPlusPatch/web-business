@@ -1,6 +1,7 @@
+import DOMPurify from "isomorphic-dompurify";
 import { Role } from "~/db/entities/User";
 import { AppDataSource } from "~~/db/data-source";
-import { Post } from "~~/db/entities/Post";
+import { Post, Visibility } from "~~/db/entities/Post";
 import { getUserByToken } from "~/utils/tokens";
 
 export default defineEventHandler(async event => {
@@ -27,12 +28,16 @@ export default defineEventHandler(async event => {
 
 			const body = (await readBody(event)) as Partial<Post>;
 
-			if (body.content) post.content = body.content;
-			if (body.description) post.description = body.description;
-			if (body.title) post.title = body.title;
-			if (body.banner) post.banner = body.banner;
-			if (body.slug) post.slug = body.slug;
-			if (body.visibility) post.visibility = body.visibility;
+			if (body.content) post.content = DOMPurify.sanitize(body.content);
+			if (body.description)
+				post.description = DOMPurify.sanitize(body.description);
+			if (body.title) post.title = DOMPurify.sanitize(body.title);
+			if (body.banner) post.banner = DOMPurify.sanitize(body.banner);
+			if (body.slug) post.slug = DOMPurify.sanitize(body.slug);
+			if (body.visibility)
+				post.visibility = DOMPurify.sanitize(
+					body.visibility
+				) as Visibility;
 
 			await AppDataSource.getRepository(Post).save(post);
 			return post;
