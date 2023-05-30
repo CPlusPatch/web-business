@@ -42,6 +42,60 @@ pnpm preview # For testing
 pm2 start ecosystem.config.js # For production deployment
 ```
 
+## Administration
+
+### Adding new users (for now)
+
+You may use the following JS scripts to generate a hashed password with Node's `crypto` library:
+
+```js
+import { randomBytes, pbkdf2 } from "crypto";
+
+export function createSalt(length = 128) {
+	return randomBytes(length).toString("base64");
+}
+
+export function createPasswordHash(
+	password,
+	salt = "",
+	iterations = 10000
+) {
+	return new Promise((resolve, reject) => {
+		pbkdf2(password, salt, iterations, 100, "sha256", (err, derivedKey) => {
+			if (err) return reject(err);
+			return resolve(`${derivedKey.toString("hex")}:${salt}`);
+		});
+	});
+}
+```
+
+To use it, run `createSalt` to generate a random salt, then run `createPasswordHash("your password here", salt)` to generate a new salted password.
+
+Passwords are stored as `hash:salt` in the database, and `createPasswordHash` outputs this format.
+
+To continue, you will need some kind of [SQLite browser](https://sqlitebrowser.org/) and a working instance of the web app: more administration tools are coming soon.
+
+Open to the `user` table, and insert the following row:
+```
+┌────────────┬──────────────────┬───────────────┐
+│  username  │   display_name   │ oauthAccounts │
+├────────────┼──────────────────┼───────────────┤
+│ A username │ New display name │ []            │
+└────────────┴──────────────────┴───────────────┘
+```
+
+All the other fields may be left blank or will be generated automatically. If the user needs to be an admin, that is a creator of posts, insert this row instead:
+
+```
+┌────────────┬───────┬──────────────────┬───────────────┐
+│  username  │ role  │   display_name   │ oauthAccounts │
+├────────────┼───────┼──────────────────┼───────────────┤
+│ A username │ admin │ New display name │ []            │
+└────────────┴───────┴──────────────────┴───────────────┘
+```
+
+You can save and login with your new credentials now.
+
 ## Scripts for development
 
 ### Images
