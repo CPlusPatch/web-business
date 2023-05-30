@@ -1,3 +1,16 @@
+<script setup lang="ts">
+const themes: { [key: string]: string } = {
+	gray: "text-gray-900 fill-orange-400",
+	orange: "text-orange-100 fill-white",
+	orangeLight:
+		"text-orange-700 dark:text-orange-200 bg-orange-100 dark:bg-orange-800 hover:bg-orange-200 border-transparent",
+};
+
+defineProps<{
+	theme?: "gray" | "orange" | "orangeLight";
+}>();
+</script>
+
 <template>
 	<svg
 		v-bind="$attrs"
@@ -5,7 +18,7 @@
 		height="24"
 		stroke="#000"
 		viewBox="0 0 24 24"
-		class="dark:text-white"
+		:class="theme && themes[theme]"
 		xmlns="http://www.w3.org/2000/svg">
 		<g class="spinner_V8m1">
 			<circle

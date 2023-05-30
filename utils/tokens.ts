@@ -18,6 +18,7 @@ export async function getUserByToken(value: string) {
 						role: true,
 						username: true,
 						display_name: true,
+						oauthAccounts: true,
 					},
 				},
 				where: {
