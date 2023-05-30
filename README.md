@@ -104,6 +104,7 @@ Convert all JPEG images to WebP (uses ImageMagick)
 ```bash
 magick mogrify -format webp *.jpeg
 ```
+Convert all JPEG images to WebP (uses ImageMagick)
 
 Resize all images to 250x250 (when adding languages to `/public/static/languages/`)
 ```bash
