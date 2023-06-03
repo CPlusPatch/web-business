@@ -15,6 +15,23 @@ useServerSeoMeta({
 	twitterCard: "summary_large_image",
 	author: "Gaspard Wierzbinski",
 });
+
+const data = [
+	{
+		component: "BigText",
+		category: "headers",
+		slots: [
+			{
+				name: "text-primary",
+				value: "Hey",
+			},
+			{
+				name: "text-typewriter",
+				value: "I'm CPlusPatch",
+			},
+		],
+	},
+];
 </script>
 
 <template>
@@ -80,32 +97,12 @@ useServerSeoMeta({
 		</div>
 	</div>
 
-	<!-- Big landing title -->
-	<div class="relative pb-16 sm:pb-24 mt-40">
-		<div class="px-4 mx-auto mt-16 max-w-7xl ssm:mt-12 sm:px-6 font-inter">
-			<div class="text-left">
-				<h1
-					class="text-4xl font-black text-gray-900 dark:text-gray-300 sm:text-5xl md:text-6xl">
-					<span class="block">Hey,</span>
-					<span
-						class="pb-2 text-transparent bg-clip-text bg-gradient-to-tr from-pink-500 !to-yellow-500 via-red-500">
-						I&apos;m
-
-						<Typewriter
-							class="inline"
-							:text-array="[
-								'CPlusPatch',
-								'a developer',
-								'a Linux user',
-								'a FOSS supporter',
-							]"
-							:speed="100"
-							:wait="1500" />
-					</span>
-				</h1>
-			</div>
-		</div>
-	</div>
+	<Block
+		v-for="(block, index) in data"
+		:key="index"
+		:category="block.category"
+		:component="block.component"
+		:slots="block.slots" />
 
 	<!-- Main hero -->
 	<div class="relative">
