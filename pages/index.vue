@@ -5,6 +5,8 @@ import LighthouseScores from "~~/components/landing/LighthouseScores.vue";
 import Certs from "~~/components/landing/Certs.vue";
 import Testimonials from "~~/components/landing/Testimonials.vue";
 import Faqs from "~~/components/landing/Faqs.vue";
+import { Block } from "~/db/entities/Block";
+import BlockRenderer from "~/components/BlockRenderer.vue";
 
 useServerSeoMeta({
 	title: "CPlusPatch",
@@ -16,22 +18,38 @@ useServerSeoMeta({
 	author: "Gaspard Wierzbinski",
 });
 
-const data = [
-	{
-		component: "BigText",
-		category: "headers",
-		slots: [
-			{
-				name: "text-primary",
-				value: "Hey",
-			},
-			{
-				name: "text-typewriter",
-				value: "I'm CPlusPatch",
-			},
-		],
-	},
-];
+const token = useCookie("token");
+
+const data = (await useFetch("/api/blocks/1")).data.value as Block[] | null;
+
+if (!data) {
+	throw createError("No blocks returned!");
+}
+const isAdmin = (await useFetch("/api/user/admin")).data.value;
+
+const saveBlock = (newBlock: Block, index: number) => {
+	data[index] = newBlock;
+
+	fetch(`/api/blocks/${newBlock.id}`, {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token.value}`,
+		},
+		body: JSON.stringify(newBlock),
+	})
+		.then(data => {
+			switch (data.status) {
+				case 201:
+				case 200: {
+					break;
+				}
+			}
+		})
+		.catch(err => {
+			console.error(err);
+		});
+};
 </script>
 
 <template>
@@ -97,12 +115,12 @@ const data = [
 		</div>
 	</div>
 
-	<Block
+	<BlockRenderer
 		v-for="(block, index) in data"
 		:key="index"
-		:category="block.category"
-		:component="block.component"
-		:slots="block.slots" />
+		:block="block"
+		:edit="isAdmin ?? false"
+		:update-block="(newBlock: Block) => saveBlock(newBlock, index)" />
 
 	<!-- Main hero -->
 	<div class="relative">
