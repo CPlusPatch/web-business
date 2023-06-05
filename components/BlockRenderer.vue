@@ -5,8 +5,15 @@ import { Block } from "~/db/entities/Block";
 const props = defineProps<{
 	block: Block;
 	edit: boolean;
-	updateBlock: (newBlock: Block) => any;
 }>();
+
+const emit = defineEmits([
+	"updateBlock",
+	"addNewBlock",
+	"deleteBlock",
+	"moveBlockUp",
+	"moveBlockDown",
+]);
 
 const importedComp = (
 	await import(
@@ -15,7 +22,7 @@ const importedComp = (
 ).default;
 
 const editSlot = (e: Event, slot: any) => {
-	props.updateBlock({
+	emit("updateBlock", {
 		...props.block,
 		slots: props.block.slots.map(s =>
 			s.name === slot.name
@@ -31,12 +38,27 @@ const editSlot = (e: Event, slot: any) => {
 
 <template>
 	<div class="relative">
-		<!-- <Button
-			class="!absolute bottom-0 right-0 z-50"
-			theme="gray"
-			@click="open = true">
-			Edit
-		</Button> -->
+		<div
+			v-if="edit"
+			class="!absolute bottom-0 inset-x-0 justify-center z-50 flex gap-x-2">
+			<Button theme="gray" @click="$emit('moveBlockUp')">
+				<Icon name="ic:round-keyboard-arrow-up" />
+			</Button>
+			<Button theme="gray" @click="$emit('moveBlockDown')">
+				<Icon name="ic:round-keyboard-arrow-down" />
+			</Button>
+			<Button
+				theme="gray"
+				class="!text-red-600"
+				@click="$emit('deleteBlock')">
+				<Icon name="ic:round-delete" class="mr-2" />
+				Delete
+			</Button>
+			<Button theme="gray" @click="$emit('addNewBlock')">
+				<Icon name="ic:round-add-circle-outline" class="mr-2" />
+				Add new
+			</Button>
+		</div>
 		<component :is="importedComp">
 			<template
 				v-for="slot in block.slots"

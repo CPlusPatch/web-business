@@ -1,19 +1,6 @@
-<script setup lang="ts"></script>
 <script lang="ts">
+import { InputType, TemplateMetadata } from "~/types/types";
 // import Typewriter from "~/components/typewriter/Typewriter.vue";
-enum InputType {
-	String,
-	Paragraph,
-}
-interface TemplateMetadata {
-	name: string;
-	category: "headers" | "navbars";
-	inputs: {
-		name: string;
-		type: InputType;
-	}[];
-}
-
 const meta: TemplateMetadata = {
 	category: "headers",
 	name: "bigtext1",

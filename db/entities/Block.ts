@@ -17,10 +17,13 @@ export class Block {
 	@Column("varchar")
 	category: string;
 
+	@Column("integer")
+	index: number;
+
 	@Column("simple-json")
 	slots: {
 		name: string;
-		value: string;
+		value?: string;
 	}[];
 
 	@CreateDateColumn()

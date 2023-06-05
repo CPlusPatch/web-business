@@ -1,4 +1,3 @@
-import DOMPurify from "isomorphic-dompurify";
 import { Role } from "~/db/entities/User";
 import { AppDataSource } from "~~/db/data-source";
 import { getUserByToken } from "~/utils/tokens";
@@ -28,38 +27,23 @@ export default defineEventHandler(async event => {
 	}
 
 	// Initialize the AppDataSource and retrieve the block with the specified ID.
-	const block = await AppDataSource.initialize()
+	const isDeleted = await AppDataSource.initialize()
 		.then(async AppDataSource => {
-			const block = await AppDataSource.getRepository(Block).findOneBy({
+			// Delete the block.
+			const result = await AppDataSource.getRepository(Block).delete({
 				id: Number(id),
 			});
 
-			// If the block is not found, return false.
-			if (!block) return false;
-
-			// Read the body of the event and cast it to a Partial<Block> object.
-			const body = (await readBody(event)) as Partial<Block>;
-
-			// Sanitize and update the slots of the block.
-			if (body.slots)
-				block.slots = body.slots.map(s => ({
-					name: DOMPurify.sanitize(s.name),
-					value: DOMPurify.sanitize(s.value),
-				}));
-
-			// Save the updated block.
-			await AppDataSource.getRepository(Block).save(block);
-
-			return block;
+			return (result.affected ?? 0) > 0;
 		})
 		.finally(() => {
 			// Destroy the AppDataSource connection.
 			AppDataSource.destroy();
 		});
 
-	// If the block is found, return it. Otherwise, throw an error.
-	if (block) {
-		return block;
+	// If the block is deleted, return it. Otherwise, throw an error.
+	if (isDeleted) {
+		return true;
 	} else {
 		throw createError({
 			statusCode: 404,

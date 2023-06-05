@@ -20,15 +20,16 @@ useServerSeoMeta({
 
 const token = useCookie("token");
 
-const data = (await useFetch("/api/blocks/1")).data.value as Block[] | null;
+const data = (await useFetch("/api/blocks/1")).data as Ref<Block[] | null>;
 
-if (!data) {
+if (!data.value) {
 	throw createError("No blocks returned!");
 }
 const isAdmin = (await useFetch("/api/user/admin")).data.value;
 
 const saveBlock = (newBlock: Block, index: number) => {
-	data[index] = newBlock;
+	if (!data.value) return false;
+	data.value[index] = newBlock;
 
 	fetch(`/api/blocks/${newBlock.id}`, {
 		method: "PUT",
@@ -49,6 +50,80 @@ const saveBlock = (newBlock: Block, index: number) => {
 		.catch(err => {
 			console.error(err);
 		});
+};
+
+const moveBlockUp = (index: number) => {
+	if (!data.value) return false;
+	const temp = data.value[index];
+	data.value[index] = data.value[index - 1];
+	data.value[index].index += 1;
+	// eslint-disable-next-line no-self-assign
+	data.value[index] = data.value[index]; // Force update
+	data.value[index - 1] = temp;
+	data.value[index - 1].index -= 1;
+
+	saveBlock(data.value[index], index);
+	// saveBlock(data.value[index - 1], index - 1);
+};
+
+const moveBlockDown = (index: number) => {
+	if (!data.value) return false;
+	const temp = data.value[index];
+	data.value[index] = data.value[index + 1];
+	data.value[index].index -= 1;
+	// eslint-disable-next-line no-self-assign
+	data.value[index] = data.value[index]; // Force update
+	data.value[index + 1] = temp;
+	data.value[index + 1].index += 1;
+
+	saveBlock(data.value[index], index);
+};
+
+const addNewBlock = async (index: number) => {
+	if (!data.value) return false;
+
+	const block = await useFetch(`/api/blocks/new`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token.value}`,
+		},
+		body: JSON.stringify({
+			category: "headers",
+			component: "BigText",
+			index: index + 1,
+		}),
+	});
+
+	if (!block.data.value) return;
+
+	data.value = [
+		// part of the array before the specified index
+		...data.value.slice(0, index),
+		// inserted item
+		block.data.value as unknown as Block,
+		// part of the array after the specified index
+		...data.value.slice(index),
+	];
+};
+
+const deleteBlock = async (index: number) => {
+	if (!data.value) return false;
+
+	const block = await useFetch(`/api/blocks/${data.value[index].id}`, {
+		method: "DELETE",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token.value}`,
+		},
+	});
+
+	if (!block.data.value) return;
+
+	data.value = [
+		...data.value.slice(0, index),
+		...data.value.slice(index + 1),
+	];
 };
 </script>
 
@@ -117,10 +192,14 @@ const saveBlock = (newBlock: Block, index: number) => {
 
 	<BlockRenderer
 		v-for="(block, index) in data"
-		:key="index"
+		:key="block.index"
 		:block="block"
 		:edit="isAdmin ?? false"
-		:update-block="(newBlock: Block) => saveBlock(newBlock, index)" />
+		@move-block-down="moveBlockDown(index)"
+		@move-block-up="moveBlockUp(index)"
+		@delete-block="deleteBlock(index)"
+		@add-new-block="addNewBlock(index)"
+		@update-block="(newBlock: Block) => saveBlock(newBlock, index)" />
 
 	<!-- Main hero -->
 	<div class="relative">

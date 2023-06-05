@@ -12,7 +12,9 @@ export default defineEventHandler(async () => {
 
 	const blocks = await AppDataSource.initialize()
 		.then(async AppDataSource => {
-			const blocks = await AppDataSource.getRepository(Block).find();
+			const blocks = (
+				await AppDataSource.getRepository(Block).find()
+			).sort((a, b) => a.index - b.index);
 
 			return blocks;
 		})

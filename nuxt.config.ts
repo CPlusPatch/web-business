@@ -75,5 +75,17 @@ export default defineNuxtConfig({
 				protocolImports: true,
 			}),
 		],
+		resolve: {
+			extensions: [
+				".mjs",
+				".js",
+				".mts",
+				".ts",
+				".jsx",
+				".tsx",
+				".json",
+				".vue",
+			],
+		},
 	},
 });
