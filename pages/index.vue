@@ -54,6 +54,8 @@ const saveBlock = (newBlock: Block, index: number) => {
 
 const moveBlockUp = (index: number) => {
 	if (!data.value) return false;
+	if (index === 0) return false;
+
 	const temp = data.value[index];
 	data.value[index] = data.value[index - 1];
 	data.value[index].index += 1;
@@ -68,6 +70,8 @@ const moveBlockUp = (index: number) => {
 
 const moveBlockDown = (index: number) => {
 	if (!data.value) return false;
+	if (index === data.value.length - 1) return false;
+
 	const temp = data.value[index];
 	data.value[index] = data.value[index + 1];
 	data.value[index].index -= 1;
@@ -195,6 +199,7 @@ const deleteBlock = async (index: number) => {
 		:key="block.index"
 		:block="block"
 		:edit="isAdmin ?? false"
+		:is-last="index === (data?.length ?? 0) - 1"
 		@move-block-down="moveBlockDown(index)"
 		@move-block-up="moveBlockUp(index)"
 		@delete-block="deleteBlock(index)"

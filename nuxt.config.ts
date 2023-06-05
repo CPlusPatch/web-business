@@ -11,6 +11,7 @@ export default defineNuxtConfig({
 		"nuxt-delay-hydration",
 		"nuxt-headlessui",
 		"nuxt-icon",
+		"@vueuse/nuxt",
 	],
 	extends: ["nuxt-seo-kit"],
 	app: {

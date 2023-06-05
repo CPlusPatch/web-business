@@ -21,6 +21,8 @@
 		"@types/node": "^18.15.11",
 		"@typescript-eslint/parser": "^5.57.1",
 		"@unocss/nuxt": "^0.51.4",
+		"@vueuse/core": "^10.1.2",
+		"@vueuse/nuxt": "^10.1.2",
 		"eslint": "^8.37.0",
 		"eslint-config-prettier": "^8.8.0",
 		"eslint-plugin-prettier": "^4.2.1",

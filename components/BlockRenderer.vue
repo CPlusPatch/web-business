@@ -5,6 +5,7 @@ import { Block } from "~/db/entities/Block";
 const props = defineProps<{
 	block: Block;
 	edit: boolean;
+	isLast: boolean;
 }>();
 
 const emit = defineEmits([
@@ -41,10 +42,18 @@ const editSlot = (e: Event, slot: any) => {
 		<div
 			v-if="edit"
 			class="!absolute bottom-0 inset-x-0 justify-center z-50 flex gap-x-2">
-			<Button theme="gray" @click="$emit('moveBlockUp')">
+			<Button
+				theme="gray"
+				class="disabled:!opacity-50"
+				:disabled="block.index === 0"
+				@click="$emit('moveBlockUp')">
 				<Icon name="ic:round-keyboard-arrow-up" />
 			</Button>
-			<Button theme="gray" @click="$emit('moveBlockDown')">
+			<Button
+				theme="gray"
+				class="disabled:!opacity-50"
+				:disabled="isLast"
+				@click="$emit('moveBlockDown')">
 				<Icon name="ic:round-keyboard-arrow-down" />
 			</Button>
 			<Button
