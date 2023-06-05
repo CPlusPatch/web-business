@@ -6,6 +6,7 @@ const props = defineProps<{
 	block: Block;
 	edit: boolean;
 	isLast: boolean;
+	isFirst: boolean;
 }>();
 
 const emit = defineEmits([
@@ -41,31 +42,32 @@ const editSlot = (e: Event, slot: any) => {
 	<div class="relative">
 		<div
 			v-if="edit"
-			class="!absolute bottom-0 inset-x-0 justify-center z-50 flex gap-x-2">
+			class="!absolute left-10 items-center inset-y-0 justify-center z-50 flex flex-col gap-2">
 			<Button
 				theme="gray"
-				class="disabled:!opacity-50"
-				:disabled="block.index === 0"
+				class="!px-2 !py-2 !shadow-lg"
+				:disabled="isFirst"
 				@click="$emit('moveBlockUp')">
-				<Icon name="ic:round-keyboard-arrow-up" />
+				<Icon name="ic:round-keyboard-arrow-up" class="w-6 h-6" />
 			</Button>
 			<Button
 				theme="gray"
-				class="disabled:!opacity-50"
+				class="!px-2 !py-2 !shadow-lg"
 				:disabled="isLast"
 				@click="$emit('moveBlockDown')">
-				<Icon name="ic:round-keyboard-arrow-down" />
+				<Icon name="ic:round-keyboard-arrow-down" class="w-6 h-6" />
 			</Button>
 			<Button
 				theme="gray"
-				class="!text-red-600"
+				class="!text-red-600 !px-2 !py-2 !shadow-lg"
 				@click="$emit('deleteBlock')">
-				<Icon name="ic:round-delete" class="mr-2" />
-				Delete
+				<Icon name="ic:round-delete" class="w-6 h-6" />
 			</Button>
-			<Button theme="gray" @click="$emit('addNewBlock')">
-				<Icon name="ic:round-add-circle-outline" class="mr-2" />
-				Add new
+			<Button
+				theme="gray"
+				class="!px-2 !py-2 !shadow-lg"
+				@click="$emit('addNewBlock')">
+				<Icon name="ic:round-add-circle-outline" class="w-6 h-6" />
 			</Button>
 		</div>
 		<component :is="importedComp">

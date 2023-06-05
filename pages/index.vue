@@ -200,6 +200,7 @@ const deleteBlock = async (index: number) => {
 		:block="block"
 		:edit="isAdmin ?? false"
 		:is-last="index === (data?.length ?? 0) - 1"
+		:is-first="index === 0"
 		@move-block-down="moveBlockDown(index)"
 		@move-block-up="moveBlockUp(index)"
 		@delete-block="deleteBlock(index)"
