@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Skills from "~~/components/landing/Skills.vue";
 import OpenSourceWorkflow from "~~/components/landing/OpenSourceWorkflow.vue";
 import LighthouseScores from "~~/components/landing/LighthouseScores.vue";
 import Certs from "~~/components/landing/Certs.vue";
@@ -208,10 +207,6 @@ const deleteBlock = async (index: number) => {
 		@delete-block="deleteBlock(block.index)"
 		@add-new-block="addNewBlock(block.index)"
 		@update-block="(newBlock: Block) => {data![newBlock.index] = newBlock;saveAll()}" />
-
-	<Skills v-once />
-
-	<OpenSourceWorkflow v-once />
 
 	<LighthouseScores v-once />
 

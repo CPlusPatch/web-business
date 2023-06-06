@@ -23,14 +23,14 @@ const importedComp = (
 	)
 ).default;
 
-const editSlot = (e: Event, slot: any) => {
+const editSlot = (value: string, slot: any) => {
 	emit("updateBlock", {
 		...props.block,
 		slots: props.block.slots.map(s =>
 			s.name === slot
 				? {
 						name: slot,
-						value: (e.target as HTMLSpanElement).innerText,
+						value,
 				  }
 				: s
 		),

@@ -40,14 +40,26 @@ const emit = defineEmits(["editField"]);
 						class="inline mr-auto"
 						:contenteditable="editable"
 						data-placeholder="Your"
-						@input="emit('editField', $event, 'text-primary')"
+						@input="
+							emit(
+								'editField',
+								($event.target as HTMLSpanElement).innerText,
+								'text-primary'
+							)
+						"
 						>{{ textPrimary }}</span
 					>
 					<span
 						:contenteditable="editable"
 						data-placeholder="Title here"
 						class="py-2 text-transparent mr-auto bg-clip-text bg-gradient-to-tr from-pink-500 !to-yellow-500 via-red-500"
-						@input="emit('editField', $event, 'text-typewriter')">
+						@input="
+							emit(
+								'editField',
+								($event.target as HTMLSpanElement).innerText,
+								'text-typewriter'
+							)
+						">
 						{{ textTypewriter }}
 					</span>
 
