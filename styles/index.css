@@ -52,6 +52,11 @@ a {
 	text-decoration: none;
 }
 
+[data-placeholder]:empty:before {
+    content: attr(data-placeholder);
+	border-bottom: 3px dashed black;
+}
+
 .bio a::after,
 .status-text a::after {
 	content: "";

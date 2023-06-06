@@ -53,27 +53,27 @@ props.block.slots.forEach(s => {
 			class="!absolute left-10 items-center inset-y-0 justify-center z-50 flex flex-col gap-2">
 			<Button
 				theme="gray"
-				class="!px-2 !py-2 !shadow-lg"
+				class="!px-2 !py-2 !shadow-md hover:translate-x-1"
 				:disabled="isFirst"
 				@click="$emit('moveBlockUp')">
 				<Icon name="ic:round-keyboard-arrow-up" class="w-6 h-6" />
 			</Button>
 			<Button
 				theme="gray"
-				class="!px-2 !py-2 !shadow-lg"
+				class="!px-2 !py-2 !shadow-md hover:translate-x-1"
 				:disabled="isLast"
 				@click="$emit('moveBlockDown')">
 				<Icon name="ic:round-keyboard-arrow-down" class="w-6 h-6" />
 			</Button>
 			<Button
 				theme="gray"
-				class="!text-red-600 !px-2 !py-2 !shadow-lg"
+				class="!text-red-600 !px-2 !py-2 !shadow-md hover:translate-x-1"
 				@click="$emit('deleteBlock')">
 				<Icon name="ic:round-delete" class="w-6 h-6" />
 			</Button>
 			<Button
 				theme="gray"
-				class="!px-2 !py-2 !shadow-lg"
+				class="!px-2 !py-2 !shadow-md hover:translate-x-1"
 				@click="$emit('addNewBlock')">
 				<Icon name="ic:round-add-circle-outline" class="w-6 h-6" />
 			</Button>
