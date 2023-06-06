@@ -27,15 +27,23 @@ const editSlot = (e: Event, slot: any) => {
 	emit("updateBlock", {
 		...props.block,
 		slots: props.block.slots.map(s =>
-			s.name === slot.name
+			s.name === slot
 				? {
-						name: slot.name,
+						name: slot,
 						value: (e.target as HTMLSpanElement).innerText,
 				  }
 				: s
 		),
 	});
 };
+
+const passedProps: {
+	[name: string]: string | undefined;
+} = {};
+
+props.block.slots.forEach(s => {
+	passedProps[s.name] = s.value;
+});
 </script>
 
 <template>
@@ -70,19 +78,33 @@ const editSlot = (e: Event, slot: any) => {
 				<Icon name="ic:round-add-circle-outline" class="w-6 h-6" />
 			</Button>
 		</div>
-		<component :is="importedComp">
-			<template
+		<component
+			:is="importedComp"
+			v-bind="passedProps"
+			:editable="edit"
+			@edit-field="editSlot">
+			<!-- <template
 				v-for="slot in block.slots"
 				:key="slot.name"
 				#[slot.name]=""
 				><span
+					v-if="
+						meta.inputs.find(i => i.name === slot.name)?.type ===
+						InputType.String
+					"
 					:contenteditable="edit"
 					@input="editSlot($event, slot)"
 					>{{
 						block.slots.find(s => s.name === slot.name)?.value
 					}}</span
-				></template
-			>
+				>
+				{{
+					meta.inputs.find(i => i.name === slot.name)?.type ===
+					InputType.Image
+						? block.slots.find(s => s.name === slot.name)?.value
+						: undefined
+				}}
+			</template> -->
 		</component>
 	</div>
 </template>

@@ -54,26 +54,42 @@ export default defineEventHandler(async event => {
 				}));
 
 			if (body.index !== block.index) {
-				console.log(body.index);
-				console.log(
-					await AppDataSource.getRepository(Block)
-						.createQueryBuilder()
-						.update()
-						.set({ index: body.index })
-						.where("id = :id", { id: Number(id) })
-						.execute()
-				);
+				await AppDataSource.getRepository(Block)
+					.createQueryBuilder()
+					.update()
+					.set({ index: body.index })
+					.where("id = :id", { id: Number(id) })
+					.execute();
+
+				const tableLength = await AppDataSource.getRepository(
+					Block
+				).count();
+
+				await AppDataSource.getRepository(Block)
+					.createQueryBuilder("block")
+					.update()
+					.set({ index: () => "`index` + 1" })
+					.where("`index` >= :newIndex", { newIndex: body.index })
+					.andWhere("`index` < :oldIndex", { oldIndex: block.index })
+					.andWhere("id != :id", { id: Number(id) })
+					.execute();
 
 				await AppDataSource.getRepository(Block)
 					.createQueryBuilder("block")
 					.update()
 					.set({ index: () => "`index` - 1" })
-					.where("`index` > :oldIndex", {
-						oldIndex: block.index,
-					})
-					.andWhere("`index` <= :newIndex", {
-						newIndex: body.index,
-					})
+					.where("`index` > :oldIndex", { oldIndex: block.index })
+					.andWhere("`index` <= :newIndex", { newIndex: body.index })
+					.andWhere("id != :id", { id: Number(id) })
+					.execute();
+
+				await AppDataSource.getRepository(Block)
+					.createQueryBuilder()
+					.update()
+					.set({ index: tableLength - 1 })
+					.where("id = :id")
+					.setParameter("id", Number(id))
+					.andWhere("`index` >= :newIndex", { newIndex: tableLength })
 					.execute();
 			}
 

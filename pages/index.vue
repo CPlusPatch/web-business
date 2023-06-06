@@ -58,14 +58,12 @@ const moveBlockUp = (index: number) => {
 
 	const temp = data.value[index];
 	data.value[index] = data.value[index - 1];
-	data.value[index].index += 1;
-	// eslint-disable-next-line no-self-assign
-	data.value[index] = data.value[index]; // Force update
-	data.value[index - 1] = temp;
-	data.value[index - 1].index -= 1;
+	data.value[index].index = index; // Update index of the current block
 
-	saveBlock(data.value[index], index);
-	// saveBlock(data.value[index - 1], index - 1);
+	data.value[index - 1] = temp;
+	data.value[index - 1].index = index - 1; // Update index of the previous block
+
+	saveBlock(data.value[index - 1], index - 1);
 };
 
 const moveBlockDown = (index: number) => {
@@ -74,13 +72,12 @@ const moveBlockDown = (index: number) => {
 
 	const temp = data.value[index];
 	data.value[index] = data.value[index + 1];
-	data.value[index].index -= 1;
-	// eslint-disable-next-line no-self-assign
-	data.value[index] = data.value[index]; // Force update
-	data.value[index + 1] = temp;
-	data.value[index + 1].index += 1;
+	data.value[index].index = index; // Update index of the current block
 
-	saveBlock(data.value[index], index);
+	data.value[index + 1] = temp;
+	data.value[index + 1].index = index + 1; // Update index of the next block
+
+	saveBlock(data.value[index], index + 1);
 };
 
 const addNewBlock = async (index: number) => {
@@ -206,21 +203,6 @@ const deleteBlock = async (index: number) => {
 		@delete-block="deleteBlock(index)"
 		@add-new-block="addNewBlock(index)"
 		@update-block="(newBlock: Block) => saveBlock(newBlock, index)" />
-
-	<!-- Main hero -->
-	<div class="relative">
-		<div class="relative px-4 mx-auto max-w-7xl w-full sm:px-6">
-			<nuxt-img
-				preload
-				:width="1920"
-				:height="1080"
-				sizes="lg:1920px md:700px sm:400px"
-				class="rounded-lg aspect-video shadow-lg w-full duration-150"
-				src="/static/banner.webp"
-				alt="VSCode screenshot" />
-		</div>
-		<div class="py-4 sm:py-12" />
-	</div>
 
 	<Skills v-once />
 

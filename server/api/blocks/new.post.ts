@@ -61,6 +61,13 @@ export default defineEventHandler(async event => {
 				name: i.name,
 			}));
 
+			await AppDataSource.getRepository(Block)
+				.createQueryBuilder("block")
+				.update()
+				.set({ index: () => "`index` + 1" })
+				.where("`index` >= :newIndex", { newIndex: block.index })
+				.execute();
+
 			// Save the updated block.
 			const newBlock = await AppDataSource.getRepository(Block).save(
 				block

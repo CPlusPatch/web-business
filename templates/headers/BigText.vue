@@ -19,18 +19,37 @@ const meta: TemplateMetadata = {
 export { meta };
 </script>
 
+<script setup lang="ts">
+defineProps<{
+	textPrimary: string;
+	textTypewriter: string;
+	editable: boolean;
+}>();
+
+const emit = defineEmits(["editField"]);
+</script>
+
 <template>
 	<!-- Big landing title -->
 	<div class="relative pb-16 sm:pb-24 mt-40">
 		<div class="px-4 mx-auto mt-16 max-w-7xl ssm:mt-12 sm:px-6 font-inter">
 			<div class="text-left">
 				<h1
-					class="text-4xl font-black text-gray-900 dark:text-gray-300 sm:text-5xl md:text-6xl">
-					<span class="block"><slot name="text-primary" /></span>
+					class="text-4xl font-black text-gray-900 dark:text-gray-300 sm:text-5xl md:text-6xl flex flex-col">
 					<span
-						class="pb-2 text-transparent bg-clip-text bg-gradient-to-tr from-pink-500 !to-yellow-500 via-red-500">
-						<slot name="text-typewriter" />
-						<!-- <Typewriter
+						class="inline mr-auto"
+						:contenteditable="editable"
+						@input="emit('editField', $event, 'text-primary')"
+						>{{ textPrimary }}</span
+					>
+					<span
+						:contenteditable="editable"
+						class="py-2 text-transparent mr-auto bg-clip-text bg-gradient-to-tr from-pink-500 !to-yellow-500 via-red-500"
+						@input="emit('editField', $event, 'text-typewriter')">
+						{{ textTypewriter }}
+					</span>
+
+					<!-- <Typewriter
 							class="inline"
 							:text-array="[
 								'CPlusPatch',
@@ -40,7 +59,6 @@ export { meta };
 							]"
 							:speed="100"
 							:wait="1500" /> -->
-					</span>
 				</h1>
 			</div>
 		</div>
