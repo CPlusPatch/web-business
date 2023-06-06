@@ -194,18 +194,20 @@ const deleteBlock = async (index: number) => {
 		</div>
 	</div>
 
-	<BlockRenderer
-		v-for="block in data?.sort((a, b) => a.index - b.index)"
-		:key="block.id"
-		:block="block"
-		:edit="isAdmin ?? false"
-		:is-last="block.index === (data?.length ?? 0) - 1"
-		:is-first="block.index === 0"
-		@move-block-down="moveBlockDown(block.index)"
-		@move-block-up="moveBlockUp(block.index)"
-		@delete-block="deleteBlock(block.index)"
-		@add-new-block="addNewBlock(block.index)"
-		@update-block="(newBlock: Block) => {data![newBlock.index] = newBlock;saveAll()}" />
+	<TransitionGroup name="block-list">
+		<BlockRenderer
+			v-for="block in data?.sort((a, b) => a.index - b.index)"
+			:key="block.id"
+			:block="block"
+			:edit="isAdmin ?? false"
+			:is-last="block.index === (data?.length ?? 0) - 1"
+			:is-first="block.index === 0"
+			@move-block-down="moveBlockDown(block.index)"
+			@move-block-up="moveBlockUp(block.index)"
+			@delete-block="deleteBlock(block.index)"
+			@add-new-block="addNewBlock(block.index)"
+			@update-block="(newBlock: Block) => {data![newBlock.index] = newBlock;saveAll()}" />
+	</TransitionGroup>
 
 	<LighthouseScores v-once />
 
@@ -215,3 +217,9 @@ const deleteBlock = async (index: number) => {
 
 	<Faqs />
 </template>
+
+<style scoped>
+.block-list-move {
+	transition: transform 0.2s ease-in-out;
+}
+</style>
