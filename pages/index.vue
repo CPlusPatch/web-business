@@ -98,6 +98,15 @@ const addNewBlock = async (index: number) => {
 
 	if (!block.data.value) return;
 
+	data.value = data.value.map(d =>
+		d.index >= index
+			? {
+					...d,
+					index: d.index + 1,
+			  }
+			: d
+	);
+
 	data.value = [
 		// part of the array before the specified index
 		...data.value.slice(0, index),
