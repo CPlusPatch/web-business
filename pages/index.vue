@@ -28,7 +28,7 @@ const isAdmin = (await useFetch("/api/user/admin")).data.value;
 const saveAll = async () => {
 	if (!data.value) return false;
 
-	const result = await useFetch(`/api/blocks/1`, {
+	await useFetch(`/api/blocks/1`, {
 		method: "PUT",
 		headers: {
 			"Content-Type": "application/json",

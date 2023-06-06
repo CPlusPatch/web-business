@@ -20,9 +20,13 @@ const emit = defineEmits(["editField"]);
 const sendChanges = (e: Event, index: number, fieldType: string) => {
 	const newList = _list.value;
 
-	(newList[index] as any)[fieldType] = (
-		e.target as HTMLSpanElement
-	).innerText;
+	if (fieldType === "icon") {
+		(newList[index] as any)[fieldType] = prompt("Icon name:");
+	} else {
+		(newList[index] as any)[fieldType] = (
+			e.target as HTMLSpanElement
+		).innerText;
+	}
 
 	emit("editField", newList, "list");
 };
@@ -109,14 +113,25 @@ const deleteItem = (index: number) => {
 							<div
 								v-for="(feature, index) in _list"
 								:key="feature.name"
-								class="relative pl-9 flex flex-row gap-2 items-center">
+								class="relative pl-9 flex flex-row gap-2">
 								<div class="grow">
 									<dt
 										class="inline font-semibold text-gray-900">
 										<Icon
-											:name="feature.icon"
+											:name="
+												feature.icon === ''
+													? 'tabler:dots'
+													: feature.icon
+											"
 											class="absolute left-1 top-1 h-5 w-5 text-orange-600"
-											aria-hidden="true" />
+											aria-hidden="true"
+											@click="
+												sendChanges(
+													$event,
+													index,
+													'icon'
+												)
+											" />
 
 										<span
 											:contenteditable="editable"
@@ -136,7 +151,7 @@ const deleteItem = (index: number) => {
 										class="inline"
 										:contenteditable="editable"
 										data-placeholder="Secondary text"
-										@fpcusout="
+										@focusout="
 											sendChanges(
 												$event,
 												index,
