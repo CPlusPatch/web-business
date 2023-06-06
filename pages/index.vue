@@ -37,7 +37,7 @@ const saveAll = async () => {
 		body: JSON.stringify(data.value),
 	});
 
-	if (result.data.value) data.value = result.data.value as unknown as Block[];
+	// if (result.data.value) data.value = result.data.value as unknown as Block[];
 };
 
 const moveBlockUp = (index: number) => {

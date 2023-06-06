@@ -13,16 +13,61 @@ const props = defineProps<{
 	}[];
 }>();
 
+const _list = ref(props.list);
+
 const emit = defineEmits(["editField"]);
 
 const sendChanges = (e: Event, index: number, fieldType: string) => {
-	const newList = props.list;
+	const newList = _list.value;
 
 	(newList[index] as any)[fieldType] = (
 		e.target as HTMLSpanElement
 	).innerText;
 
 	emit("editField", newList, "list");
+};
+
+const moveUp = (index: number) => {
+	if (index === 0) return;
+	const tempList = _list.value;
+	const temp = tempList[index];
+	tempList[index] = tempList[index - 1];
+	tempList[index - 1] = temp;
+
+	_list.value = tempList;
+	emit("editField", tempList, "list");
+};
+
+const moveDown = (index: number) => {
+	if (index === _list.value.length - 1) return;
+	const tempList = _list.value;
+	const temp = tempList[index];
+	tempList[index] = tempList[index + 1];
+	tempList[index + 1] = temp;
+
+	_list.value = tempList;
+	emit("editField", tempList, "list");
+};
+
+const addItem = (index: number) => {
+	_list.value = [
+		..._list.value.slice(0, index + 1),
+		{
+			name: "",
+			description: "",
+			icon: "",
+		},
+		..._list.value.splice(index + 1),
+	];
+	emit("editField", _list.value, "list");
+};
+
+const deleteItem = (index: number) => {
+	_list.value = [
+		..._list.value.slice(0, index),
+		..._list.value.splice(index + 1),
+	];
+	emit("editField", _list.value, "list");
 };
 </script>
 
@@ -60,34 +105,87 @@ const sendChanges = (e: Event, index: number, fieldType: string) => {
 					</p>
 					<dl
 						class="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none">
-						<div
-							v-for="(feature, index) in list"
-							:key="feature.name"
-							class="relative pl-9">
-							<dt class="inline font-semibold text-gray-900">
-								<Icon
-									:name="feature.icon"
-									class="absolute left-1 top-1 h-5 w-5 text-orange-600"
-									aria-hidden="true" />
+						<TransitionGroup name="block-list-2">
+							<div
+								v-for="(feature, index) in _list"
+								:key="feature.name"
+								class="relative pl-9 flex flex-row gap-2 items-center">
+								<div class="grow">
+									<dt
+										class="inline font-semibold text-gray-900">
+										<Icon
+											:name="feature.icon"
+											class="absolute left-1 top-1 h-5 w-5 text-orange-600"
+											aria-hidden="true" />
 
-								<span
-									:contenteditable="editable"
-									data-placeholder="Bold header"
-									@input="sendChanges($event, index, 'name')"
-									>{{ feature.name }}</span
-								>
-							</dt>
-							{{ " " }}
-							<dd
-								class="inline"
-								:contenteditable="editable"
-								data-placeholder="Secondary text"
-								@input="
-									sendChanges($event, index, 'description')
-								">
-								{{ feature.description }}
-							</dd>
-						</div>
+										<span
+											:contenteditable="editable"
+											data-placeholder="Bold header"
+											@focusout="
+												sendChanges(
+													$event,
+													index,
+													'name'
+												)
+											"
+											>{{ feature.name }}</span
+										>
+									</dt>
+									{{ " " }}
+									<dd
+										class="inline"
+										:contenteditable="editable"
+										data-placeholder="Secondary text"
+										@fpcusout="
+											sendChanges(
+												$event,
+												index,
+												'description'
+											)
+										">
+										{{ feature.description }}
+									</dd>
+								</div>
+								<div class="flex gap-1">
+									<div class="flex flex-col gap-1">
+										<Button
+											theme="gray"
+											class="!px-1 !py-1 !shadow-md hover:-translate-y-1"
+											@click="moveUp(index)">
+											<Icon
+												name="ic:round-keyboard-arrow-up"
+												class="w-6 h-6" />
+										</Button>
+										<Button
+											theme="gray"
+											class="!px-1 !py-1 !shadow-md hover:translate-y-1"
+											@click="moveDown(index)">
+											<Icon
+												name="ic:round-keyboard-arrow-down"
+												class="w-6 h-6" />
+										</Button>
+									</div>
+									<div class="flex flex-col gap-1">
+										<Button
+											theme="gray"
+											class="!px-1 !py-1 !text-red-600 !shadow-md"
+											@click="deleteItem(index)">
+											<Icon
+												name="ic:round-delete"
+												class="w-6 h-6" />
+										</Button>
+										<Button
+											theme="gray"
+											class="!px-1 !py-1 !shadow-md"
+											@click="addItem(index)">
+											<Icon
+												name="ic:round-plus"
+												class="w-6 h-6" />
+										</Button>
+									</div>
+								</div>
+							</div>
+						</TransitionGroup>
 					</dl>
 				</div>
 			</div>
@@ -98,3 +196,9 @@ const sendChanges = (e: Event, index: number, fieldType: string) => {
 		</div>
 	</PrimaryContainer>
 </template>
+
+<style scoped>
+.block-list-2-move {
+	transition: transform 0.2s ease-in-out;
+}
+</style>
