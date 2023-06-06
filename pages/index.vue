@@ -27,29 +27,19 @@ if (!data.value) {
 }
 const isAdmin = (await useFetch("/api/user/admin")).data.value;
 
-const saveBlock = (newBlock: Block, index: number) => {
+const saveAll = async () => {
 	if (!data.value) return false;
-	data.value[index] = newBlock;
 
-	fetch(`/api/blocks/${newBlock.id}`, {
+	const result = await useFetch(`/api/blocks/1`, {
 		method: "PUT",
 		headers: {
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${token.value}`,
 		},
-		body: JSON.stringify(newBlock),
-	})
-		.then(data => {
-			switch (data.status) {
-				case 201:
-				case 200: {
-					break;
-				}
-			}
-		})
-		.catch(err => {
-			console.error(err);
-		});
+		body: JSON.stringify(data.value),
+	});
+
+	if (result.data.value) data.value = result.data.value as unknown as Block[];
 };
 
 const moveBlockUp = (index: number) => {
@@ -58,12 +48,15 @@ const moveBlockUp = (index: number) => {
 
 	const temp = data.value[index];
 	data.value[index] = data.value[index - 1];
-	data.value[index].index = index; // Update index of the current block
-
 	data.value[index - 1] = temp;
-	data.value[index - 1].index = index - 1; // Update index of the previous block
 
-	saveBlock(data.value[index - 1], index - 1);
+	// Recalculate indexes
+	data.value = data.value.map((d, index) => ({
+		...d,
+		index,
+	}));
+
+	saveAll();
 };
 
 const moveBlockDown = (index: number) => {
@@ -72,12 +65,15 @@ const moveBlockDown = (index: number) => {
 
 	const temp = data.value[index];
 	data.value[index] = data.value[index + 1];
-	data.value[index].index = index; // Update index of the current block
-
 	data.value[index + 1] = temp;
-	data.value[index + 1].index = index + 1; // Update index of the next block
 
-	saveBlock(data.value[index], index + 1);
+	// Recalculate indexes
+	data.value = data.value.map((d, index) => ({
+		...d,
+		index,
+	}));
+
+	saveAll();
 };
 
 const addNewBlock = async (index: number) => {
@@ -201,17 +197,17 @@ const deleteBlock = async (index: number) => {
 	</div>
 
 	<BlockRenderer
-		v-for="(block, index) in data"
-		:key="block.index"
+		v-for="block in data?.sort((a, b) => a.index - b.index)"
+		:key="block.id"
 		:block="block"
 		:edit="isAdmin ?? false"
-		:is-last="index === (data?.length ?? 0) - 1"
-		:is-first="index === 0"
-		@move-block-down="moveBlockDown(index)"
-		@move-block-up="moveBlockUp(index)"
-		@delete-block="deleteBlock(index)"
-		@add-new-block="addNewBlock(index)"
-		@update-block="(newBlock: Block) => saveBlock(newBlock, index)" />
+		:is-last="block.index === (data?.length ?? 0) - 1"
+		:is-first="block.index === 0"
+		@move-block-down="moveBlockDown(block.index)"
+		@move-block-up="moveBlockUp(block.index)"
+		@delete-block="deleteBlock(block.index)"
+		@add-new-block="addNewBlock(block.index)"
+		@update-block="(newBlock: Block) => {data![newBlock.index] = newBlock;saveAll()}" />
 
 	<Skills v-once />
 

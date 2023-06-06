@@ -1,4 +1,4 @@
-import DOMPurify from "isomorphic-dompurify";
+// import DOMPurify from "isomorphic-dompurify";
 import { Role } from "~/db/entities/User";
 import { AppDataSource } from "~~/db/data-source";
 import { getUserByToken } from "~/utils/tokens";
@@ -13,7 +13,7 @@ import { Block } from "~/db/entities/Block";
  */
 export default defineEventHandler(async event => {
 	// Get the ID from the event context or assign an empty string as the default value.
-	const id = event.context.params?.id ?? "";
+	// const id = event.context.params?.id ?? "";
 
 	// Get the user by token.
 	const user = await getUserByToken(
@@ -28,89 +28,60 @@ export default defineEventHandler(async event => {
 	}
 
 	// Read the body of the event and cast it to a Partial<Block> object.
-	const body = (await readBody(event)) as Partial<Block>;
+	const body = (await readBody(event)) as Block[];
 
-	if (body.index === undefined)
+	/* if (body.index === undefined)
 		throw createError({
 			statusCode: 400,
 			statusMessage: "Missing field: index",
-		});
+		}); */
 
 	// Initialize the AppDataSource and retrieve the block with the specified ID.
-	const block = await AppDataSource.initialize()
-		.then(async AppDataSource => {
-			const block = await AppDataSource.getRepository(Block).findOneBy({
-				id: Number(id),
-			});
 
-			// If the block is not found, return false.
-			if (!block) return false;
+	if (!AppDataSource.isInitialized) {
+		await AppDataSource.initialize();
+	}
 
-			// Sanitize and update the slots of the block.
-			if (body.slots)
-				block.slots = body.slots.map(s => ({
+	/* // If no blocks are found, return false.
+	if (!blocks || blocks.length === 0) return false;
+
+	// Iterate over each block and sanitize/update the slots and index.
+	blocks = await Promise.all(
+		blocks.map(async block => {
+			const bodyElement = body.find(b => Number(b.id) === block.id);
+
+			if (!bodyElement) return block;
+
+			if (bodyElement.slots) {
+				block.slots = bodyElement.slots.map(s => ({
 					name: DOMPurify.sanitize(s.name),
 					value: s.value ? DOMPurify.sanitize(s.value) : undefined,
 				}));
-
-			if (body.index !== block.index) {
-				await AppDataSource.getRepository(Block)
-					.createQueryBuilder()
-					.update()
-					.set({ index: body.index })
-					.where("id = :id", { id: Number(id) })
-					.execute();
-
-				const tableLength = await AppDataSource.getRepository(
-					Block
-				).count();
-
-				await AppDataSource.getRepository(Block)
-					.createQueryBuilder("block")
-					.update()
-					.set({ index: () => "`index` + 1" })
-					.where("`index` >= :newIndex", { newIndex: body.index })
-					.andWhere("`index` < :oldIndex", { oldIndex: block.index })
-					.andWhere("id != :id", { id: Number(id) })
-					.execute();
-
-				await AppDataSource.getRepository(Block)
-					.createQueryBuilder("block")
-					.update()
-					.set({ index: () => "`index` - 1" })
-					.where("`index` > :oldIndex", { oldIndex: block.index })
-					.andWhere("`index` <= :newIndex", { newIndex: body.index })
-					.andWhere("id != :id", { id: Number(id) })
-					.execute();
-
-				await AppDataSource.getRepository(Block)
-					.createQueryBuilder()
-					.update()
-					.set({ index: tableLength - 1 })
-					.where("id = :id")
-					.setParameter("id", Number(id))
-					.andWhere("`index` >= :newIndex", { newIndex: tableLength })
-					.execute();
 			}
+			if (bodyElement.index) block.index = Number(bodyElement.index);
 
-			// Save the updated block.
-			await AppDataSource.getRepository(Block).save({
-				...block,
-				index: body.index,
-			});
-
-			if (body.index) block.index = Number(body.index);
-
-			return block;
+			// Update the block in the query builder.
+			return await AppDataSource.getRepository(Block).save(block);
 		})
-		.finally(() => {
-			// Destroy the AppDataSource connection.
-			AppDataSource.destroy();
-		});
+	); */
 
-	// If the block is found, return it. Otherwise, throw an error.
-	if (block) {
-		return block;
+	const blocks = await Promise.all(
+		body.map(async bodyBlock => {
+			await AppDataSource.getRepository(Block)
+				.createQueryBuilder("block")
+				.update()
+				.set(bodyBlock)
+				.where("id = :id", { id: bodyBlock.id })
+				.execute();
+
+			return bodyBlock;
+		})
+	);
+
+	AppDataSource.destroy();
+
+	if (blocks) {
+		return blocks;
 	} else {
 		throw createError({
 			statusCode: 404,

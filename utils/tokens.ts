@@ -30,6 +30,6 @@ export async function getUserByToken(value: string) {
 			AppDataSource.destroy();
 		});
 
-	if (token && token.user) return token.user;
+	if (token?.user) return token.user;
 	else return null;
 }
