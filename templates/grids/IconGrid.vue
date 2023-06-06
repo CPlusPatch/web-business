@@ -3,13 +3,30 @@
 		<div class="space-y-12">
 			<div class="space-y-5 sm:space-y-4">
 				<h2
-					class="mb-3 text-3xl font-black text-gray-800 font-poppins sm:text-5xl">
-					Languages & Frameworks
+					:contenteditable="editable"
+					data-placeholder="Secondary text here"
+					class="mb-3 text-3xl font-black inline mr-2 text-gray-800 font-poppins sm:text-5xl"
+					@input="
+						emit(
+							'editField',
+							($event.target as HTMLSpanElement).innerText,
+							'text-header'
+						)
+					">
+					{{ textHeader }}
 				</h2>
-				<p class="text-xl text-gray-500 dark:text-gray-300 font-inter">
-					My experience with several different programming languages,
-					frameworks, and libraries. Skill in any may vary from
-					project to project.
+				<p
+					:contenteditable="editable"
+					data-placeholder="Secondary text here"
+					class="text-xl text-gray-500 dark:text-gray-300 font-inter"
+					@input="
+						emit(
+							'editField',
+							($event.target as HTMLSpanElement).innerText,
+							'text-secondary'
+						)
+					">
+					{{ textSecondary }}
 				</p>
 			</div>
 		</div>
@@ -83,7 +100,11 @@ import PrimaryContainer from "~/components/layout/PrimaryContainer.vue";
 
 defineProps<{
 	editable: boolean;
+	textHeader: string;
+	textSecondary: string;
 }>();
+
+const emit = defineEmits(["editField"]);
 
 const languages: {
 	name: string;

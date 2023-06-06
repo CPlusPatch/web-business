@@ -32,10 +32,10 @@ const sendChanges = (e: Event, index: number, fieldType: string) => {
 			class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 items-center">
 			<div class="lg:pr-8">
 				<div class="lg:max-w-lg">
-					<p
+					<h2
 						:contenteditable="editable"
 						data-placeholder="Title"
-						class="mt-2 text-4xl font-bold text-gray-900 sm:text-6xl"
+						class="mt-2 mr-2 inline text-4xl font-bold text-gray-900 sm:text-6xl"
 						@input="
 							emit(
 								'editField',
@@ -44,7 +44,7 @@ const sendChanges = (e: Event, index: number, fieldType: string) => {
 							)
 						">
 						{{ textHeader }}
-					</p>
+					</h2>
 					<p
 						class="mt-6 text-lg leading-8 text-gray-600"
 						:contenteditable="editable"
@@ -93,7 +93,7 @@ const sendChanges = (e: Event, index: number, fieldType: string) => {
 			</div>
 			<nuxt-img
 				alt="Product screenshot"
-				src="/static/photo-motherboard-square.webp"
+				:src="imageMain"
 				class="w-[48rem] max-w-none rounded-xl hidden md:block duration-500 shadow-xl ring-1 ring-gray-400/10 sm:w-[40rem] md:-ml-4 lg:-ml-0" />
 		</div>
 	</PrimaryContainer>

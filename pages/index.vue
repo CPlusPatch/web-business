@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import OpenSourceWorkflow from "~~/components/landing/OpenSourceWorkflow.vue";
 import LighthouseScores from "~~/components/landing/LighthouseScores.vue";
 import Certs from "~~/components/landing/Certs.vue";
 import Testimonials from "~~/components/landing/Testimonials.vue";
