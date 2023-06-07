@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import LighthouseScores from "~~/components/landing/LighthouseScores.vue";
 import Certs from "~~/components/landing/Certs.vue";
 import Testimonials from "~~/components/landing/Testimonials.vue";
 import Faqs from "~~/components/landing/Faqs.vue";
@@ -84,8 +83,8 @@ const addNewBlock = async (index: number) => {
 			Authorization: `Bearer ${token.value}`,
 		},
 		body: JSON.stringify({
-			category: "headers",
-			component: "BigText",
+			category: prompt("Category:"),
+			component: prompt("Component:"),
 			index: index + 1,
 		}),
 	});
@@ -109,6 +108,12 @@ const addNewBlock = async (index: number) => {
 		// part of the array after the specified index
 		...data.value.slice(index),
 	];
+
+	// Recalculate indexes
+	data.value = data.value.map((d, index) => ({
+		...d,
+		index,
+	}));
 };
 
 const deleteBlock = async (index: number) => {
@@ -208,8 +213,6 @@ const deleteBlock = async (index: number) => {
 			@add-new-block="addNewBlock(block.index)"
 			@update-block="(newBlock: Block) => {data![newBlock.index] = newBlock;saveAll()}" />
 	</TransitionGroup>
-
-	<LighthouseScores v-once />
 
 	<Certs v-once />
 

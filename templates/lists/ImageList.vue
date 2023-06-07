@@ -3,9 +3,9 @@ import PrimaryContainer from "~/components/layout/PrimaryContainer.vue";
 
 const props = defineProps<{
 	editable: boolean;
-	imageMain: string;
-	textHeader: string;
-	textSecondary: string;
+	imageMain?: string;
+	textHeader?: string;
+	textSecondary?: string;
 	list: {
 		name: string;
 		description: string;
