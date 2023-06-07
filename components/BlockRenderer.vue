@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Codemirror } from "vue-codemirror";
-import { json } from "@codemirror/lang-json";
+import { json, jsonParseLinter } from "@codemirror/lang-json";
+import { linter } from "@codemirror/lint";
 import { Block } from "~/db/entities/Block";
 
 // import Button from "./button/Button.vue";
@@ -127,9 +128,9 @@ props.block.slots.forEach(s => {
 		<dialog
 			ref="dialog"
 			class="open:backdrop:backdrop-blur-md open:opacity-100 opacity-0 duration-200 relative rounded-lg bg-white text-left shadow-xl transition-all w-full sm:max-w-3xl p-0">
-			<form method="dialog" class="bg-white">
+			<form method="dialog" class="bg-white w-full">
 				<div
-					class="sm:flex sm:items-start px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+					class="sm:flex sm:items-start px-4 pb-4 pt-5 sm:p-6 sm:pb-4 w-full">
 					<div
 						class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-md bg-orange-100 sm:mx-0 sm:h-10 sm:w-10">
 						<Icon
@@ -138,19 +139,24 @@ props.block.slots.forEach(s => {
 							aria-hidden="true" />
 					</div>
 					<div
-						class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left grow">
+						class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left grow overflow-hidden">
 						<h3
 							class="text-base font-semibold leading-6 text-gray-900">
 							Edit the raw text
 						</h3>
-						<div class="mt-1 w-full">
+						<div class="mt-1 max-w-full overflow-hidden">
 							<codemirror
 								v-model="code"
 								placeholder="JSON code goes here..."
-								:style="{ height: '22rem', width: '100%' }"
+								:style="{
+									height: '22rem',
+								}"
 								:indent-with-tab="true"
 								:tab-size="4"
-								:extensions="[json()]" />
+								:extensions="[
+									json(),
+									linter(jsonParseLinter()),
+								]" />
 							<!-- <textarea
 								rows="14"
 								name="text"
