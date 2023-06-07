@@ -211,7 +211,7 @@ const deleteBlock = async (index: number) => {
 			@move-block-up="moveBlockUp(block.index)"
 			@delete-block="deleteBlock(block.index)"
 			@add-new-block="addNewBlock(block.index)"
-			@update-block="(newBlock: Block) => {data![newBlock.index] = newBlock;saveAll()}" />
+			@update-block="(newBlock: Block) => { data![newBlock.index] = newBlock; saveAll() }" />
 	</TransitionGroup>
 
 	<Certs v-once />

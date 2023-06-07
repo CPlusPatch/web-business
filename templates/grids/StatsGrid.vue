@@ -1,25 +1,7 @@
 <script setup lang="ts">
 import PrimaryContainer from "~/components/layout/PrimaryContainer.vue";
 
-const stats = ref([
-	{
-		id: "ba68ae20-59c5-4844-8a27-c4a842666bf0",
-		name: "Transferred data on this website",
-		value: "394 kB",
-	},
-	{
-		id: "556a63e4-4db0-4dca-8fbf-c3695d579de7",
-		name: "Percentile in site performance",
-		value: "98th",
-	},
-	{
-		id: "c97e292d-e2e8-4239-a004-2ce43e74e31f",
-		name: "Google Lighthouse score",
-		value: "100.00",
-	},
-]);
-
-const props = defineProps<{
+defineProps<{
 	editable: boolean;
 	textHeader: string;
 	textSecondary: string;
@@ -39,11 +21,11 @@ const emit = defineEmits(["editField"]);
 			<h2
 				:contenteditable="editable"
 				data-placeholder="Header text here"
-				class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl"
+				class="text-4xl font-bold tracking-tight inline text-gray-900 sm:text-5xl"
 				@focusout="
 					emit(
 						'editField',
-						($event.target as HTMLSpanElement).innerText,
+						($event.target as HTMLHeadingElement).innerText,
 						'text-header'
 					)
 				">
@@ -56,7 +38,7 @@ const emit = defineEmits(["editField"]);
 				@focusout="
 					emit(
 						'editField',
-						($event.target as HTMLSpanElement).innerText,
+						($event.target as HTMLParagraphElement).innerText,
 						'text-secondary'
 					)
 				">
