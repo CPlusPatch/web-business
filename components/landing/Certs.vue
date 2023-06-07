@@ -27,6 +27,17 @@ const certs = [
 			href: "https://garef.com",
 		},
 	},
+	{
+		title: "2023 Coding Challenge Winner",
+		desc: [
+			"Winner of a national programming challenge in the entirety of French Polynesia, where I was personally commended by the examinators for my work and beating several previously established speed records.",
+		],
+		image: "https://cdn-web.cpluspatch.com/macbook-colored.webp",
+		link: {
+			text: "Contest results (Python section)",
+			href: "https://maths.pf/non-classe/resultats-du-defi-codage-et-robotique-2023/",
+		},
+	},
 ];
 </script>
 
@@ -40,7 +51,7 @@ const certs = [
 		<div
 			v-for="cert of certs"
 			:key="cert.title"
-			class="relative flex-row flex justify-between odd:flex-row-reverse max-w-5xl mx-auto gap-6 mt-12 lg:mt-24 gap-8 lg:items-center">
+			class="relative flex-row flex justify-between odd:flex-row-reverse max-w-6xl mx-auto gap-6 mt-12 lg:mt-24 gap-8 lg:items-center">
 			<div class="relative flex flex-col gap-y-4 md:w-2/3">
 				<h3
 					class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
