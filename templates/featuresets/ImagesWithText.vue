@@ -17,11 +17,11 @@ const props = defineProps<{
 	}[];
 }>();
 
-const _list = ref(props.list);
+// const _list = ref(props.list);
 
 const emit = defineEmits(["editField"]);
 
-const sendChanges = (e: Event, index: number, fieldType: string) => {
+/* const sendChanges = (e: Event, index: number, fieldType: string) => {
 	const newList = _list.value;
 
 	if (fieldType === "image") {
@@ -85,7 +85,9 @@ const deleteItem = (index: number) => {
 		..._list.value.splice(index + 1),
 	];
 	emit("editField", _list.value, "list");
-};
+}; */
+
+const _prompt = (...args: any[]) => prompt(...args);
 </script>
 
 <template>
@@ -104,10 +106,20 @@ const deleteItem = (index: number) => {
 			{{ textHeader }}
 		</h2>
 
-		<TransitionGroup name="block-list-2">
+		<TemplatesTemplateList
+			v-slot="{
+				add,
+				deleteItem,
+				moveDown,
+				moveUp,
+				update,
+				element,
+				index,
+			}"
+			key-name="title"
+			:list="list"
+			@edit-field="(...props) => emit('editField', ...props)">
 			<div
-				v-for="(cert, index) of list"
-				:key="cert.title"
 				class="relative flex-row flex max-w-6xl mx-auto mt-12 lg:mt-24 gap-8 lg:items-center">
 				<div
 					class="flex-row flex odd:flex-row-reverse justify-between lg:items-center gap-8 grow">
@@ -116,25 +128,37 @@ const deleteItem = (index: number) => {
 							:contenteditable="editable"
 							data-placeholder="Bold title"
 							class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl"
-							@focusout="sendChanges($event, index, 'title')">
-							{{ cert.title }}
+							@focusout="
+								update(
+									($event.target as any).innerText,
+									index,
+									'title'
+								)
+							">
+							{{ element.title }}
 						</h3>
 
 						<p
 							:contenteditable="editable"
 							data-placeholder="A short description here"
 							class="mt-3 text-lg text-gray-500 font-inter"
-							@focusout="sendChanges($event, index, 'desc')">
-							{{ cert.desc }}
+							@focusout="
+								update(
+									($event.target as any).innerText,
+									index,
+									'desc'
+								)
+							">
+							{{ element.desc }}
 						</p>
 
 						<a
-							v-if="cert.link.text"
+							v-if="element.link.text"
 							class="text-lg text-blue-600 font-inter"
-							:href="cert.link.href"
+							:href="element.link.href"
 							target="_blank"
 							rel="noreferrer">
-							{{ cert.link.text }}
+							{{ element.link.text }}
 							<IconExternalLink class="inline mb-1 w-5 h-5" />
 						</a>
 
@@ -142,7 +166,16 @@ const deleteItem = (index: number) => {
 							v-if="editable"
 							theme="gray"
 							class="w-20"
-							@click="sendChanges($event, index, 'link')">
+							@click="
+								update(
+									{
+										text: _prompt('Link text:'),
+										href: _prompt('Link href:'),
+									},
+									index,
+									'link'
+								)
+							">
 							Add link
 						</Button>
 					</div>
@@ -152,10 +185,12 @@ const deleteItem = (index: number) => {
 						aria-hidden="true">
 						<nuxt-img
 							class="relative h-72 w-72 rounded-lg shadow-md hover:rotate-2 duration-200 hover:shadow-xl"
-							:src="cert.image === '' ? '#' : cert.image"
+							:src="element.image === '' ? '#' : element.image"
 							loading="lazy"
 							alt="Photograph of an Astro Pi"
-							@click="sendChanges($event, index, 'image')" />
+							@click="
+								update(_prompt('Image URL:'), index, 'image')
+							" />
 					</div>
 				</div>
 				<div class="flex gap-1">
@@ -187,13 +222,15 @@ const deleteItem = (index: number) => {
 						<Button
 							theme="gray"
 							class="!px-1 !py-1 !shadow-md"
-							@click="addItem(index)">
+							@click="add(index)">
 							<Icon name="ic:round-plus" class="w-6 h-6" />
 						</Button>
 					</div>
 				</div>
 			</div>
-		</TransitionGroup>
+		</TemplatesTemplateList>
+
+		<TransitionGroup name="block-list-2"> </TransitionGroup>
 	</PrimaryContainer>
 </template>
 

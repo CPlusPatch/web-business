@@ -1,0 +1,88 @@
+<script setup lang="ts">
+const props = defineProps<{
+	list: Array<any>;
+	keyName: string;
+}>();
+
+const _list = ref(props.list);
+
+const emit = defineEmits(["editField"]);
+
+// Pass "null" for newValue to send no changes
+const update = (newValue: any, index: number, fieldType: string) => {
+	const newList = _list.value;
+
+	if (newValue === null) return;
+
+	(newList[index] as any)[fieldType] = newValue;
+
+	emit("editField", newList, "list");
+};
+
+const moveUp = (index: number) => {
+	if (index === 0) return;
+	const tempList = _list.value;
+	const temp = tempList[index];
+	tempList[index] = tempList[index - 1];
+	tempList[index - 1] = temp;
+
+	_list.value = tempList;
+	emit("editField", tempList, "list");
+};
+
+const moveDown = (index: number) => {
+	if (index === _list.value.length - 1) return;
+	const tempList = _list.value;
+	const temp = tempList[index];
+	tempList[index] = tempList[index + 1];
+	tempList[index + 1] = temp;
+
+	_list.value = tempList;
+	emit("editField", tempList, "list");
+};
+
+const addItem = (index: number) => {
+	_list.value = [
+		..._list.value.slice(0, index + 1),
+		{
+			title: "",
+			desc: "",
+			image: "",
+			link: {
+				href: "#",
+				text: "",
+			},
+		},
+		..._list.value.splice(index + 1),
+	];
+	emit("editField", _list.value, "list");
+};
+
+const deleteItem = (index: number) => {
+	_list.value = [
+		..._list.value.slice(0, index),
+		..._list.value.splice(index + 1),
+	];
+	emit("editField", _list.value, "list");
+};
+</script>
+
+<template>
+	<TransitionGroup name="block-list-2">
+		<slot
+			v-for="(item, index) in props.list"
+			:key="item[keyName]"
+			:element="item"
+			:index="index"
+			:update="update"
+			:move-up="moveUp"
+			:move-down="moveDown"
+			:delete-item="deleteItem"
+			:add="addItem"></slot>
+	</TransitionGroup>
+</template>
+<style scoped>
+.block-list-2-move {
+	transition: transform 0.2s ease-in-out;
+}
+</style>
