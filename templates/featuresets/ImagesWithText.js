@@ -1,6 +1,6 @@
 const meta = {
 	category: "featuresets",
-	name: "alternatingimages1",
+	name: "imageswithtext1",
 	inputs: [
 		{
 			name: "text-header",

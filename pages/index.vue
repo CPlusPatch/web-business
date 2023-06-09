@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Certs from "~~/components/landing/Certs.vue";
 import Testimonials from "~~/components/landing/Testimonials.vue";
 import Faqs from "~~/components/landing/Faqs.vue";
 import { Block } from "~/db/entities/Block";
