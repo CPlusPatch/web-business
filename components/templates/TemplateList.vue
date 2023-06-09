@@ -2,6 +2,7 @@
 const props = defineProps<{
 	list: Array<any>;
 	keyName: string;
+	fieldName: string;
 }>();
 
 const _list = ref(props.list);
@@ -16,7 +17,7 @@ const update = (newValue: any, index: number, fieldType: string) => {
 
 	(newList[index] as any)[fieldType] = newValue;
 
-	emit("editField", newList, "list");
+	emit("editField", newList, props.fieldName);
 };
 
 const moveUp = (index: number) => {
@@ -27,7 +28,7 @@ const moveUp = (index: number) => {
 	tempList[index - 1] = temp;
 
 	_list.value = tempList;
-	emit("editField", tempList, "list");
+	emit("editField", tempList, props.fieldName);
 };
 
 const moveDown = (index: number) => {
@@ -38,24 +39,16 @@ const moveDown = (index: number) => {
 	tempList[index + 1] = temp;
 
 	_list.value = tempList;
-	emit("editField", tempList, "list");
+	emit("editField", tempList, props.fieldName);
 };
 
-const addItem = (index: number) => {
+const addItem = (index: number, emptyItem: any) => {
 	_list.value = [
 		..._list.value.slice(0, index + 1),
-		{
-			title: "",
-			desc: "",
-			image: "",
-			link: {
-				href: "#",
-				text: "",
-			},
-		},
+		emptyItem,
 		..._list.value.splice(index + 1),
 	];
-	emit("editField", _list.value, "list");
+	emit("editField", _list.value, props.fieldName);
 };
 
 const deleteItem = (index: number) => {
@@ -63,14 +56,14 @@ const deleteItem = (index: number) => {
 		..._list.value.slice(0, index),
 		..._list.value.splice(index + 1),
 	];
-	emit("editField", _list.value, "list");
+	emit("editField", _list.value, props.fieldName);
 };
 </script>
 
 <template>
 	<TransitionGroup name="block-list-2">
 		<slot
-			v-for="(item, index) in props.list"
+			v-for="(item, index) in _list"
 			:key="item[keyName]"
 			:element="item"
 			:index="index"

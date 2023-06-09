@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { nanoid } from "nanoid";
 import PrimaryContainer from "~/components/layout/PrimaryContainer.vue";
 
 defineProps<{
@@ -47,18 +48,91 @@ const emit = defineEmits(["editField"]);
 		</div>
 		<dl
 			class="grid grid-cols-1 gap-x-4 gap-y-6 text-center lg:grid-cols-3 w-full">
-			<div
-				v-for="stat in grid"
-				:key="stat.id"
-				class="w-full flex flex-col gap-y-4 ring-2 rounded-lg shadow hover:ring-orange-400 ease-in-out duration-500 ring-gray-200 p-6">
-				<dt class="text-base leading-7 text-gray-600">
-					{{ stat.name }}
-				</dt>
-				<dd
-					class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
-					{{ stat.value }}
-				</dd>
-			</div>
+			<TemplatesTemplateList
+				v-slot="{
+					add,
+					deleteItem,
+					moveDown,
+					moveUp,
+					update,
+					element,
+					index,
+				}"
+				field-name="grid"
+				key-name="id"
+				:list="grid"
+				@edit-field="(...props) => emit('editField', ...props)">
+				<div>
+					<div
+						class="w-full flex flex-col gap-y-4 ring-2 rounded-lg shadow hover:ring-orange-400 ease-in-out duration-500 ring-gray-200 p-6">
+						<dt
+							:contenteditable="editable"
+							data-placeholder="Short description here"
+							class="text-base leading-7 text-gray-600"
+							@focusout="
+								update(
+									($event.target as any).innerText,
+									index,
+									'name'
+								)
+							">
+							{{ element.name }}
+						</dt>
+						<dd
+							:contenteditable="editable"
+							data-placeholder="Big Stat"
+							class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl"
+							@focusout="
+								update(
+									($event.target as any).innerText,
+									index,
+									'value'
+								)
+							">
+							{{ element.value }}
+						</dd>
+					</div>
+					<div
+						v-if="editable"
+						class="flex flex-row gap-1 justify-center mt-3">
+						<Button
+							theme="gray"
+							class="!px-1 !py-1 !shadow-md hover:-translate-y-1"
+							@click="moveUp(index)">
+							<Icon
+								name="ic:round-keyboard-arrow-left"
+								class="w-6 h-6" />
+						</Button>
+						<Button
+							theme="gray"
+							class="!px-1 !py-1 !shadow-md hover:translate-y-1"
+							@click="moveDown(index)">
+							<Icon
+								name="ic:round-keyboard-arrow-right"
+								class="w-6 h-6" />
+						</Button>
+
+						<Button
+							theme="gray"
+							class="!px-1 !py-1 !text-red-600 !shadow-md"
+							@click="deleteItem(index)">
+							<Icon name="ic:round-delete" class="w-6 h-6" />
+						</Button>
+						<Button
+							theme="gray"
+							class="!px-1 !py-1 !shadow-md"
+							@click="
+								add(index, {
+									id: nanoid(),
+									name: '',
+									value: '',
+								})
+							">
+							<Icon name="ic:round-plus" class="w-6 h-6" />
+						</Button>
+					</div>
+				</div>
+			</TemplatesTemplateList>
 		</dl>
 	</PrimaryContainer>
 </template>

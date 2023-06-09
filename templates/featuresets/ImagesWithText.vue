@@ -3,7 +3,7 @@
 import { IconExternalLink } from "@tabler/icons-vue";
 import PrimaryContainer from "~/components/layout/PrimaryContainer.vue";
 
-const props = defineProps<{
+defineProps<{
 	editable: boolean;
 	textHeader: string;
 	list: {
@@ -116,6 +116,7 @@ const _prompt = (...args: any[]) => prompt(...args);
 				element,
 				index,
 			}"
+			field-name="list"
 			key-name="title"
 			:list="list"
 			@edit-field="(...props) => emit('editField', ...props)">
@@ -222,7 +223,17 @@ const _prompt = (...args: any[]) => prompt(...args);
 						<Button
 							theme="gray"
 							class="!px-1 !py-1 !shadow-md"
-							@click="add(index)">
+							@click="
+								add(index, {
+									title: '',
+									desc: '',
+									image: '',
+									link: {
+										href: '#',
+										text: '',
+									},
+								})
+							">
 							<Icon name="ic:round-plus" class="w-6 h-6" />
 						</Button>
 					</div>
