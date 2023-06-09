@@ -214,8 +214,6 @@ const deleteBlock = async (index: number) => {
 			@update-block="(newBlock: Block) => { data![newBlock.index] = newBlock; saveAll() }" />
 	</TransitionGroup>
 
-	<Certs v-once />
-
 	<Testimonials />
 
 	<Faqs />
