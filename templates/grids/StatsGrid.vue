@@ -24,11 +24,12 @@ const emit = defineEmits(["editField"]);
 				data-placeholder="Header text here"
 				class="text-4xl font-bold tracking-tight inline text-gray-900 sm:text-5xl"
 				@focusout="
-					emit(
-						'editField',
-						($event.target as HTMLHeadingElement).innerText,
-						'text-header'
-					)
+					editable &&
+						emit(
+							'editField',
+							($event.target as HTMLHeadingElement).innerText,
+							'text-header'
+						)
 				">
 				{{ textHeader }}
 			</h2>
@@ -37,11 +38,12 @@ const emit = defineEmits(["editField"]);
 				data-placeholder="Header text here"
 				class="mt-6 text-lg leading-8 text-gray-700"
 				@focusout="
-					emit(
-						'editField',
-						($event.target as HTMLParagraphElement).innerText,
-						'text-secondary'
-					)
+					editable &&
+						emit(
+							'editField',
+							($event.target as HTMLParagraphElement).innerText,
+							'text-secondary'
+						)
 				">
 				{{ textSecondary }}
 			</p>
@@ -70,11 +72,12 @@ const emit = defineEmits(["editField"]);
 							data-placeholder="Short description here"
 							class="text-base leading-7 text-gray-600"
 							@focusout="
-								update(
-									($event.target as any).innerText,
-									index,
-									'name'
-								)
+								editable &&
+									update(
+										($event.target as any).innerText,
+										index,
+										'name'
+									)
 							">
 							{{ element.name }}
 						</dt>
@@ -83,11 +86,12 @@ const emit = defineEmits(["editField"]);
 							data-placeholder="Big Stat"
 							class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl"
 							@focusout="
-								update(
-									($event.target as any).innerText,
-									index,
-									'value'
-								)
+								editable &&
+									update(
+										($event.target as any).innerText,
+										index,
+										'value'
+									)
 							">
 							{{ element.value }}
 						</dd>

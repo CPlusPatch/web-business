@@ -6,12 +6,13 @@
 					:contenteditable="editable"
 					data-placeholder="Header text here"
 					class="mb-3 text-3xl font-black inline mr-2 text-gray-800 font-poppins sm:text-5xl"
-					@input="
-						emit(
-							'editField',
-							($event.target as HTMLSpanElement).innerText,
-							'text-header'
-						)
+					@focusout="
+						editable &&
+							emit(
+								'editField',
+								($event.target as HTMLSpanElement).innerText,
+								'text-header'
+							)
 					">
 					{{ textHeader }}
 				</h2>
@@ -19,12 +20,13 @@
 					:contenteditable="editable"
 					data-placeholder="Secondary text here"
 					class="text-xl text-gray-500 dark:text-gray-300 font-inter"
-					@input="
-						emit(
-							'editField',
-							($event.target as HTMLSpanElement).innerText,
-							'text-secondary'
-						)
+					@focusout="
+						editable &&
+							emit(
+								'editField',
+								($event.target as HTMLSpanElement).innerText,
+								'text-secondary'
+							)
 					">
 					{{ textSecondary }}
 				</p>

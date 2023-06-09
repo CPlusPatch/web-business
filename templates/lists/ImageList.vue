@@ -85,12 +85,14 @@ const deleteItem = (index: number) => {
 						:contenteditable="editable"
 						data-placeholder="Title"
 						class="mt-2 mr-2 inline text-4xl font-bold text-gray-900 sm:text-6xl"
-						@input="
-							emit(
-								'editField',
-								($event.target as HTMLSpanElement).innerText,
-								'text-header'
-							)
+						@focusout="
+							editable &&
+								emit(
+									'editField',
+									($event.target as HTMLSpanElement)
+										.innerText,
+									'text-header'
+								)
 						">
 						{{ textHeader }}
 					</h2>
@@ -98,12 +100,14 @@ const deleteItem = (index: number) => {
 						class="mt-6 text-lg leading-8 text-gray-600"
 						:contenteditable="editable"
 						data-placeholder="Secondary text here"
-						@input="
-							emit(
-								'editField',
-								($event.target as HTMLSpanElement).innerText,
-								'text-secondary'
-							)
+						@focusout="
+							editable &&
+								emit(
+									'editField',
+									($event.target as HTMLSpanElement)
+										.innerText,
+									'text-secondary'
+								)
 						">
 						{{ textSecondary }}
 					</p>
@@ -126,22 +130,24 @@ const deleteItem = (index: number) => {
 											class="absolute left-1 top-1 h-5 w-5 text-orange-600"
 											aria-hidden="true"
 											@click="
-												sendChanges(
-													$event,
-													index,
-													'icon'
-												)
+												editable &&
+													sendChanges(
+														$event,
+														index,
+														'icon'
+													)
 											" />
 
 										<span
 											:contenteditable="editable"
 											data-placeholder="Bold header"
 											@focusout="
-												sendChanges(
-													$event,
-													index,
-													'name'
-												)
+												editable &&
+													sendChanges(
+														$event,
+														index,
+														'name'
+													)
 											"
 											>{{ feature.name }}</span
 										>
@@ -152,16 +158,17 @@ const deleteItem = (index: number) => {
 										:contenteditable="editable"
 										data-placeholder="Secondary text"
 										@focusout="
-											sendChanges(
-												$event,
-												index,
-												'description'
-											)
+											editable &&
+												sendChanges(
+													$event,
+													index,
+													'description'
+												)
 										">
 										{{ feature.description }}
 									</dd>
 								</div>
-								<div class="flex gap-1">
+								<div v-if="editable" class="flex gap-1">
 									<div class="flex flex-col gap-1">
 										<Button
 											theme="gray"

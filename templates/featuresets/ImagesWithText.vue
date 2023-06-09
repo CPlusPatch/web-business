@@ -17,75 +17,7 @@ defineProps<{
 	}[];
 }>();
 
-// const _list = ref(props.list);
-
 const emit = defineEmits(["editField"]);
-
-/* const sendChanges = (e: Event, index: number, fieldType: string) => {
-	const newList = _list.value;
-
-	if (fieldType === "image") {
-		(newList[index] as any)[fieldType] = prompt("Image URL:");
-	} else if (fieldType === "link") {
-		(newList[index] as any)[fieldType] = {
-			text: prompt("Link text:"),
-			href: prompt("Link URL:"),
-		};
-	} else {
-		(newList[index] as any)[fieldType] = (
-			e.target as HTMLSpanElement
-		).innerText;
-	}
-
-	emit("editField", newList, "list");
-};
-
-const moveUp = (index: number) => {
-	if (index === 0) return;
-	const tempList = _list.value;
-	const temp = tempList[index];
-	tempList[index] = tempList[index - 1];
-	tempList[index - 1] = temp;
-
-	_list.value = tempList;
-	emit("editField", tempList, "list");
-};
-
-const moveDown = (index: number) => {
-	if (index === _list.value.length - 1) return;
-	const tempList = _list.value;
-	const temp = tempList[index];
-	tempList[index] = tempList[index + 1];
-	tempList[index + 1] = temp;
-
-	_list.value = tempList;
-	emit("editField", tempList, "list");
-};
-
-const addItem = (index: number) => {
-	_list.value = [
-		..._list.value.slice(0, index + 1),
-		{
-			title: "",
-			desc: "",
-			image: "",
-			link: {
-				href: "#",
-				text: "",
-			},
-		},
-		..._list.value.splice(index + 1),
-	];
-	emit("editField", _list.value, "list");
-};
-
-const deleteItem = (index: number) => {
-	_list.value = [
-		..._list.value.slice(0, index),
-		..._list.value.splice(index + 1),
-	];
-	emit("editField", _list.value, "list");
-}; */
 
 const _prompt = (...args: any[]) => prompt(...args);
 </script>
@@ -130,11 +62,12 @@ const _prompt = (...args: any[]) => prompt(...args);
 							data-placeholder="Bold title"
 							class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl"
 							@focusout="
-								update(
-									($event.target as any).innerText,
-									index,
-									'title'
-								)
+								editable &&
+									update(
+										($event.target as any).innerText,
+										index,
+										'title'
+									)
 							">
 							{{ element.title }}
 						</h3>
@@ -144,11 +77,12 @@ const _prompt = (...args: any[]) => prompt(...args);
 							data-placeholder="A short description here"
 							class="mt-3 text-lg text-gray-500 font-inter"
 							@focusout="
-								update(
-									($event.target as any).innerText,
-									index,
-									'desc'
-								)
+								editable &&
+									update(
+										($event.target as any).innerText,
+										index,
+										'desc'
+									)
 							">
 							{{ element.desc }}
 						</p>
@@ -190,11 +124,16 @@ const _prompt = (...args: any[]) => prompt(...args);
 							loading="lazy"
 							alt="Photograph of an Astro Pi"
 							@click="
-								update(_prompt('Image URL:'), index, 'image')
+								editable &&
+									update(
+										_prompt('Image URL:'),
+										index,
+										'image'
+									)
 							" />
 					</div>
 				</div>
-				<div class="flex gap-1">
+				<div v-if="editable" class="flex gap-1">
 					<div class="flex flex-col gap-1">
 						<Button
 							theme="gray"
