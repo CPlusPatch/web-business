@@ -10,6 +10,10 @@ const meta = {
 			name: "text-secondary",
 			type: "string",
 		},
+		{
+			name: "grid",
+			type: "array",
+		},
 	],
 };
 

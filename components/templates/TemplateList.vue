@@ -74,7 +74,7 @@ const deleteItem = (index: number) => {
 			:add="addItem"></slot>
 	</TransitionGroup>
 </template>
-<style scoped>
+<style>
 .block-list-2-move {
 	transition: transform 0.2s ease-in-out;
 }
