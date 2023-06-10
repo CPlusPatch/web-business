@@ -1,23 +1,25 @@
 <script setup lang="ts">
+import { nanoid } from "nanoid";
 import PrimaryContainer from "~/components/layout/PrimaryContainer.vue";
 
-const props = defineProps<{
+defineProps<{
 	editable: boolean;
 	imageMain?: string;
 	textHeader?: string;
 	textSecondary?: string;
 	list: {
+		id: string;
 		name: string;
 		description: string;
 		icon: string;
 	}[];
 }>();
 
-const _list = ref(props.list);
-
 const emit = defineEmits(["editField"]);
 
-const sendChanges = (e: Event, index: number, fieldType: string) => {
+const _prompt = (...props: any[]) => prompt(...props);
+
+/* const sendChanges = (e: Event, index: number, fieldType: string) => {
 	const newList = _list.value;
 
 	if (fieldType === "icon") {
@@ -72,7 +74,7 @@ const deleteItem = (index: number) => {
 		..._list.value.splice(index + 1),
 	];
 	emit("editField", _list.value, "list");
-};
+}; */
 </script>
 
 <template>
@@ -113,26 +115,38 @@ const deleteItem = (index: number) => {
 					</p>
 					<dl
 						class="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none">
-						<TransitionGroup name="block-list-2">
-							<div
-								v-for="(feature, index) in _list"
-								:key="feature.name"
-								class="relative pl-9 flex flex-row gap-2">
+						<TemplatesTemplateList
+							v-slot="{
+								add,
+								deleteItem,
+								moveDown,
+								moveUp,
+								update,
+								element,
+								index,
+							}"
+							field-name="list"
+							key-name="id"
+							:list="list"
+							@edit-field="
+								(...props) => emit('editField', ...props)
+							">
+							<div class="relative pl-9 flex flex-row gap-2">
 								<div class="grow">
 									<dt
 										class="inline font-semibold text-gray-900">
 										<Icon
 											:name="
-												feature.icon === ''
+												element.icon === ''
 													? 'tabler:dots'
-													: feature.icon
+													: element.icon
 											"
 											class="absolute left-1 top-1 h-5 w-5 text-orange-600"
 											aria-hidden="true"
 											@click="
 												editable &&
-													sendChanges(
-														$event,
+													update(
+														_prompt('Icon name:'),
 														index,
 														'icon'
 													)
@@ -143,13 +157,14 @@ const deleteItem = (index: number) => {
 											data-placeholder="Bold header"
 											@focusout="
 												editable &&
-													sendChanges(
-														$event,
+													update(
+														($event.target as any)
+															.innerText,
 														index,
 														'name'
 													)
 											"
-											>{{ feature.name }}</span
+											>{{ element.name }}</span
 										>
 									</dt>
 									{{ " " }}
@@ -159,13 +174,14 @@ const deleteItem = (index: number) => {
 										data-placeholder="Secondary text"
 										@focusout="
 											editable &&
-												sendChanges(
-													$event,
+												update(
+													($event.target as any)
+														.innerText,
 													index,
 													'description'
 												)
 										">
-										{{ feature.description }}
+										{{ element.description }}
 									</dd>
 								</div>
 								<div v-if="editable" class="flex gap-1">
@@ -199,7 +215,14 @@ const deleteItem = (index: number) => {
 										<Button
 											theme="gray"
 											class="!px-1 !py-1 !shadow-md"
-											@click="addItem(index)">
+											@click="
+												add(index, {
+													id: nanoid(),
+													name: '',
+													description: '',
+													icon: '',
+												})
+											">
 											<Icon
 												name="ic:round-plus"
 												class="w-6 h-6" />
@@ -207,7 +230,7 @@ const deleteItem = (index: number) => {
 									</div>
 								</div>
 							</div>
-						</TransitionGroup>
+						</TemplatesTemplateList>
 					</dl>
 				</div>
 			</div>
@@ -218,9 +241,3 @@ const deleteItem = (index: number) => {
 		</div>
 	</PrimaryContainer>
 </template>
-
-<style scoped>
-.block-list-2-move {
-	transition: transform 0.2s ease-in-out;
-}
-</style>
