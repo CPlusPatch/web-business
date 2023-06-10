@@ -18,63 +18,6 @@ defineProps<{
 const emit = defineEmits(["editField"]);
 
 const _prompt = (...props: any[]) => prompt(...props);
-
-/* const sendChanges = (e: Event, index: number, fieldType: string) => {
-	const newList = _list.value;
-
-	if (fieldType === "icon") {
-		(newList[index] as any)[fieldType] = prompt("Icon name:");
-	} else {
-		(newList[index] as any)[fieldType] = (
-			e.target as HTMLSpanElement
-		).innerText;
-	}
-
-	emit("editField", newList, "list");
-};
-
-const moveUp = (index: number) => {
-	if (index === 0) return;
-	const tempList = _list.value;
-	const temp = tempList[index];
-	tempList[index] = tempList[index - 1];
-	tempList[index - 1] = temp;
-
-	_list.value = tempList;
-	emit("editField", tempList, "list");
-};
-
-const moveDown = (index: number) => {
-	if (index === _list.value.length - 1) return;
-	const tempList = _list.value;
-	const temp = tempList[index];
-	tempList[index] = tempList[index + 1];
-	tempList[index + 1] = temp;
-
-	_list.value = tempList;
-	emit("editField", tempList, "list");
-};
-
-const addItem = (index: number) => {
-	_list.value = [
-		..._list.value.slice(0, index + 1),
-		{
-			name: "",
-			description: "",
-			icon: "",
-		},
-		..._list.value.splice(index + 1),
-	];
-	emit("editField", _list.value, "list");
-};
-
-const deleteItem = (index: number) => {
-	_list.value = [
-		..._list.value.slice(0, index),
-		..._list.value.splice(index + 1),
-	];
-	emit("editField", _list.value, "list");
-}; */
 </script>
 
 <template>
