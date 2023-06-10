@@ -110,6 +110,26 @@ Resize all images to 250x250 (when adding languages to `/public/static/languages
 ```bash
 mogrify -path . -auto-orient -thumbnail 250x *.png
 ```
+
+## Writing custom templates
+
+To add custom templates to the CMS block system, open the `templates/` directory, then create two files inside a category folder: `TemplateName.vue` and `TemplateName.js`. You may also create new folders, the location doesn't matter as long as it's inside `templates/`.
+
+Inside the `.vue` file you may write a new Vue component. You will need to add this block of code:
+
+```vue
+<script setup lang="ts">
+defineProps<{
+	editable: boolean;
+}>();
+
+const emit = defineEmits(["editField"]);
+</script>
+```
+
+After this, you may add whatever parameters you want such as `textHeader` for a heading, `list` for a list and more. Please refer to other existing components for more.
+
+You will need to write the contents of the `.js` file according to how the other files are written, please look at those examples.
 ## Attributions
 
 I will add more attributions when I find the image sources (mostly logos)
