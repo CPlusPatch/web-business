@@ -53,7 +53,6 @@ const faq = [
 								<span class="flex items-center ml-6 h-7">
 									<IconChevronDown
 										:class="[
-											// @ts-expect-error
 											open ? '-rotate-180' : 'rotate-0',
 											'w-6 h-6 duration-300 ease-in-out transform',
 										]"

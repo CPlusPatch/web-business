@@ -62,16 +62,16 @@ const deleteItem = (index: number) => {
 
 <template>
 	<TransitionGroup name="block-list-2">
-		<slot
-			v-for="(item, index) in _list"
-			:key="item[keyName]"
-			:element="item"
-			:index="index"
-			:update="update"
-			:move-up="moveUp"
-			:move-down="moveDown"
-			:delete-item="deleteItem"
-			:add="addItem"></slot>
+		<div v-for="(item, index) in _list" :key="item[keyName]">
+			<slot
+				:element="item"
+				:index="index"
+				:update="update"
+				:move-up="moveUp"
+				:move-down="moveDown"
+				:delete-item="deleteItem"
+				:add="addItem"></slot>
+		</div>
 	</TransitionGroup>
 </template>
 <style>

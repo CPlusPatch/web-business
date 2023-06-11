@@ -76,7 +76,7 @@ const _prompt = (...props: any[]) => prompt(...props);
 							">
 							<div class="relative pl-9 flex flex-row gap-2">
 								<div class="grow">
-									<dt
+									<div
 										class="inline font-semibold text-gray-900">
 										<Icon
 											:name="
@@ -109,9 +109,9 @@ const _prompt = (...props: any[]) => prompt(...props);
 											"
 											>{{ element.name }}</span
 										>
-									</dt>
+									</div>
 									{{ " " }}
-									<dd
+									<div
 										class="inline"
 										:contenteditable="editable"
 										data-placeholder="Secondary text"
@@ -125,7 +125,7 @@ const _prompt = (...props: any[]) => prompt(...props);
 												)
 										">
 										{{ element.description }}
-									</dd>
+									</div>
 								</div>
 								<div v-if="editable" class="flex gap-1">
 									<div class="flex flex-col gap-1">

@@ -133,49 +133,45 @@ const _prompt = (...args: any[]) => prompt(...args);
 							" />
 					</div>
 				</div>
-				<div v-if="editable" class="flex gap-1">
-					<div class="flex flex-col gap-1">
-						<Button
-							theme="gray"
-							class="!px-1 !py-1 !shadow-md hover:-translate-y-1"
-							@click="moveUp(index)">
-							<Icon
-								name="ic:round-keyboard-arrow-up"
-								class="w-6 h-6" />
-						</Button>
-						<Button
-							theme="gray"
-							class="!px-1 !py-1 !shadow-md hover:translate-y-1"
-							@click="moveDown(index)">
-							<Icon
-								name="ic:round-keyboard-arrow-down"
-								class="w-6 h-6" />
-						</Button>
-					</div>
-					<div class="flex flex-col gap-1">
-						<Button
-							theme="gray"
-							class="!px-1 !py-1 !text-red-600 !shadow-md"
-							@click="deleteItem(index)">
-							<Icon name="ic:round-delete" class="w-6 h-6" />
-						</Button>
-						<Button
-							theme="gray"
-							class="!px-1 !py-1 !shadow-md"
-							@click="
-								add(index, {
-									title: '',
-									desc: '',
-									image: '',
-									link: {
-										href: '#',
-										text: '',
-									},
-								})
-							">
-							<Icon name="ic:round-plus" class="w-6 h-6" />
-						</Button>
-					</div>
+				<div v-if="editable" class="grid-cols-2 grid gap-1 shrink-0">
+					<Button
+						theme="gray"
+						class="!px-1 !py-1 !shadow-md hover:-translate-y-1"
+						@click="moveUp(index)">
+						<Icon
+							name="ic:round-keyboard-arrow-up"
+							class="w-6 h-6" />
+					</Button>
+					<Button
+						theme="gray"
+						class="!px-1 !py-1 !text-red-600 !shadow-md"
+						@click="deleteItem(index)">
+						<Icon name="ic:round-delete" class="w-6 h-6" />
+					</Button>
+					<Button
+						theme="gray"
+						class="!px-1 !py-1 !shadow-md hover:translate-y-1"
+						@click="moveDown(index)">
+						<Icon
+							name="ic:round-keyboard-arrow-down"
+							class="w-6 h-6" />
+					</Button>
+					<Button
+						theme="gray"
+						class="!px-1 !py-1 !shadow-md"
+						@click="
+							add(index, {
+								title: '',
+								desc: '',
+								image: '',
+								link: {
+									href: '#',
+									text: '',
+								},
+							})
+						">
+						<Icon name="ic:round-plus" class="w-6 h-6" />
+					</Button>
 				</div>
 			</div>
 		</TemplatesTemplateList>
