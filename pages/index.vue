@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import Testimonials from "~~/components/landing/Testimonials.vue";
-import Faqs from "~~/components/landing/Faqs.vue";
 import { Block } from "~/db/entities/Block";
 import BlockRenderer from "~/components/BlockRenderer.vue";
 
@@ -214,8 +213,6 @@ const deleteBlock = async (index: number) => {
 	</TransitionGroup>
 
 	<Testimonials />
-
-	<Faqs />
 </template>
 
 <style scoped>
