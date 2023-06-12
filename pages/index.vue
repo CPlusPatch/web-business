@@ -23,7 +23,22 @@ if (!data.value) {
 	throw createError("No blocks returned!");
 }
 
+const blockMeta =
+	(
+		await useFetch(`/api/blocks/meta`, {
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token.value}`,
+			},
+		})
+	).data.value ?? [];
+
+// Get array of categories and deduplicate
+const categories = [...new Set(blockMeta.map(m => m.category))];
+
 const isAdmin = (await useFetch("/api/user/admin")).data.value;
+
+const blockChooseDialog = ref<HTMLDialogElement | null>(null);
 
 const saveAll = async () => {
 	if (!data.value) return false;
@@ -77,6 +92,8 @@ const moveBlockDown = (index: number) => {
 const addNewBlock = async (index: number) => {
 	if (!data.value) return false;
 
+	const { category, component } = await chooseBlockDialog();
+
 	const block = await useFetch(`/api/blocks/new`, {
 		method: "POST",
 		headers: {
@@ -84,8 +101,8 @@ const addNewBlock = async (index: number) => {
 			Authorization: `Bearer ${token.value}`,
 		},
 		body: JSON.stringify({
-			category: prompt("Category:"),
-			component: prompt("Component:"),
+			category,
+			component,
 			index: index + 1,
 			page_id: pageId,
 		}),
@@ -111,11 +128,28 @@ const addNewBlock = async (index: number) => {
 		...data.value.slice(index),
 	];
 
+	console.log(data.value);
+
 	// Recalculate indexes
 	data.value = data.value.map((d, index) => ({
 		...d,
 		index,
 	}));
+};
+
+const createNewPage = async () => {
+	const page = await useFetch(`/api/pages/new`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token.value}`,
+		},
+		body: JSON.stringify({
+			path: "",
+		}),
+	});
+
+	console.log(page.data.value);
 };
 
 const deleteBlock = async (index: number) => {
@@ -136,12 +170,35 @@ const deleteBlock = async (index: number) => {
 		...data.value.slice(index + 1),
 	];
 };
+
+const chooseBlockDialog = (): Promise<{
+	component: string;
+	category: string;
+}> => {
+	return new Promise(resolve => {
+		if (!blockChooseDialog.value) return;
+
+		blockChooseDialog.value.showModal();
+
+		blockChooseDialog.value.addEventListener("close", () => {
+			resolve({
+				component: JSON.parse(
+					blockChooseDialog.value?.returnValue ?? ""
+				).name,
+				category: JSON.parse(blockChooseDialog.value?.returnValue ?? "")
+					.category,
+			});
+		});
+	});
+};
 </script>
 
 <template>
 	<div v-if="data?.length === 0" class="mt-40">
 		No posts yet!
-		<Button v-if="isAdmin ?? false" theme="orange">Create new page</Button>
+		<Button v-if="isAdmin ?? false" theme="orange" @click="createNewPage"
+			>Create new page</Button
+		>
 	</div>
 	<TransitionGroup name="block-list">
 		<BlockRenderer
@@ -157,6 +214,37 @@ const deleteBlock = async (index: number) => {
 			@add-new-block="addNewBlock(block.index)"
 			@update-block="(newBlock: Block) => { data![newBlock.index] = newBlock; saveAll() }" />
 	</TransitionGroup>
+
+	<dialog
+		ref="blockChooseDialog"
+		class="open:backdrop:backdrop-blur-md open:opacity-100 opacity-0 duration-200 relative rounded-lg bg-white text-left shadow-xl transition-all w-full sm:max-w-3xl p-0">
+		<form method="dialog" class="bg-white w-full">
+			<div class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4 w-full">
+				List:
+
+				<div v-for="category of categories" :key="category">
+					<div
+						v-for="component of blockMeta.filter(
+							m => m.category === category
+						)"
+						:key="component.name">
+						{{ component.category }}
+						{{ component.name }}
+						<Button
+							theme="gray"
+							type="submit"
+							:value="JSON.stringify(component)"
+							>Add new</Button
+						>
+					</div>
+				</div>
+			</div>
+			<div
+				class="bg-gray-50 px-4 py-3 flex md:flex-row-reverse md:flex-row sm:px-6 gap-2 flex-col">
+				<Button theme="gray" type="submit"> Cancel </Button>
+			</div>
+		</form>
+	</dialog>
 </template>
 
 <style scoped>

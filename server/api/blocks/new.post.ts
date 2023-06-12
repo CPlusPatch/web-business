@@ -1,3 +1,5 @@
+import { readFileSync } from "fs";
+import path from "path";
 import DOMPurify from "isomorphic-dompurify";
 import { Role } from "~/db/entities/User";
 import { AppDataSource } from "~~/db/data-source";
@@ -52,11 +54,15 @@ export default defineEventHandler(async event => {
 			block.page_id = Number(body.page_id);
 			block.index = Number(body.index);
 
-			const meta = (
-				await import(
-					`../../templates/${block.category}/${block.component}.js`
-				)
-			).meta as TemplateMetadata;
+			// Parse the meta of blocks
+			const meta = JSON.parse(
+				readFileSync(
+					path.resolve(
+						path.dirname(""),
+						`./templates/${block.category}/${block.component}.json`
+					)
+				).toString()
+			) as TemplateMetadata;
 
 			block.slots = meta.inputs.map(i => ({
 				name: i.name,

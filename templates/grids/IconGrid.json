@@ -1,0 +1,9 @@
+{
+	"category": "grids",
+	"name": "IconGrid",
+	"inputs": [
+		{ "name": "text-header", "type": "string" },
+		{ "name": "text-secondary", "type": "string" },
+		{ "name": "grid", "type": "array" }
+	]
+}

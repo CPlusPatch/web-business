@@ -1,0 +1,8 @@
+{
+	"category": "grids",
+	"name": "StatsGrid",
+	"inputs": [
+		{ "name": "text-header", "type": "string" },
+		{ "name": "text-secondary", "type": "string" }
+	]
+}

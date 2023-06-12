@@ -1,0 +1,5 @@
+{
+	"category": "heroes",
+	"name": "BigHero",
+	"inputs": [{ "name": "image-main", "type": "image" }]
+}

@@ -47,7 +47,17 @@
 				}"
 				field-name="grid"
 				key-name="name"
-				:list="grid"
+				:list="
+					grid ?? [
+						{
+							name: '',
+							type: '',
+							experience: '',
+							image: '',
+							padding: false,
+						},
+					]
+				"
 				@edit-field="(...props) => emit('editField', ...props)">
 				<div>
 					<div
@@ -66,7 +76,11 @@
 							alt=""
 							@click="
 								editable &&
-									update(_prompt('Icon name'), index, 'image')
+									update(
+										_prompt('Icon name', element.image),
+										index,
+										'image'
+									)
 							" />
 
 						<div
@@ -163,9 +177,9 @@ import PrimaryContainer from "~/components/layout/PrimaryContainer.vue";
 
 defineProps<{
 	editable: boolean;
-	textHeader: string;
-	textSecondary: string;
-	grid: {
+	textHeader?: string;
+	textSecondary?: string;
+	grid?: {
 		name: string;
 		type: string;
 		experience: string;

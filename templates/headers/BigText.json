@@ -1,0 +1,8 @@
+{
+	"category": "headers",
+	"name": "BigText",
+	"inputs": [
+		{ "name": "text-primary", "type": "string" },
+		{ "name": "text-typewriter", "type": "string" }
+	]
+}

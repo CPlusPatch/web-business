@@ -1,0 +1,14 @@
+{
+	"category": "disclosures",
+	"name": "DisclosureList",
+	"inputs": [
+		{
+			"name": "text-header",
+			"type": "string"
+		},
+		{
+			"name": "list",
+			"type": "array"
+		}
+	]
+}

@@ -5,7 +5,7 @@ export enum InputType {
 }
 export interface TemplateMetadata {
 	name: string;
-	category: "headers" | "navbars";
+	category: string;
 	inputs: {
 		name: string;
 		type: InputType;

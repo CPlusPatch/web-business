@@ -1,0 +1,10 @@
+{
+	"category": "carousels",
+	"name": "GradientCarousel",
+	"inputs": [
+		{
+			"name": "list",
+			"type": "array"
+		}
+	]
+}
