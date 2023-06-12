@@ -1,28 +1,11 @@
 <script lang="ts">
-import { InputType, TemplateMetadata } from "~/types/types";
 // import Typewriter from "~/components/typewriter/Typewriter.vue";
-const meta: TemplateMetadata = {
-	category: "headers",
-	name: "bigtext1",
-	inputs: [
-		{
-			name: "text-primary",
-			type: InputType.String,
-		},
-		{
-			name: "text-typewriter",
-			type: InputType.String,
-		},
-	],
-};
-
-export { meta };
 </script>
 
 <script setup lang="ts">
 defineProps<{
-	textPrimary: string;
-	textTypewriter: string;
+	textPrimary?: string;
+	textTypewriter?: string;
 	editable: boolean;
 }>();
 

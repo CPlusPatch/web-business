@@ -1,6 +1,8 @@
 {
 	"category": "carousels",
 	"name": "GradientCarousel",
+	"displayName": "Card Grid",
+	"description": "Grid of cards with an avatars",
 	"inputs": [
 		{
 			"name": "list",

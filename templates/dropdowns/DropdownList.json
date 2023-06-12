@@ -1,0 +1,16 @@
+{
+	"category": "dropdowns",
+	"name": "DropdownList",
+	"displayName": "Dropdown List",
+	"description": "Vertical list of dropdowns",
+	"inputs": [
+		{
+			"name": "text-header",
+			"type": "string"
+		},
+		{
+			"name": "list",
+			"type": "array"
+		}
+	]
+}

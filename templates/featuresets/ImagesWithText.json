@@ -1,6 +1,8 @@
 {
 	"category": "featuresets",
 	"name": "ImagesWithText",
+	"displayName": "Images with Text",
+	"description": "Rows of images and text together",
 	"inputs": [
 		{ "name": "text-header", "type": "string" },
 		{ "name": "list", "type": "array" }

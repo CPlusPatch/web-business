@@ -33,9 +33,6 @@ const blockMeta =
 		})
 	).data.value ?? [];
 
-// Get array of categories and deduplicate
-const categories = [...new Set(blockMeta.map(m => m.category))];
-
 const isAdmin = (await useFetch("/api/user/admin")).data.value;
 
 const blockChooseDialog = ref<HTMLDialogElement | null>(null);
@@ -217,27 +214,12 @@ const chooseBlockDialog = (): Promise<{
 
 	<dialog
 		ref="blockChooseDialog"
-		class="open:backdrop:backdrop-blur-md open:opacity-100 opacity-0 duration-200 relative rounded-lg bg-white text-left shadow-xl transition-all w-full sm:max-w-3xl p-0">
-		<form method="dialog" class="bg-white w-full">
-			<div class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4 w-full">
-				List:
-
-				<div v-for="category of categories" :key="category">
-					<div
-						v-for="component of blockMeta.filter(
-							m => m.category === category
-						)"
-						:key="component.name">
-						{{ component.category }}
-						{{ component.name }}
-						<Button
-							theme="gray"
-							type="submit"
-							:value="JSON.stringify(component)"
-							>Add new</Button
-						>
-					</div>
-				</div>
+		class="open:backdrop:backdrop-blur-md open:opacity-100 opacity-0 duration-200 relative rounded-lg bg-white text-left shadow-xl transition-all w-full h-full p-0">
+		<form
+			method="dialog"
+			class="bg-white w-full flex flex-col justify-between h-full">
+			<div class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4 w-full grow">
+				<PickersBlockPicker :block-meta="blockMeta" />
 			</div>
 			<div
 				class="bg-gray-50 px-4 py-3 flex md:flex-row-reverse md:flex-row sm:px-6 gap-2 flex-col">

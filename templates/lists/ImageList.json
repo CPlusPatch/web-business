@@ -1,6 +1,8 @@
 {
 	"category": "lists",
 	"name": "imagelist1",
+	"displayName": "Image List",
+	"description": "A list of images",
 	"inputs": [
 		{ "name": "text-header", "type": "string" },
 		{ "name": "text-secondary", "type": "string" },

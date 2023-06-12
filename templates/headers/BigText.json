@@ -1,6 +1,8 @@
 {
 	"category": "headers",
 	"name": "BigText",
+	"displayName": "Large Gradient Header",
+	"description": "Large gradient header with two rows",
 	"inputs": [
 		{ "name": "text-primary", "type": "string" },
 		{ "name": "text-typewriter", "type": "string" }

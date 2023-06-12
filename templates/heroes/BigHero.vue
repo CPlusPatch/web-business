@@ -17,7 +17,7 @@ defineProps<{
 				:height="1080"
 				sizes="lg:1920px md:700px sm:400px"
 				class="rounded-lg aspect-video shadow-lg w-full duration-150"
-				:src="imageMain ?? '/'"
+				:src="imageMain ?? 'https://placehold.co/1920x1080'"
 				alt="VSCode screenshot" />
 		</div>
 		<div class="py-4 sm:py-12" />

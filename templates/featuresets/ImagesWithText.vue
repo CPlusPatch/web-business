@@ -1,12 +1,14 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import { IconExternalLink } from "@tabler/icons-vue";
+import { nanoid } from "nanoid";
 import PrimaryContainer from "~/components/layout/PrimaryContainer.vue";
 
 defineProps<{
 	editable: boolean;
-	textHeader: string;
-	list: {
+	textHeader?: string;
+	list?: {
+		id: string;
 		title: string;
 		desc: string;
 		image: string;
@@ -50,7 +52,20 @@ const _prompt = (...args: any[]) => prompt(...args);
 			}"
 			field-name="list"
 			key-name="title"
-			:list="list"
+			:list="
+				list ?? [
+					{
+						id: nanoid(),
+						title: '',
+						desc: '',
+						image: '',
+						link: {
+							href: '#',
+							text: '',
+						},
+					},
+				]
+			"
 			@edit-field="(...props) => emit('editField', ...props)">
 			<div
 				class="relative flex-row flex max-w-6xl mx-auto mt-12 lg:mt-24 gap-8 lg:items-center">
@@ -120,7 +135,11 @@ const _prompt = (...args: any[]) => prompt(...args);
 						aria-hidden="true">
 						<nuxt-img
 							class="relative h-72 w-72 rounded-lg shadow-md hover:rotate-2 duration-200 hover:shadow-xl"
-							:src="element.image === '' ? '#' : element.image"
+							:src="
+								element.image === ''
+									? 'https://placehold.co/400'
+									: element.image
+							"
 							loading="lazy"
 							alt="Photograph of an Astro Pi"
 							@click="

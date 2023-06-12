@@ -41,7 +41,7 @@ import PrimaryContainer from "~/components/layout/PrimaryContainer.vue";
 
 defineProps<{
 	editable: boolean;
-	list: {
+	list?: {
 		id: string;
 		name: string;
 		profession: string;
@@ -68,7 +68,38 @@ const emit = defineEmits(["editField"]);
 					moveUp,
 					update,
 				}"
-				:list="list"
+				:list="
+					list ?? [
+						{
+							id: nanoid(),
+							name: '',
+							profession: '',
+							text: '',
+							avatar: '',
+						},
+						{
+							id: nanoid(),
+							name: '',
+							profession: '',
+							text: '',
+							avatar: '',
+						},
+						{
+							id: nanoid(),
+							name: '',
+							profession: '',
+							text: '',
+							avatar: '',
+						},
+						{
+							id: nanoid(),
+							name: '',
+							profession: '',
+							text: '',
+							avatar: '',
+						},
+					]
+				"
 				key-name="id"
 				field-name="list"
 				@edit-field="(...props) => emit('editField', ...props)">

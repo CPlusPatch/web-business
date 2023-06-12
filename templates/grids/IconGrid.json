@@ -1,6 +1,8 @@
 {
 	"category": "grids",
 	"name": "IconGrid",
+	"displayName": "Icon Grid",
+	"description": "Grid of small cards with icons",
 	"inputs": [
 		{ "name": "text-header", "type": "string" },
 		{ "name": "text-secondary", "type": "string" },

@@ -4,9 +4,9 @@ import PrimaryContainer from "~/components/layout/PrimaryContainer.vue";
 
 defineProps<{
 	editable: boolean;
-	textHeader: string;
-	textSecondary: string;
-	grid: {
+	textHeader?: string;
+	textSecondary?: string;
+	grid?: {
 		id: string;
 		name: string;
 		value: string;
@@ -62,7 +62,25 @@ const emit = defineEmits(["editField"]);
 				}"
 				field-name="grid"
 				key-name="id"
-				:list="grid"
+				:list="
+					grid ?? [
+						{
+							id: nanoid(),
+							name: '',
+							value: '',
+						},
+						{
+							id: nanoid(),
+							name: '',
+							value: '',
+						},
+						{
+							id: nanoid(),
+							name: '',
+							value: '',
+						},
+					]
+				"
 				@edit-field="(...props) => emit('editField', ...props)">
 				<div>
 					<div

@@ -1,5 +1,7 @@
 {
 	"category": "heroes",
 	"name": "BigHero",
+	"displayName": "Big Banner",
+	"description": "Big banner for showing off an image",
 	"inputs": [{ "name": "image-main", "type": "image" }]
 }
