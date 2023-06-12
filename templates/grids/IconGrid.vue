@@ -46,10 +46,11 @@
 					index,
 				}"
 				field-name="grid"
-				key-name="name"
+				key-name="id"
 				:list="
 					grid ?? [
 						{
+							id: nanoid(),
 							name: '',
 							type: '',
 							experience: '',
@@ -57,6 +58,7 @@
 							padding: false,
 						},
 						{
+							id: nanoid(),
 							name: '',
 							type: '',
 							experience: '',
@@ -64,6 +66,7 @@
 							padding: false,
 						},
 						{
+							id: nanoid(),
 							name: '',
 							type: '',
 							experience: '',
@@ -71,6 +74,7 @@
 							padding: false,
 						},
 						{
+							id: nanoid(),
 							name: '',
 							type: '',
 							experience: '',
@@ -194,6 +198,7 @@
 </template>
 
 <script setup lang="ts">
+import { nanoid } from "nanoid";
 import PrimaryContainer from "~/components/layout/PrimaryContainer.vue";
 
 defineProps<{
@@ -201,6 +206,7 @@ defineProps<{
 	textHeader?: string;
 	textSecondary?: string;
 	grid?: {
+		id: string;
 		name: string;
 		type: string;
 		experience: string;

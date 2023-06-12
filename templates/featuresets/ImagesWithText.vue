@@ -51,7 +51,7 @@ const _prompt = (...args: any[]) => prompt(...args);
 				index,
 			}"
 			field-name="list"
-			key-name="title"
+			key-name="id"
 			:list="
 				list ?? [
 					{
