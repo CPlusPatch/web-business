@@ -218,13 +218,7 @@ const chooseBlockDialog = (): Promise<{
 		<form
 			method="dialog"
 			class="bg-white w-full flex flex-col justify-between h-full">
-			<div class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4 w-full grow">
-				<PickersBlockPicker :block-meta="blockMeta" />
-			</div>
-			<div
-				class="bg-gray-50 px-4 py-3 flex md:flex-row-reverse md:flex-row sm:px-6 gap-2 flex-col">
-				<Button theme="gray" type="submit"> Cancel </Button>
-			</div>
+			<PickersBlockPicker :block-meta="blockMeta" />
 		</form>
 	</dialog>
 </template>

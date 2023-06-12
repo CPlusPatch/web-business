@@ -44,7 +44,7 @@ const _prompt = (...props: any[]) => prompt(...props);
 					<p
 						class="mt-6 text-lg leading-8 text-gray-600"
 						:contenteditable="editable"
-						data-placeholder="Secondary text here"
+						data-placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 						@focusout="
 							editable &&
 								emit(
@@ -72,6 +72,18 @@ const _prompt = (...props: any[]) => prompt(...props);
 							key-name="id"
 							:list="
 								list ?? [
+									{
+										id: nanoid(),
+										name: '',
+										description: '',
+										icon: '',
+									},
+									{
+										id: nanoid(),
+										name: '',
+										description: '',
+										icon: '',
+									},
 									{
 										id: nanoid(),
 										name: '',

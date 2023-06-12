@@ -54,7 +54,7 @@ a {
 
 [data-placeholder]:empty:before {
     content: attr(data-placeholder);
-	border-bottom: 3px dashed black;
+	border-bottom: 2px dashed black;
 }
 
 .bio a::after,

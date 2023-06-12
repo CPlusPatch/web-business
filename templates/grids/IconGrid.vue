@@ -56,6 +56,27 @@
 							image: '',
 							padding: false,
 						},
+						{
+							name: '',
+							type: '',
+							experience: '',
+							image: '',
+							padding: false,
+						},
+						{
+							name: '',
+							type: '',
+							experience: '',
+							image: '',
+							padding: false,
+						},
+						{
+							name: '',
+							type: '',
+							experience: '',
+							image: '',
+							padding: false,
+						},
 					]
 				"
 				@edit-field="(...props) => emit('editField', ...props)">

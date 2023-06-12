@@ -4,7 +4,7 @@ import PrimaryContainer from "~/components/layout/PrimaryContainer.vue";
 
 defineProps<{
 	editable: boolean;
-	textHeader: string;
+	textHeader?: string;
 	list?: {
 		id: string;
 		question: string;

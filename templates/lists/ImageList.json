@@ -1,6 +1,6 @@
 {
 	"category": "lists",
-	"name": "imagelist1",
+	"name": "ImageList",
 	"displayName": "Image List",
 	"description": "A list of images",
 	"inputs": [

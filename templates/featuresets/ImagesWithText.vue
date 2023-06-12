@@ -89,7 +89,7 @@ const _prompt = (...args: any[]) => prompt(...args);
 
 						<p
 							:contenteditable="editable"
-							data-placeholder="A short description here"
+							data-placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
 							class="mt-3 text-lg text-gray-500 font-inter"
 							@focusout="
 								editable &&
