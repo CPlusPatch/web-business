@@ -14,8 +14,8 @@ const emit = defineEmits(["editField"]);
 
 <template>
 	<!-- Big landing title -->
-	<div class="relative pb-16 sm:pb-24 mt-40">
-		<div class="px-4 mx-auto mt-16 max-w-7xl ssm:mt-12 sm:px-6 font-inter">
+	<div class="relative">
+		<div class="px-4 mx-auto max-w-7xl sm:px-6 font-inter">
 			<div class="text-left">
 				<h1
 					class="text-4xl font-black text-gray-900 dark:text-gray-300 sm:text-5xl md:text-6xl flex flex-col">

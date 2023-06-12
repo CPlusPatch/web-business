@@ -194,7 +194,8 @@ const chooseBlockDialog = (): Promise<{
 </script>
 
 <template>
-	<TransitionGroup name="block-list">
+	<div class="w-full h-40"></div>
+	<TransitionGroup tag="div" name="block-list" class="flex flex-col gap-30">
 		<BlockRenderer
 			v-for="(block, index) in data"
 			:key="block.id"
