@@ -13,7 +13,7 @@ import { Block } from "~/db/entities/Block";
  */
 export default defineEventHandler(async event => {
 	// Get the ID from the event context or assign an empty string as the default value.
-	// const id = event.context.params?.id ?? "";
+	const id = event.context.params?.id ?? "";
 
 	// Get the user by token.
 	const user = await getUserByToken(
@@ -43,6 +43,7 @@ export default defineEventHandler(async event => {
 				.update()
 				.set(bodyBlock)
 				.where("id = :id", { id: bodyBlock.id })
+				.andWhere("page_id = :page_id", { page_id: Number(id) })
 				.execute();
 
 			return bodyBlock;

@@ -49,6 +49,7 @@ export default defineEventHandler(async event => {
 				block.component = DOMPurify.sanitize(body.component);
 			if (body.category)
 				block.category = DOMPurify.sanitize(body.category);
+			block.page_id = Number(body.page_id);
 			block.index = Number(body.index);
 
 			const meta = (
@@ -66,6 +67,7 @@ export default defineEventHandler(async event => {
 				.update()
 				.set({ index: () => "`index` + 1" })
 				.where("`index` >= :newIndex", { newIndex: block.index })
+				.andWhere("`page_id` >= :page_id", { page_id: block.page_id })
 				.execute();
 
 			// Save the updated block.

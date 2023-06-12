@@ -7,7 +7,7 @@ defineProps<{
 	imageMain?: string;
 	textHeader?: string;
 	textSecondary?: string;
-	list: {
+	list?: {
 		id: string;
 		name: string;
 		description: string;
@@ -70,7 +70,16 @@ const _prompt = (...props: any[]) => prompt(...props);
 							}"
 							field-name="list"
 							key-name="id"
-							:list="list"
+							:list="
+								list ?? [
+									{
+										id: nanoid(),
+										name: '',
+										description: '',
+										icon: '',
+									},
+								]
+							"
 							@edit-field="
 								(...props) => emit('editField', ...props)
 							">
@@ -179,7 +188,7 @@ const _prompt = (...props: any[]) => prompt(...props);
 			</div>
 			<nuxt-img
 				alt="Product screenshot"
-				:src="imageMain"
+				:src="imageMain ?? 'https://placehold.co/1200'"
 				class="w-[48rem] max-w-none rounded-xl hidden md:block duration-500 shadow-xl ring-1 ring-gray-400/10 sm:w-[40rem] md:-ml-4 lg:-ml-0" />
 		</div>
 	</PrimaryContainer>

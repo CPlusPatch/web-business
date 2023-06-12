@@ -86,16 +86,16 @@ props.block.slots.forEach(s => {
 			v-if="edit"
 			class="!absolute left-10 items-center inset-y-0 justify-center z-50 flex flex-col gap-2">
 			<Button
+				v-if="!isFirst"
 				theme="gray"
 				class="!px-2 !py-2 !shadow-md enabled:hover:translate-x-1"
-				:disabled="isFirst"
 				@click="$emit('moveBlockUp')">
 				<Icon name="ic:round-keyboard-arrow-up" class="w-6 h-6" />
 			</Button>
 			<Button
+				v-if="!isLast"
 				theme="gray"
 				class="!px-2 !py-2 !shadow-md enabled:hover:translate-x-1"
-				:disabled="isLast"
 				@click="$emit('moveBlockDown')">
 				<Icon name="ic:round-keyboard-arrow-down" class="w-6 h-6" />
 			</Button>

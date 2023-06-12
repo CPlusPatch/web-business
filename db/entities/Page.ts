@@ -7,27 +7,12 @@ import {
 } from "typeorm";
 
 @Entity()
-export class Block {
+export class Page {
 	@PrimaryGeneratedColumn()
 	id: number;
 
 	@Column("varchar")
-	component: string;
-
-	@Column("varchar")
-	category: string;
-
-	@Column("integer")
-	index: number;
-
-	@Column("simple-json")
-	slots: {
-		name: string;
-		value?: string;
-	}[];
-
-	@Column("integer")
-	page_id: number;
+	path: string;
 
 	@CreateDateColumn()
 	created_at: Date;

@@ -14,11 +14,15 @@ useServerSeoMeta({
 
 const token = useCookie("token");
 
-const data = (await useFetch("/api/blocks/1")).data as Ref<Block[] | null>;
+const pageId = 1;
+const data = (await useFetch(`/api/blocks/${pageId}`)).data as Ref<
+	Block[] | null
+>;
 
 if (!data.value) {
 	throw createError("No blocks returned!");
 }
+
 const isAdmin = (await useFetch("/api/user/admin")).data.value;
 
 const saveAll = async () => {
@@ -83,6 +87,7 @@ const addNewBlock = async (index: number) => {
 			category: prompt("Category:"),
 			component: prompt("Component:"),
 			index: index + 1,
+			page_id: pageId,
 		}),
 	});
 
@@ -134,68 +139,10 @@ const deleteBlock = async (index: number) => {
 </script>
 
 <template>
-	<!-- SVG dots -->
-	<div class="absolute inset-y-0 w-full h-96 -z-20" aria-hidden="true">
-		<div class="relative h-auto">
-			<svg
-				class="hidden absolute right-full transform translate-x-1/4 translate-y-1/3 md:translate-y-1/2 sm:translate-x-1/2 lg:translate-x-full md:block"
-				width="404"
-				height="584"
-				fill="none"
-				viewBox="0 0 404 184">
-				<defs>
-					<pattern
-						id="e229dbec-10e9-49ee-8ec3-0286ca089edf"
-						x="0"
-						y="0"
-						width="20"
-						height="20"
-						patternUnits="userSpaceOnUse">
-						<rect
-							x="0"
-							y="0"
-							width="4"
-							height="4"
-							class="text-gray-200"
-							fill="currentColor" />
-					</pattern>
-				</defs>
-				<rect
-					width="404"
-					height="284"
-					fill="url(#e229dbec-10e9-49ee-8ec3-0286ca089edf)" />
-			</svg>
-			<svg
-				class="absolute left-full transform -translate-x-1/4 -translate-y-3/4 sm:-translate-x-1/2 md:-translate-y-1/2 lg:-translate-x-3/4"
-				width="404"
-				height="784"
-				fill="none"
-				viewBox="0 0 404 784">
-				<defs>
-					<pattern
-						id="d2a68204-c383-44b1-b99f-42ccff4e5365"
-						x="0"
-						y="0"
-						width="20"
-						height="20"
-						patternUnits="userSpaceOnUse">
-						<rect
-							x="0"
-							y="0"
-							width="4"
-							height="4"
-							class="text-gray-200"
-							fill="currentColor" />
-					</pattern>
-				</defs>
-				<rect
-					width="404"
-					height="784"
-					fill="url(#d2a68204-c383-44b1-b99f-42ccff4e5365)" />
-			</svg>
-		</div>
+	<div v-if="data?.length === 0" class="mt-40">
+		No posts yet!
+		<Button v-if="isAdmin ?? false" theme="orange">Create new page</Button>
 	</div>
-
 	<TransitionGroup name="block-list">
 		<BlockRenderer
 			v-for="block in data?.sort((a, b) => a.index - b.index)"
