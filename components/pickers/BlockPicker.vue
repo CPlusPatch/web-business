@@ -77,7 +77,7 @@ watch(
 					{{ component.description }}
 				</Button>
 			</div>
-			<div class="h-full grow">
+			<div class="h-full grow p-10">
 				<Transition
 					mode="out-in"
 					enter-from-class="opacity-0 sm:scale-95"
