@@ -4,7 +4,9 @@ defineProps<{
 	editable: boolean;
 }>();
 
-// const emit = defineEmits(["editField"]);
+const emit = defineEmits(["editField"]);
+
+const _prompt = (...props: any[]) => prompt(...props);
 </script>
 
 <template>
@@ -18,7 +20,14 @@ defineProps<{
 				sizes="lg:1920px md:700px sm:400px"
 				class="rounded-lg aspect-video shadow-lg w-full duration-150"
 				:src="imageMain ?? 'https://placehold.co/1920x1080'"
-				alt="VSCode screenshot" />
+				alt="VSCode screenshot"
+				@click="
+					emit(
+						'editField',
+						_prompt('Image URL:', imageMain),
+						'image-main'
+					)
+				" />
 		</div>
 		<div class="py-4 sm:py-12" />
 	</div>

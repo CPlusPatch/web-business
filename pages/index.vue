@@ -23,6 +23,11 @@ if (!data.value) {
 	throw createError("No blocks returned!");
 }
 
+if (data.value.length === 0)
+	throw createError({
+		statusCode: 404,
+	});
+
 const blockMeta =
 	(
 		await useFetch(`/api/blocks/meta`, {
@@ -48,8 +53,6 @@ const saveAll = async () => {
 		},
 		body: JSON.stringify(data.value),
 	});
-
-	// if (result.data.value) data.value = result.data.value as unknown as Block[];
 };
 
 const moveBlockUp = (index: number) => {
@@ -118,7 +121,7 @@ const addNewBlock = async (index: number) => {
 
 	data.value = [
 		// part of the array before the specified index
-		...data.value.slice(0, index),
+		...data.value.slice(0, index + 1),
 		// inserted item
 		block.data.value as unknown as Block,
 		// part of the array after the specified index
@@ -133,7 +136,7 @@ const addNewBlock = async (index: number) => {
 		index,
 	}));
 };
-
+/* 
 const createNewPage = async () => {
 	const page = await useFetch(`/api/pages/new`, {
 		method: "POST",
@@ -147,7 +150,7 @@ const createNewPage = async () => {
 	});
 
 	console.log(page.data.value);
-};
+}; */
 
 const deleteBlock = async (index: number) => {
 	if (!data.value) return false;
@@ -191,25 +194,19 @@ const chooseBlockDialog = (): Promise<{
 </script>
 
 <template>
-	<div v-if="data?.length === 0" class="mt-40">
-		No posts yet!
-		<Button v-if="isAdmin ?? false" theme="orange" @click="createNewPage"
-			>Create new page</Button
-		>
-	</div>
 	<TransitionGroup name="block-list">
 		<BlockRenderer
-			v-for="block in data?.sort((a, b) => a.index - b.index)"
+			v-for="(block, index) in data"
 			:key="block.id"
 			:block="block"
 			:edit="isAdmin ?? false"
-			:is-last="block.index === (data?.length ?? 0) - 1"
-			:is-first="block.index === 0"
-			@move-block-down="moveBlockDown(block.index)"
-			@move-block-up="moveBlockUp(block.index)"
-			@delete-block="deleteBlock(block.index)"
-			@add-new-block="addNewBlock(block.index)"
-			@update-block="(newBlock: Block) => { data![newBlock.index] = newBlock; saveAll() }" />
+			:is-last="index === (data?.length ?? 0) - 1"
+			:is-first="index === 0"
+			@move-block-down="moveBlockDown(index)"
+			@move-block-up="moveBlockUp(index)"
+			@delete-block="deleteBlock(index)"
+			@add-new-block="addNewBlock(index)"
+			@update-block="(newBlock: Block) => { data![index] = newBlock; saveAll() }" />
 	</TransitionGroup>
 
 	<dialog
