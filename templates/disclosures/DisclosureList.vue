@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { IconChevronDown } from "@tabler/icons-vue";
 import { nanoid } from "nanoid";
 import PrimaryContainer from "~/components/layout/PrimaryContainer.vue";
 
@@ -71,7 +70,8 @@ const emit = defineEmits(["editField"]);
 										{{ element.question }}
 									</span>
 									<span class="flex items-center ml-6 h-7">
-										<IconChevronDown
+										<Icon
+											name="tabler:chevron-down"
 											:class="[
 												open
 													? '-rotate-180'
