@@ -31,7 +31,7 @@ const emit = defineEmits(["editField"]);
 				">
 				{{ textHeader }}
 			</h2>
-			<dl class="gap-y-3 flex flex-col">
+			<div class="gap-y-3 flex flex-col">
 				<TemplatesTemplateList
 					v-slot="{
 						add,
@@ -73,8 +73,8 @@ const emit = defineEmits(["editField"]);
 						v-slot="{ open }"
 						class="flex flex-row"
 						as="div">
-						<dl class="mx-3 py-4 space-y-3 grow border-b">
-							<dt class="text-lg font-poppins">
+						<div class="mx-3 py-4 space-y-3 grow border-b">
+							<div class="text-lg font-poppins">
 								<HeadlessDisclosureButton
 									class="flex justify-between items-start w-full text-left text-gray-400 font-inter">
 									<span
@@ -104,7 +104,7 @@ const emit = defineEmits(["editField"]);
 											aria-hidden="true" />
 									</span>
 								</HeadlessDisclosureButton>
-							</dt>
+							</div>
 							<transition
 								enter-active-class="transition duration-100 ease-in"
 								enter-from-class="transform scale-95 opacity-0"
@@ -113,7 +113,7 @@ const emit = defineEmits(["editField"]);
 								leave-from-class="transform scale-100 opacity-100"
 								leave-to-class="transform scale-95 opacity-0">
 								<HeadlessDisclosurePanel>
-									<dd class="pr-12 mt-2">
+									<div class="pr-12 mt-2">
 										<p
 											:contenteditable="editable"
 											data-placeholder="Disclosure content"
@@ -129,10 +129,10 @@ const emit = defineEmits(["editField"]);
 											">
 											{{ element.answer }}
 										</p>
-									</dd>
+									</div>
 								</HeadlessDisclosurePanel>
 							</transition>
-						</dl>
+						</div>
 						<div v-if="editable" class="flex gap-1">
 							<div class="flex flex-col gap-1">
 								<Button
@@ -179,7 +179,7 @@ const emit = defineEmits(["editField"]);
 						</div>
 					</HeadlessDisclosure>
 				</TemplatesTemplateList>
-			</dl>
+			</div>
 		</div>
 	</PrimaryContainer>
 </template>

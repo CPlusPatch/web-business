@@ -48,7 +48,7 @@ const emit = defineEmits(["editField"]);
 				{{ textSecondary }}
 			</p>
 		</div>
-		<dl
+		<div
 			class="grid grid-cols-1 gap-x-4 gap-y-6 text-center lg:grid-cols-3 w-full">
 			<TemplatesTemplateList
 				v-slot="{
@@ -83,9 +83,9 @@ const emit = defineEmits(["editField"]);
 				"
 				@edit-field="(...props) => emit('editField', ...props)">
 				<div>
-					<dl
+					<div
 						class="w-full flex flex-col gap-y-4 ring-2 rounded-lg shadow hover:ring-orange-400 ease-in-out duration-500 ring-gray-200 p-6">
-						<dt
+						<div
 							:contenteditable="editable"
 							data-placeholder="Short description here"
 							class="text-base leading-7 text-gray-600"
@@ -98,8 +98,8 @@ const emit = defineEmits(["editField"]);
 									)
 							">
 							{{ element.name }}
-						</dt>
-						<dd
+						</div>
+						<div
 							:contenteditable="editable"
 							data-placeholder="Big Stat"
 							class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl"
@@ -112,8 +112,8 @@ const emit = defineEmits(["editField"]);
 									)
 							">
 							{{ element.value }}
-						</dd>
-					</dl>
+						</div>
+					</div>
 					<div
 						v-if="editable"
 						class="flex flex-row gap-1 justify-center mt-3">
@@ -155,6 +155,6 @@ const emit = defineEmits(["editField"]);
 					</div>
 				</div>
 			</TemplatesTemplateList>
-		</dl>
+		</div>
 	</PrimaryContainer>
 </template>

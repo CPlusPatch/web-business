@@ -37,7 +37,7 @@ const faq = [
 				class="text-3xl font-extrabold text-center text-gray-900 dark:text-gray-200 sm:text-4xl font-poppins">
 				Frequently asked questions
 			</h2>
-			<dl class="gap-y-3 flex flex-col divide-y divide-gray-300">
+			<div class="gap-y-3 flex flex-col divide-y divide-gray-300">
 				<HeadlessDisclosure
 					v-for="group of faq"
 					:key="group.question"
@@ -78,7 +78,7 @@ const faq = [
 						</transition>
 					</div>
 				</HeadlessDisclosure>
-			</dl>
+			</div>
 		</div>
 	</PrimaryContainer>
 </template>
