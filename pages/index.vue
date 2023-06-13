@@ -28,17 +28,20 @@ if (data.value.length === 0)
 		statusCode: 404,
 	});
 
-const blockMeta =
-	(
-		await useFetch(`/api/blocks/meta`, {
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token.value}`,
-			},
-		})
-	).data.value ?? [];
-
 const isAdmin = (await useFetch("/api/user/admin")).data.value;
+
+const blockMeta = isAdmin
+	? (
+			await useFetch(`/api/blocks/meta`, {
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token.value}`,
+				},
+			})
+	  ).data.value ?? []
+	: [];
+
+console.log(blockMeta);
 
 const blockChooseDialog = ref<HTMLDialogElement | null>(null);
 
@@ -211,6 +214,7 @@ const chooseBlockDialog = (): Promise<{
 	</TransitionGroup>
 
 	<dialog
+		v-if="isAdmin"
 		ref="blockChooseDialog"
 		class="open:backdrop:backdrop-blur-md open:opacity-100 opacity-0 duration-200 relative rounded-lg bg-white text-left shadow-xl transition-all w-full h-full p-0">
 		<form

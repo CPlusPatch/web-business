@@ -14,6 +14,7 @@ export default defineNuxtConfig({
 		"@vueuse/nuxt",
 	],
 	extends: ["nuxt-seo-kit"],
+	components: ["~/templates", "~/components"],
 	app: {
 		head: {
 			link: [
