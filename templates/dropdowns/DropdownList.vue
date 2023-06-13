@@ -73,7 +73,7 @@ const emit = defineEmits(["editField"]);
 						v-slot="{ open }"
 						class="flex flex-row"
 						as="div">
-						<div class="mx-3 py-4 space-y-3 grow border-b">
+						<dl class="mx-3 py-4 space-y-3 grow border-b">
 							<dt class="text-lg font-poppins">
 								<HeadlessDisclosureButton
 									class="flex justify-between items-start w-full text-left text-gray-400 font-inter">
@@ -132,7 +132,7 @@ const emit = defineEmits(["editField"]);
 									</dd>
 								</HeadlessDisclosurePanel>
 							</transition>
-						</div>
+						</dl>
 						<div v-if="editable" class="flex gap-1">
 							<div class="flex flex-col gap-1">
 								<Button

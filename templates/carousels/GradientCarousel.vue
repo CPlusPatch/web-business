@@ -110,6 +110,7 @@ const emit = defineEmits(["editField"]);
 							class="p-3 lg:w-40 w-full overflow-hidden shrink-0">
 							<img
 								:contenteditable="editable"
+								alt=""
 								:src="
 									element.avatar === ''
 										? 'https://placehold.co/400'

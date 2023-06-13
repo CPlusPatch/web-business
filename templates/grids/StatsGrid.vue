@@ -83,7 +83,7 @@ const emit = defineEmits(["editField"]);
 				"
 				@edit-field="(...props) => emit('editField', ...props)">
 				<div>
-					<div
+					<dl
 						class="w-full flex flex-col gap-y-4 ring-2 rounded-lg shadow hover:ring-orange-400 ease-in-out duration-500 ring-gray-200 p-6">
 						<dt
 							:contenteditable="editable"
@@ -113,7 +113,7 @@ const emit = defineEmits(["editField"]);
 							">
 							{{ element.value }}
 						</dd>
-					</div>
+					</dl>
 					<div
 						v-if="editable"
 						class="flex flex-row gap-1 justify-center mt-3">

@@ -56,7 +56,7 @@ const _prompt = (...props: any[]) => prompt(...props);
 						">
 						{{ textSecondary }}
 					</p>
-					<dl
+					<div
 						class="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none">
 						<TemplatesTemplateList
 							v-slot="{
@@ -195,7 +195,7 @@ const _prompt = (...props: any[]) => prompt(...props);
 								</div>
 							</div>
 						</TemplatesTemplateList>
-					</dl>
+					</div>
 				</div>
 			</div>
 			<nuxt-img
