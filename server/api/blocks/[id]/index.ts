@@ -6,13 +6,11 @@ export default defineEventHandler(async event => {
 
 	const blocks = await AppDataSource.initialize()
 		.then(async AppDataSource => {
-			const blocks = (
+			return (
 				await AppDataSource.getRepository(Block).findBy({
 					page_id: Number(id),
 				})
 			).sort((a, b) => a.index - b.index);
-
-			return blocks;
 		})
 		.finally(() => {
 			AppDataSource.destroy();

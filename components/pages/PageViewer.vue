@@ -2,31 +2,19 @@
 import { Block } from "~/db/entities/Block";
 import BlockRenderer from "~/components/BlockRenderer.vue";
 
-useServerSeoMeta({
-	title: "CPlusPatch",
-	ogTitle: "Website for CPlusPatch, aka Gaspard Wierzbinski",
-	description: "My blog, about me and how you can contact me!",
-	ogDescription: "My blog, about me and how you can contact me!",
-	ogImage: "/static/servers.webp",
-	twitterCard: "summary_large_image",
-	author: "Gaspard Wierzbinski",
-});
+const props = defineProps<{
+	id: number;
+}>();
 
 const token = useCookie("token");
 
-const pageId = 1;
-const data = (await useFetch(`/api/blocks/${pageId}`)).data as Ref<
+const data = (await useFetch(`/api/blocks/${props.id}`)).data as Ref<
 	Block[] | null
 >;
 
 if (!data.value) {
 	throw createError("No blocks returned!");
 }
-
-if (data.value.length === 0)
-	throw createError({
-		statusCode: 404,
-	});
 
 const isAdmin = (await useFetch("/api/user/admin")).data.value;
 
@@ -105,7 +93,7 @@ const addNewBlock = async (index: number) => {
 			category,
 			component,
 			index: index + 1,
-			page_id: pageId,
+			page_id: props.id,
 		}),
 	});
 
