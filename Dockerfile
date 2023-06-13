@@ -15,5 +15,6 @@ RUN cd ./app && pnpm build
 FROM docker.io/node:18-alpine
 
 COPY --from=builder /app/.output/ /app
+COPY --from=builder /app/templates /templates
 
 CMD ["/app/server/index.mjs"]
