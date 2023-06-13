@@ -33,7 +33,6 @@
 			</div>
 		</div>
 		<div
-			role="list"
 			class="grid grid-cols-1 gap-5 mt-12 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4 font-inter">
 			<TemplatesTemplateList
 				v-slot="{
