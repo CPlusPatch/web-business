@@ -21,11 +21,12 @@ const _prompt = (...props: any[]) => prompt(...props);
 			:src="imageMain ?? 'https://placehold.co/1920x1080'"
 			alt="VSCode screenshot"
 			@click="
-				emit(
-					'editField',
-					_prompt('Image URL:', imageMain),
-					'image-main'
-				)
+				editable &&
+					emit(
+						'editField',
+						_prompt('Image URL:', imageMain),
+						'image-main'
+					)
 			" />
 	</div>
 </template>
