@@ -41,8 +41,6 @@ const blockMeta = isAdmin
 	  ).data.value ?? []
 	: [];
 
-console.log(blockMeta);
-
 const blockChooseDialog = ref<HTMLDialogElement | null>(null);
 
 const saveAll = async () => {
@@ -130,8 +128,6 @@ const addNewBlock = async (index: number) => {
 		// part of the array after the specified index
 		...data.value.slice(index),
 	];
-
-	console.log(data.value);
 
 	// Recalculate indexes
 	data.value = data.value.map((d, index) => ({
