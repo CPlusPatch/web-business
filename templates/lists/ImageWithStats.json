@@ -1,0 +1,12 @@
+{
+	"category": "lists",
+	"name": "ImageWithStats",
+	"displayName": "Images With Stats",
+	"description": "Alternating images with stats",
+	"inputs": [
+		{ "name": "text-header", "type": "string" },
+		{ "name": "image", "type": "string" },
+		{ "name": "items", "type": "array" },
+		{ "name": "reversed", "type": "boolean" }
+	]
+}

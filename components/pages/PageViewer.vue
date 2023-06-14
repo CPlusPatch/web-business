@@ -1,20 +1,26 @@
 <script setup lang="ts">
+import { nanoid } from "nanoid";
 import { Block } from "~/db/entities/Block";
 import BlockRenderer from "~/components/BlockRenderer.vue";
+import { Page } from "~/db/entities/Page";
 
 const props = defineProps<{
-	id: number;
+	page: Page;
 }>();
 
 const token = useCookie("token");
 
-const data = (await useFetch(`/api/blocks/${props.id}`)).data as Ref<
-	Block[] | null
->;
+const loading = ref(false);
+
+const data = ref(
+	(await useFetch(`/api/blocks/${props.page.id}`)).data.value
+) as Ref<Block[] | null>;
 
 if (!data.value) {
 	throw createError("No blocks returned!");
 }
+
+const valueToUpdate = ref(nanoid());
 
 const isAdmin = (await useFetch("/api/user/admin")).data.value;
 
@@ -34,7 +40,7 @@ const blockChooseDialog = ref<HTMLDialogElement | null>(null);
 const saveAll = async () => {
 	if (!data.value) return false;
 
-	await useFetch(`/api/blocks/1`, {
+	await useFetch(`/api/blocks/${props.page.id}`, {
 		method: "PUT",
 		headers: {
 			"Content-Type": "application/json",
@@ -93,7 +99,7 @@ const addNewBlock = async (index: number) => {
 			category,
 			component,
 			index: index + 1,
-			page_id: props.id,
+			page_id: props.page.id,
 		}),
 	});
 
@@ -178,11 +184,38 @@ const chooseBlockDialog = (): Promise<{
 		});
 	});
 };
+
+const updateBlock = (newBlock: Block, index: number) => {
+	if (!data.value) return;
+	data.value.splice(index, 1, newBlock);
+	saveAll();
+};
 </script>
 
 <template>
+	<div
+		v-if="data?.length === 0"
+		class="mt-40 max-w-7xl mx-auto w-full flex items-center justify-center flex-col gap-4 grow">
+		<h1 class="font-mono text-8xl">/{{ props.page.path }}</h1>
+		<Button
+			theme="orange"
+			:loading="loading"
+			@click="
+				async () => {
+					loading = true;
+					await addNewBlock(0);
+					loading = false;
+				}
+			"
+			>Add new block</Button
+		>
+	</div>
 	<div class="w-full h-40"></div>
-	<TransitionGroup tag="div" name="block-list" class="flex flex-col gap-30">
+	<TransitionGroup
+		:key="valueToUpdate"
+		tag="div"
+		name="block-list"
+		class="flex flex-col gap-30">
 		<BlockRenderer
 			v-for="(block, index) in data"
 			:key="block.id"
@@ -194,7 +227,7 @@ const chooseBlockDialog = (): Promise<{
 			@move-block-up="moveBlockUp(index)"
 			@delete-block="deleteBlock(index)"
 			@add-new-block="addNewBlock(index)"
-			@update-block="(newBlock: Block) => { data![index] = newBlock; saveAll() }" />
+			@update-block="(newBlock: Block) => updateBlock(newBlock, index)" />
 	</TransitionGroup>
 
 	<dialog

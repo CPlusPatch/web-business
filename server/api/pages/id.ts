@@ -9,8 +9,6 @@ export default defineEventHandler(async event => {
 
 	// const isAdmin = user?.role === Role.ADMIN;
 
-	console.log(body);
-
 	const page = await AppDataSource.initialize()
 		.then(async AppDataSource => {
 			return await AppDataSource.getRepository(Page).findOneBy({

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Page } from "~/db/entities/Page";
+
 useServerSeoMeta({
 	title: "CPlusPatch",
 	ogTitle: "Website for CPlusPatch, aka Gaspard Wierzbinski",
@@ -18,7 +20,7 @@ const page = (
 			path: pagePath,
 		}),
 	})
-).data.value;
+).data.value as unknown as Page;
 
 const isAdmin = (await useFetch("/api/user/admin")).data.value;
 const token = useCookie("token");
@@ -47,5 +49,5 @@ const createNewPage = async () => {
 			>Create new page</Button
 		>
 	</div>
-	<PagesPageViewer v-else :id="page.id" />
+	<PagesPageViewer v-else :page="page" />
 </template>
