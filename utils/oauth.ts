@@ -1,3 +1,7 @@
+/**
+ * Sign in with Mastodon
+ * @returns {Promise<void>}
+ */
 export async function signInWithMastodon() {
 	let instanceUrl = new URL("https://placeholder.com");
 	try {
@@ -21,6 +25,11 @@ export async function signInWithMastodon() {
 	window.location.href = authorizationUrl;
 }
 
+/**
+ * Create a Mastodon app
+ * @param {URL} instanceUrl - The instance URL
+ * @returns {Promise<{clientId: string, clientSecret: string, redirectUri: string, instanceUrl: string}>}
+ */
 export async function createMastodonApp(instanceUrl: URL) {
 	const appName = "CPlusPatch CMS";
 	const redirectUri = `${window.location.origin}/auth/login/`;
@@ -50,6 +59,12 @@ export async function createMastodonApp(instanceUrl: URL) {
 	};
 }
 
+/**
+ * Get Mastodon access token
+ * @param {string} code - The authorization code
+ * @param {{clientSecret: string, instanceUrl: string, redirectUri: string, clientId: string}} oauthData - OAuth data
+ * @returns {Promise<string>} - Access token
+ */
 export async function getMastodonAccessToken(
 	code: string,
 	oauthData: {
@@ -79,6 +94,12 @@ export async function getMastodonAccessToken(
 	return data.access_token;
 }
 
+/**
+ * Get Mastodon account
+ * @param {string} accessToken - The access token
+ * @param {{clientSecret: string, instanceUrl: string, redirectUri: string, clientId: string}} oauthData - OAuth data
+ * @returns {Promise<Object>} - Account data
+ */
 export async function getMastodonAccount(
 	accessToken: string,
 	oauthData: {
@@ -100,6 +121,10 @@ export async function getMastodonAccount(
 	return data;
 }
 
+/**
+ * Sign in with Misskey
+ * @returns {Promise<void>}
+ */
 export async function signInWithMisskey() {
 	let instanceUrl = new URL("https://placeholder.com");
 	try {
@@ -132,6 +157,11 @@ export async function signInWithMisskey() {
 	window.location.href = (await response.json()).url;
 }
 
+/**
+ * Create a Misskey app
+ * @param {URL} instanceUrl - The instance URL
+ * @returns {Promise<{clientId: string, clientSecret: string, redirectUri: string, instanceUrl: string}>}
+ */
 export async function createMisskeyApp(instanceUrl: URL) {
 	const appName = "CPlusPatch CMS";
 	const appDescription = "CPlusPatch CMS";
@@ -161,6 +191,12 @@ export async function createMisskeyApp(instanceUrl: URL) {
 	};
 }
 
+/**
+ * Get Misskey access token
+ * @param {string} code - The authorization code
+ * @param {{clientSecret: string, instanceUrl: string, redirectUri: string, clientId: string}} oauthData - OAuth data
+ * @returns {Promise<string>} - Access token
+ */
 export async function getMisskeyAccessToken(
 	code: string,
 	oauthData: {
@@ -187,6 +223,12 @@ export async function getMisskeyAccessToken(
 	return data.accessToken;
 }
 
+/**
+ * Get Misskey account
+ * @param {string} accessToken - The access token
+ * @param {{clientSecret: string, instanceUrl: string, redirectUri: string, clientId: string}} oauthData - OAuth data
+ * @returns {Promise<{id: string, username: string}>} - Account data
+ */
 export async function getMisskeyAccount(
 	accessToken: string,
 	oauthData: {
