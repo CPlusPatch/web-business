@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { IconCalendar, IconClock } from "@tabler/icons-vue";
 import { marked } from "marked";
 import { me } from "~/app.vue";
 import PrimaryContainer from "~~/components/layout/PrimaryContainer.vue";
@@ -117,7 +116,7 @@ definePageMeta({
 				<span
 					v-if="post.data.value?.created_at"
 					class="flex gap-x-2 items-center">
-					<IconCalendar class="w-4 h-4 mb-1" />
+					<Icon name="tabler:calendar" class="w-4 h-4 mb-1" />
 					{{
 						new Date(
 							post.data.value?.created_at
@@ -133,7 +132,7 @@ definePageMeta({
 				<span
 					v-if="post.data.value?.content"
 					class="flex gap-x-2 items-center">
-					<IconClock class="w-4 h-4 mb-1" />
+					<Icon name="tabler:clock" class="w-4 h-4 mb-1" />
 					{{
 						Math.ceil(
 							post.data.value?.content.split(" ").length / 183

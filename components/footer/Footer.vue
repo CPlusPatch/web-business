@@ -1,38 +1,29 @@
 <script setup lang="ts">
-import {
-	IconMail,
-	IconBrandMatrix,
-	IconCopyleft,
-	IconBrandStackoverflow,
-	IconCode,
-	IconBrandGithub,
-} from "@tabler/icons-vue";
-
 const socials = [
 	{
 		name: "GitHub",
 		href: "https://github.com/CPlusPatch",
-		icon: IconBrandGithub,
+		icon: "tabler:brand-github",
 	},
 	{
 		name: "Codeberg",
 		href: "https://codeberg.org/CPlusPatch",
-		icon: IconCode,
+		icon: "tabler:code",
 	},
 	{
 		name: "E-mail",
 		href: "mailto:contact@cpluspatch.com",
-		icon: IconMail,
+		icon: "tabler:mail",
 	},
 	{
 		name: "StackOverflow",
 		href: "https://stackoverflow.com/users/12187615/cpluspatch",
-		icon: IconBrandStackoverflow,
+		icon: "tabler:brand-stackoverflow",
 	},
 	{
 		name: "Matrix",
 		href: "https://matrix.to/#/@jesse:cpluspatch.dev",
-		icon: IconBrandMatrix,
+		icon: "tabler:brand-matrix",
 	},
 ];
 </script>
@@ -50,12 +41,14 @@ const socials = [
 					:href="item.href"
 					class="text-gray-400 hover:text-gray-500">
 					<span class="sr-only">{{ item.name }}</span>
-					<component :is="item.icon" aria-hidden="true" size="24" />
+					<Icon :name="item.icon" aria-hidden="true" size="24" />
 				</a>
 			</div>
 			<div class="mt-8 md:mt-0 md:order-1">
 				<p class="text-base text-center text-gray-600">
-					<IconCopyleft class="h-[1em] inline mb-0.5" />
+					<Icon
+						name="tabler:copyleft"
+						class="h-[1em] inline mb-0.5" />
 					{{ new Date().getFullYear() }}&nbsp; Gaspard Wierzbinski.
 					Licensed under GPLv3
 				</p>

@@ -1,10 +1,4 @@
 <script setup lang="ts">
-import {
-	IconLock,
-	IconFilePlus,
-	IconChevronRight,
-	IconArticleFilledFilled,
-} from "@tabler/icons-vue";
 import { me } from "~/app.vue";
 import Button from "~/components/button/Button.vue";
 import SmallSelect, {
@@ -71,7 +65,8 @@ useServerSeoMeta({
 					</li>
 					<li>
 						<div class="flex items-center">
-							<IconChevronRight
+							<Icon
+								name="tabler:chevron-right"
 								class="flex-shrink-0 h-5 w-5 text-gray-400"
 								aria-hidden="true" />
 							<NuxtLink
@@ -116,7 +111,9 @@ useServerSeoMeta({
 						theme="orange"
 						class="flex gap-x-1 items-center w-full md:w-auto"
 						@click="createNew">
-						<IconFilePlus class="h-5 w-5 mb-0.5" />Add new post
+						<Icon
+							name="tabler:file-plus"
+							class="h-5 w-5 mb-0.5" />Add new post
 					</Button>
 				</div>
 			</div>
@@ -144,7 +141,7 @@ useServerSeoMeta({
 							v-if="post.visibility !== Visibility.PUBLIC"
 							class="!absolute !p-2 top-3 right-3 z-10"
 							theme="gray">
-							<IconLock />
+							<Icon name="tabler:lock" />
 						</Button>
 						<img
 							v-if="post.banner"
@@ -157,7 +154,9 @@ useServerSeoMeta({
 						<NuxtLink class="mb-4" :to="`/blog/${post.slug}`">
 							<p
 								class="flex items-center text-sm font-bold text-gray-600 font-inter">
-								<IconArticleFilledFilled class="mr-2 w-5 h-5" />
+								<Icon
+									name="tabler:article-filled-filled"
+									class="mr-2 w-5 h-5" />
 								ARTICLE
 							</p>
 							<div

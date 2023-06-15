@@ -1,7 +1,6 @@
 <!-- eslint-disable vue/no-v-html -->
 <!-- eslint-disable vue/no-textarea-mustache -->
 <script setup lang="ts">
-import { IconDots } from "@tabler/icons-vue";
 import { marked } from "marked";
 import SmallLogo from "~/components/logos/SmallLogo.vue";
 import EditorSettings from "~/components/slide-over/EditorSettings.vue";
@@ -133,7 +132,7 @@ onUnmounted(() => {
 					class="flex absolute inset-y-0 right-0 gap-x-4 items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 					<span class="inline-flex relative z-0 rounded-md shadow-sm">
 						<button type="button" @click="showSidebar = true">
-							<IconDots class="w-5 h-5" />
+							<Icon name="tabler:dots" class="w-5 h-5" />
 						</button>
 					</span>
 				</div>

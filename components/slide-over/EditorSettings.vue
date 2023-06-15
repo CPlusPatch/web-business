@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { IconFileUpload, IconX } from "@tabler/icons-vue";
 import { arrayBufferToWebP } from "webp-converter-browser";
 import { Post, Visibility } from "~/db/entities/Post";
 
@@ -172,7 +171,10 @@ const save = (e: Event) => {
 									class="text-gray-400 bg-white rounded-md duration-200 outline-none hover:text-gray-500 focus:outline-none active:scale-95"
 									@click="close">
 									<span class="sr-only">Close panel</span>
-									<IconX class="w-5 h-5" aria-hidden="true" />
+									<Icon
+										name="tabler:x"
+										class="w-5 h-5"
+										aria-hidden="true" />
 								</button>
 							</div>
 
@@ -200,7 +202,9 @@ const save = (e: Event) => {
 											theme="gray"
 											class="!absolute right-0 bottom-1 !p-2 m-2"
 											@click="fileUpload?.click()">
-											<IconFileUpload class="w-5 h-5" />
+											<Icon
+												name="tabler:file-upload"
+												class="w-5 h-5" />
 										</Button>
 									</div>
 

@@ -2,7 +2,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import { onUnmounted, ref } from "vue";
-import { IconMenu2 } from "@tabler/icons-vue";
 import WideLogo from "./logos/WideLogo.vue";
 import SmallLogo from "./logos/SmallLogo.vue";
 import Button from "./button/Button.vue";
@@ -113,7 +112,7 @@ onUnmounted(() => {
 				title="Open mobile navbar"
 				class="!border-none !p-0 !outline-none !shadow-none md:hidden"
 				@click="open = !open">
-				<IconMenu2 class="w-8 h-8" />
+				<Icon name="tabler:menu-2" class="w-8 h-8" />
 			</Button>
 
 			<HeadlessMenu

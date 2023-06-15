@@ -1,6 +1,5 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import { IconExternalLink } from "@tabler/icons-vue";
 import PrimaryContainer from "~/components/layout/PrimaryContainer.vue";
 
 defineProps<{
@@ -52,7 +51,9 @@ defineProps<{
 						data-placeholder="Link text"
 						rel="noreferrer">
 						{{ element.linkText }}
-						<IconExternalLink class="inline mb-1 w-5 h-5" />
+						<Icon
+							name="tabler:external-link"
+							class="inline mb-1 w-5 h-5" />
 					</a>
 				</div>
 
