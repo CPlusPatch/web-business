@@ -3,8 +3,15 @@
 	"name": "StatsGrid",
 	"displayName": "Stats Grid",
 	"description": "Grid of big stats or text",
-	"inputs": [
-		{ "name": "text-header", "type": "string" },
-		{ "name": "text-secondary", "type": "string" }
-	]
+	"inputs": {
+		"text-header": "string",
+		"text-secondary": "string",
+		"grid": [
+			{
+				"id": "string",
+				"name": "string",
+				"value": "string"
+			}
+		]
+	}
 }

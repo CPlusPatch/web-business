@@ -87,23 +87,27 @@ const moveBlockDown = (index: number) => {
 const addNewBlock = async (index: number) => {
 	if (!data.value) return false;
 
-	const { category, component } = await chooseBlockDialog();
+	const block = await chooseBlockDialog();
 
-	const block = await useFetch(`/api/blocks/new`, {
+	if (!block) {
+		return console.log("User cancelled dialog");
+	}
+
+	const blockResult = await useFetch(`/api/blocks/new`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${token.value}`,
 		},
 		body: JSON.stringify({
-			category,
-			component,
+			category: block.category,
+			component: block.component,
 			index: index + 1,
 			page_id: props.page.id,
 		}),
 	});
 
-	if (!block.data.value) return;
+	if (!blockResult.data.value) return;
 
 	data.value = data.value.map(d =>
 		d.index >= index
@@ -118,7 +122,7 @@ const addNewBlock = async (index: number) => {
 		// part of the array before the specified index
 		...data.value.slice(0, index + 1),
 		// inserted item
-		block.data.value as unknown as Block,
+		blockResult.data.value as unknown as Block,
 		// part of the array after the specified index
 		...data.value.slice(index),
 	];
@@ -129,21 +133,6 @@ const addNewBlock = async (index: number) => {
 		index,
 	}));
 };
-/* 
-const createNewPage = async () => {
-	const page = await useFetch(`/api/pages/new`, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${token.value}`,
-		},
-		body: JSON.stringify({
-			path: "",
-		}),
-	});
-
-	console.log(page.data.value);
-}; */
 
 const deleteBlock = async (index: number) => {
 	if (!data.value) return false;
@@ -167,20 +156,25 @@ const deleteBlock = async (index: number) => {
 const chooseBlockDialog = (): Promise<{
 	component: string;
 	category: string;
-}> => {
+} | null> => {
 	return new Promise(resolve => {
 		if (!blockChooseDialog.value) return;
 
 		blockChooseDialog.value.showModal();
 
 		blockChooseDialog.value.addEventListener("close", () => {
-			resolve({
-				component: JSON.parse(
-					blockChooseDialog.value?.returnValue ?? ""
-				).name,
-				category: JSON.parse(blockChooseDialog.value?.returnValue ?? "")
-					.category,
-			});
+			try {
+				resolve({
+					component: JSON.parse(
+						blockChooseDialog.value?.returnValue ?? ""
+					).name,
+					category: JSON.parse(
+						blockChooseDialog.value?.returnValue ?? ""
+					).category,
+				});
+			} catch {
+				resolve(null);
+			}
 		});
 	});
 };

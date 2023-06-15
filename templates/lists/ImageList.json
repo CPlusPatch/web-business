@@ -3,10 +3,16 @@
 	"name": "ImageList",
 	"displayName": "Image List",
 	"description": "A list of images",
-	"inputs": [
-		{ "name": "text-header", "type": "string" },
-		{ "name": "text-secondary", "type": "string" },
-		{ "name": "image-main", "type": "image" },
-		{ "name": "list", "type": "array" }
-	]
+	"inputs": {
+		"text-header": "string",
+		"text-secondary": "string",
+		"image-main": "string",
+		"list": [
+			{
+				"id": "string",
+				"name": "string",
+				"description": "string"
+			}
+		]
+	}
 }

@@ -3,9 +3,18 @@
 	"name": "IconGrid",
 	"displayName": "Icon Grid",
 	"description": "Grid of small cards with icons",
-	"inputs": [
-		{ "name": "text-header", "type": "string" },
-		{ "name": "text-secondary", "type": "string" },
-		{ "name": "grid", "type": "array" }
-	]
+	"inputs": {
+		"text-header": "string",
+		"text-secondary": "string",
+		"grid": [
+			{
+				"id": "string",
+				"name": "string",
+				"type": "string",
+				"experience": "string",
+				"image": "string",
+				"padding": "boolean"
+			}
+		]
+	}
 }

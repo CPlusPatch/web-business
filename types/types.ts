@@ -2,6 +2,8 @@ export enum InputType {
 	String = "string",
 	Paragraph = "paragraph",
 	Image = "image",
+	Boolean = "boolean",
+	Array = "array",
 }
 export interface TemplateMetadata {
 	name: string;
@@ -9,7 +11,6 @@ export interface TemplateMetadata {
 	description: string;
 	displayName: string;
 	inputs: {
-		name: string;
-		type: InputType;
-	}[];
+		[key: string]: InputType | any;
+	};
 }

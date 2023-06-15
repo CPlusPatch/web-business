@@ -2,7 +2,10 @@
 import { Codemirror } from "vue-codemirror";
 import { json, jsonParseLinter } from "@codemirror/lang-json";
 import { linter } from "@codemirror/lint";
+import Button from "./button/Button.vue";
+import SlotEditorRenderer from "./SlotEditorRenderer.vue";
 import { Block } from "~/db/entities/Block";
+import { TemplateMetadata } from "~/types/types";
 
 // import Button from "./button/Button.vue";
 const props = defineProps<{
@@ -20,6 +23,8 @@ const emit = defineEmits([
 	"moveBlockDown",
 ]);
 
+const _block = ref(props.block);
+
 const code = ref("{}");
 
 const importedComp = (
@@ -28,18 +33,15 @@ const importedComp = (
 	)
 ).default;
 
-const editSlot = (value: string, slot: any) => {
-	emit("updateBlock", {
-		...props.block,
-		slots: props.block.slots.map(s =>
-			s.name === slot
-				? {
-						name: slot,
-						value,
-				  }
-				: s
-		),
-	});
+const importedMeta = (
+	await import(
+		`~/templates/${props.block.category}/${props.block.component}.json`
+	)
+).default as TemplateMetadata;
+
+const saveAll = () => {
+	emit("updateBlock", _block.value);
+	open.value = false;
 };
 
 const dialog = ref<HTMLDialogElement | null>(null);
@@ -71,13 +73,9 @@ const editRawSlot = async () => {
 	}
 };
 
-const passedProps: {
-	[name: string]: string | undefined;
-} = {};
+const open = ref(false);
 
-props.block.slots.forEach(s => {
-	passedProps[s.name] = s.value;
-});
+// const log = (...props: any[]) => console.log(...props);
 </script>
 
 <template>
@@ -117,13 +115,101 @@ props.block.slots.forEach(s => {
 				@click="editRawSlot">
 				<Icon name="ic:round-code" class="w-6 h-6" />
 			</Button>
+			<Button
+				theme="gray"
+				class="!px-2 !py-2 !shadow-md hover:translate-x-1"
+				@click="open = !open">
+				<Icon name="ic:round-settings" class="w-6 h-6" />
+			</Button>
 		</div>
-		<component
-			:is="importedComp"
-			v-bind="passedProps"
-			:editable="edit"
-			@edit-field="editSlot">
+		<component :is="importedComp" v-bind="_block.slots" :editable="edit">
 		</component>
+
+		<HeadlessTransitionRoot as="template" :show="open">
+			<HeadlessDialog
+				as="div"
+				class="fixed inset-0 overflow-hidden z-100"
+				@close="open = false">
+				<div class="absolute inset-0 overflow-hidden">
+					<div
+						class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
+						<HeadlessTransitionChild
+							as="template"
+							enter="transform transition ease-in-out duration-300"
+							enter-from="translate-x-full"
+							enter-to="translate-x-0"
+							leave="transform transition ease-in-out duration-300"
+							leave-from="translate-x-0"
+							leave-to="translate-x-full">
+							<div class="pointer-events-auto w-screen max-w-md">
+								<form
+									class="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl"
+									@submit.prevent>
+									<div class="h-0 flex-1 overflow-y-auto">
+										<div
+											class="bg-orange-600 py-6 px-4 sm:px-6">
+											<div
+												class="flex items-center justify-between">
+												<HeadlessDialogTitle
+													class="text-lg font-medium text-white">
+													Edit block
+												</HeadlessDialogTitle>
+												<div
+													class="ml-3 flex h-7 items-center">
+													<button
+														type="button"
+														class="rounded-md hover:text-white focus:outline-none text-gray-200 duration-200"
+														@click="open = false">
+														<span class="sr-only"
+															>Close panel</span
+														>
+														<Icon
+															name="ic:round-close"
+															class="h-6 w-6"
+															aria-hidden="true" />
+													</button>
+												</div>
+											</div>
+											<div class="mt-1">
+												<p
+													class="text-sm text-orange-100">
+													Tweaks the settings of this
+													block
+												</p>
+											</div>
+										</div>
+										<div
+											class="flex flex-1 flex-col gap-4 justify-between p-4 sm:p-6">
+											<SlotEditorRenderer
+												:slots="_block.slots"
+												:imported-meta="
+													importedMeta.inputs
+												"
+												@edit-slot="(slots: Block['slots']) => _block.slots = slots" />
+										</div>
+									</div>
+									<div
+										class="flex flex-shrink-0 justify-end px-4 py-4 gap-3">
+										<Button
+											theme="gray"
+											type="button"
+											@click="open = false">
+											Cancel
+										</Button>
+										<Button
+											theme="orange"
+											type="submit"
+											@click="saveAll">
+											Save
+										</Button>
+									</div>
+								</form>
+							</div>
+						</HeadlessTransitionChild>
+					</div>
+				</div>
+			</HeadlessDialog>
+		</HeadlessTransitionRoot>
 
 		<dialog
 			ref="dialog"

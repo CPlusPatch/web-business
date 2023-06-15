@@ -3,8 +3,17 @@
 	"name": "ImagesWithText",
 	"displayName": "Images with Text",
 	"description": "Rows of images and text together",
-	"inputs": [
-		{ "name": "text-header", "type": "string" },
-		{ "name": "list", "type": "array" }
-	]
+	"inputs": {
+		"text-header": "string",
+		"list": [
+			{
+				"id": "string",
+				"title": "string",
+				"desc": "string",
+				"image": "string",
+				"linkHref": "string",
+				"linkText": "string"
+			}
+		]
+	}
 }

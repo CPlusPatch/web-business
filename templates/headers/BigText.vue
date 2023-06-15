@@ -8,8 +8,6 @@ defineProps<{
 	textTypewriter?: string;
 	editable: boolean;
 }>();
-
-const emit = defineEmits(["editField"]);
 </script>
 
 <template>
@@ -19,34 +17,9 @@ const emit = defineEmits(["editField"]);
 			<div class="text-left">
 				<h1
 					class="text-4xl font-black text-gray-900 dark:text-gray-300 sm:text-5xl md:text-6xl flex flex-col">
+					<span class="inline mr-auto">{{ textPrimary }}</span>
 					<span
-						class="inline mr-auto"
-						:contenteditable="editable"
-						data-placeholder="Your"
-						@input="
-							editable &&
-								emit(
-									'editField',
-									($event.target as HTMLSpanElement)
-										.innerText,
-									'text-primary'
-								)
-						"
-						>{{ textPrimary }}</span
-					>
-					<span
-						:contenteditable="editable"
-						data-placeholder="Title here"
-						class="py-2 text-transparent mr-auto bg-clip-text bg-gradient-to-tr from-pink-500 !to-yellow-500 via-red-500"
-						@input="
-							editable &&
-								emit(
-									'editField',
-									($event.target as HTMLSpanElement)
-										.innerText,
-									'text-typewriter'
-								)
-						">
+						class="py-2 text-transparent mr-auto bg-clip-text bg-gradient-to-tr from-pink-500 !to-yellow-500 via-red-500">
 						{{ textTypewriter }}
 					</span>
 

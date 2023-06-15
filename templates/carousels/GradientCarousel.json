@@ -3,10 +3,15 @@
 	"name": "GradientCarousel",
 	"displayName": "Card Grid",
 	"description": "Grid of cards with an avatars",
-	"inputs": [
-		{
-			"name": "list",
-			"type": "array"
-		}
-	]
+	"inputs": {
+		"list": [
+			{
+				"id": "string",
+				"name": "string",
+				"profession": "string",
+				"avatar": "string",
+				"text": "string"
+			}
+		]
+	}
 }

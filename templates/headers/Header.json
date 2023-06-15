@@ -1,0 +1,11 @@
+{
+	"category": "headers",
+	"name": "Header",
+	"displayName": "Large header",
+	"description": "Large header with configurable size",
+	"inputs": {
+		"text-header": "string",
+		"size": "string",
+		"align": "number"
+	}
+}

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { nanoid } from "nanoid";
 import PrimaryContainer from "~/components/layout/PrimaryContainer.vue";
 /* const testimonials = [
 	{
@@ -49,179 +48,44 @@ defineProps<{
 		text: string;
 	}[];
 }>();
-
-const _prompt = (...props: any[]) => prompt(...props);
-
-const emit = defineEmits(["editField"]);
 </script>
 
 <template>
 	<PrimaryContainer class="!max-w-[90rem]">
 		<div class="lg:m-0 gap-6 duration-200 grid lg:grid-cols-2 grid-cols-1">
-			<TemplatesTemplateList
-				v-slot="{
-					add,
-					deleteItem,
-					element,
-					index,
-					moveDown,
-					moveUp,
-					update,
-				}"
-				:list="
-					list ?? [
-						{
-							id: nanoid(),
-							name: '',
-							profession: '',
-							text: '',
-							avatar: '',
-						},
-						{
-							id: nanoid(),
-							name: '',
-							profession: '',
-							text: '',
-							avatar: '',
-						},
-						{
-							id: nanoid(),
-							name: '',
-							profession: '',
-							text: '',
-							avatar: '',
-						},
-						{
-							id: nanoid(),
-							name: '',
-							profession: '',
-							text: '',
-							avatar: '',
-						},
-					]
-				"
-				key-name="id"
-				field-name="list"
-				@edit-field="(...props) => emit('editField', ...props)">
-				<div class="h-full flex flex-col justify-between">
-					<div
-						class="flex overflow-hidden h-full lg:flex-row flex-col rounded shadow ring-2 ring-gray-200 duration-200 hover:shadow-xl hover:ring-orange-500">
-						<div
-							class="p-3 lg:w-40 w-full overflow-hidden shrink-0">
-							<img
-								:contenteditable="editable"
-								alt=""
-								:src="
-									element.avatar === ''
-										? 'https://placehold.co/400'
-										: element.avatar
-								"
-								class="w-full rounded h-full object-cover shadow"
-								@click="
-									editable &&
-										update(
-											_prompt(
-												'Image URL:',
-												element.avatar
-											),
-											index,
-											'avatar'
-										)
-								" />
-						</div>
-						<div
-							class="flex grow flex-col p-3 gap-3 justify-between">
-							<p
-								class="text-gray-700"
-								:contenteditable="editable"
-								data-placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-								@focusout="
-									editable &&
-										update(
-											($event.target as any).innerText,
-											index,
-											'text'
-										)
-								">
-								{{ element.text }}
-							</p>
-							<div>
-								<h3
-									:contenteditable="editable"
-									data-placeholder="Card name"
-									class="text-black font-semibold text-lg"
-									@focusout="
-										editable &&
-											update(
-												($event.target as any)
-													.innerText,
-												index,
-												'name'
-											)
-									">
-									{{ element.name }}
-								</h3>
-								<h3
-									:contenteditable="editable"
-									data-placeholder="Card subtitle"
-									class="text-transparent bg-clip-text bg-gradient-to-tl from-fuchsia-500 via-red-600 !to-orange-400"
-									@focusout="
-										editable &&
-											update(
-												($event.target as any)
-													.innerText,
-												index,
-												'profession'
-											)
-									">
-									{{ element.profession }}
-								</h3>
-							</div>
-						</div>
+			<div
+				v-for="element of list"
+				:key="element.id"
+				class="h-full flex flex-col justify-between">
+				<div
+					class="flex overflow-hidden h-full lg:flex-row flex-col rounded shadow ring-2 ring-gray-200 duration-200 hover:shadow-xl hover:ring-orange-500">
+					<div class="p-3 lg:w-40 w-full overflow-hidden shrink-0">
+						<img
+							:contenteditable="editable"
+							alt=""
+							:src="
+								element.avatar === ''
+									? 'https://placehold.co/400'
+									: element.avatar
+							"
+							class="w-full rounded h-full object-cover shadow" />
 					</div>
-					<div
-						v-if="editable"
-						class="flex flex-row gap-1 justify-center mt-3 shrink-0">
-						<Button
-							theme="gray"
-							class="!px-1 !py-1 !shadow-md hover:-translate-y-1"
-							@click="moveUp(index)">
-							<Icon
-								name="ic:round-keyboard-arrow-left"
-								class="w-6 h-6" />
-						</Button>
-						<Button
-							theme="gray"
-							class="!px-1 !py-1 !shadow-md hover:translate-y-1"
-							@click="moveDown(index)">
-							<Icon
-								name="ic:round-keyboard-arrow-right"
-								class="w-6 h-6" />
-						</Button>
-
-						<Button
-							theme="gray"
-							class="!px-1 !py-1 !text-red-600 !shadow-md"
-							@click="deleteItem(index)">
-							<Icon name="ic:round-delete" class="w-6 h-6" />
-						</Button>
-						<Button
-							theme="gray"
-							class="!px-1 !py-1 !shadow-md"
-							@click="
-								add(index, {
-									id: nanoid(),
-									name: '',
-									avatar: '',
-									text: '',
-									profession: '',
-								})
-							">
-							<Icon name="ic:round-plus" class="w-6 h-6" />
-						</Button>
+					<div class="flex grow flex-col p-3 gap-3 justify-between">
+						<p class="text-gray-700">
+							{{ element.text }}
+						</p>
+						<div>
+							<h3 class="text-black font-semibold text-lg">
+								{{ element.name }}
+							</h3>
+							<h3
+								class="text-transparent bg-clip-text bg-gradient-to-tl from-fuchsia-500 via-red-600 !to-orange-400">
+								{{ element.profession }}
+							</h3>
+						</div>
 					</div>
 				</div>
-			</TemplatesTemplateList>
+			</div>
 		</div>
 	</PrimaryContainer>
 </template>

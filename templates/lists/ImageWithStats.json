@@ -3,10 +3,16 @@
 	"name": "ImageWithStats",
 	"displayName": "Images With Stats",
 	"description": "Alternating images with stats",
-	"inputs": [
-		{ "name": "text-header", "type": "string" },
-		{ "name": "image", "type": "string" },
-		{ "name": "items", "type": "array" },
-		{ "name": "reversed", "type": "boolean" }
-	]
+	"inputs": {
+		"text-header": "string",
+		"image": "string",
+		"items": [
+			{
+				"id": "string",
+				"title": "string",
+				"value": "string"
+			}
+		],
+		"reversed": "boolean"
+	}
 }

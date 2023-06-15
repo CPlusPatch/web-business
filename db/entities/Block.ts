@@ -22,9 +22,8 @@ export class Block {
 
 	@Column("simple-json")
 	slots: {
-		name: string;
-		value?: string;
-	}[];
+		[key: string]: any;
+	};
 
 	@Column("integer")
 	page_id: number;

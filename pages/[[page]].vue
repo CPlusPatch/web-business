@@ -11,6 +11,8 @@ useServerSeoMeta({
 	author: "Gaspard Wierzbinski",
 });
 
+const loading = ref(false);
+
 const route = useRoute();
 const pagePath = route.params.page as string;
 const page = (
@@ -26,17 +28,26 @@ const isAdmin = (await useFetch("/api/user/admin")).data.value;
 const token = useCookie("token");
 
 const createNewPage = async () => {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const page = await useFetch(`/api/pages/new`, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${token.value}`,
-		},
-		body: JSON.stringify({
-			path: pagePath,
-		}),
-	});
+	loading.value = true;
+
+	const page = (
+		await useFetch(`/api/pages/new`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token.value}`,
+			},
+			body: JSON.stringify({
+				path: pagePath,
+			}),
+		})
+	).data.value;
+
+	if (page?.id) {
+		window.location.reload();
+	} else {
+		alert("An error occured");
+	}
 };
 </script>
 
@@ -45,7 +56,11 @@ const createNewPage = async () => {
 		v-if="page === null"
 		class="mt-40 max-w-7xl mx-auto w-full flex items-center justify-center flex-col gap-4 grow">
 		<h1 class="font-mono text-8xl">404</h1>
-		<Button v-if="isAdmin ?? false" theme="orange" @click="createNewPage"
+		<Button
+			v-if="isAdmin ?? false"
+			:loading="loading"
+			theme="orange"
+			@click="createNewPage"
 			>Create new page</Button
 		>
 	</div>
