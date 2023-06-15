@@ -14,5 +14,27 @@
 			}
 		],
 		"reversed": "boolean"
+	},
+	"defaults": {
+		"text-header": "",
+		"image": "",
+		"items": [
+			{
+				"id": "#ID#",
+				"title": "",
+				"value": ""
+			},
+			{
+				"id": "#ID#",
+				"title": "",
+				"value": ""
+			},
+			{
+				"id": "#ID#",
+				"title": "",
+				"value": ""
+			}
+		],
+		"reversed": false
 	}
 }

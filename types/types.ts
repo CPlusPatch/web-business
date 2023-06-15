@@ -13,4 +13,7 @@ export interface TemplateMetadata {
 	inputs: {
 		[key: string]: InputType | any;
 	};
+	defaults: {
+		[key: string]: any;
+	};
 }

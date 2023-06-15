@@ -13,5 +13,23 @@
 				"text": "string"
 			}
 		]
+	},
+	"defaults": {
+		"list": [
+			{
+				"id": "#ID#",
+				"name": "",
+				"profession": "",
+				"avatar": "",
+				"text": ""
+			},
+			{
+				"id": "#ID#",
+				"name": "",
+				"profession": "",
+				"avatar": "",
+				"text": ""
+			}
+		]
 	}
 }

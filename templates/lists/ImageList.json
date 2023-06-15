@@ -14,5 +14,27 @@
 				"description": "string"
 			}
 		]
+	},
+	"defaults": {
+		"text-header": "",
+		"text-secondary": "",
+		"image-main": "",
+		"items": [
+			{
+				"id": "#ID#",
+				"name": "",
+				"description": ""
+			},
+			{
+				"id": "#ID#",
+				"name": "",
+				"description": ""
+			},
+			{
+				"id": "#ID#",
+				"name": "",
+				"description": ""
+			}
+		]
 	}
 }

@@ -24,6 +24,7 @@ defineProps<{
 			<div
 				class="px-4 sm:px-6 lg:py-16 lg:mx-0 lg:px-0 grow flex flex flex-col gap-y-4">
 				<h2
+					data-placeholder="Empty title"
 					class="text-3xl font-extrabold tracking-tight text-gray-900 font-inter">
 					{{ textHeader }}
 				</h2>
@@ -35,10 +36,13 @@ defineProps<{
 						class="flex flex-row justify-between">
 						<div class="flex flex-col py-3">
 							<div
+								data-placeholder="Empty title"
 								class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">
 								{{ item.title }}
 							</div>
-							<div class="text-lg font-semibold">
+							<div
+								data-placeholder="Empty value"
+								class="text-lg font-semibold">
 								{{ item.value }}
 							</div>
 						</div>
@@ -49,8 +53,8 @@ defineProps<{
 			<div
 				class="hidden justify-center items-center mt-0 md:flex grow h-[35rem]">
 				<img
-					class="h-full w-auto"
-					:src="image ?? 'https://placehold.co/600'"
+					class="h-full w-auto rounded"
+					:src="image === '' ? 'https://placehold.co/600' : image"
 					format="webp"
 					alt="Laptop"
 					width="416"

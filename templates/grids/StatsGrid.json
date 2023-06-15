@@ -13,5 +13,26 @@
 				"value": "string"
 			}
 		]
+	},
+	"defaults": {
+		"text-header": "",
+		"text-secondary": "",
+		"grid": [
+			{
+				"id": "#ID#",
+				"name": "",
+				"value": ""
+			},
+			{
+				"id": "#ID#",
+				"name": "",
+				"value": ""
+			},
+			{
+				"id": "#ID#",
+				"name": "",
+				"value": ""
+			}
+		]
 	}
 }

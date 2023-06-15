@@ -20,6 +20,7 @@ defineProps<{
 <template>
 	<PrimaryContainer>
 		<h2
+			data-placeholder="Title"
 			class="text-center mt-1 text-4xl inline mx-auto font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
 			{{ textHeader }}
 		</h2>
@@ -32,11 +33,14 @@ defineProps<{
 				class="flex-row flex odd:flex-row-reverse justify-between lg:items-center gap-8 grow">
 				<div class="relative flex flex-col gap-y-4 md:w-2/3">
 					<h3
+						data-placeholder="Title"
 						class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
 						{{ element.title }}
 					</h3>
 
-					<p class="mt-3 text-lg text-gray-500 font-inter">
+					<p
+						data-placeholder="Description element"
+						class="mt-3 text-lg text-gray-500 font-inter">
 						{{ element.desc }}
 					</p>
 
@@ -45,6 +49,7 @@ defineProps<{
 						class="text-lg text-blue-600 font-inter"
 						:href="element.linkHref"
 						target="_blank"
+						data-placeholder="Link text"
 						rel="noreferrer">
 						{{ element.linkText }}
 						<IconExternalLink class="inline mb-1 w-5 h-5" />

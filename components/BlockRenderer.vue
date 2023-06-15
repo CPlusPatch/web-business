@@ -185,6 +185,9 @@ const open = ref(false);
 												:imported-meta="
 													importedMeta.inputs
 												"
+												:defaults="
+													importedMeta.defaults
+												"
 												@edit-slot="(slots: Block['slots']) => _block.slots = slots" />
 										</div>
 									</div>

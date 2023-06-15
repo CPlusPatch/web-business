@@ -22,10 +22,13 @@ defineProps<{
 			<div class="lg:pr-8">
 				<div class="lg:max-w-lg">
 					<h2
+						data-placeholder="Example header"
 						class="mt-2 mr-2 inline text-4xl font-bold text-gray-900 sm:text-6xl">
 						{{ textHeader }}
 					</h2>
-					<p class="mt-6 text-lg leading-8 text-gray-600">
+					<p
+						data-placeholder="Secondary text here to explain something"
+						class="mt-6 text-lg leading-8 text-gray-600">
 						{{ textSecondary }}
 					</p>
 					<div
@@ -45,10 +48,14 @@ defineProps<{
 										class="absolute left-1 top-1 h-5 w-5 text-orange-600"
 										aria-hidden="true" />
 
-									<span>{{ element.name }}</span>
+									<span data-placeholder="Element name">{{
+										element.name
+									}}</span>
 								</div>
 								{{ " " }}
-								<div class="inline">
+								<div
+									class="inline"
+									data-placeholder="Element description">
 									{{ element.description }}
 								</div>
 							</div>
@@ -58,7 +65,9 @@ defineProps<{
 			</div>
 			<nuxt-img
 				alt="Product screenshot"
-				:src="imageMain ?? 'https://placehold.co/1200'"
+				:src="
+					imageMain === '' ? 'https://placehold.co/1200' : imageMain
+				"
 				class="w-[48rem] max-w-none rounded-xl hidden md:block duration-500 shadow-xl ring-1 ring-gray-400/10 sm:w-[40rem] md:-ml-4 lg:-ml-0" />
 		</div>
 	</PrimaryContainer>

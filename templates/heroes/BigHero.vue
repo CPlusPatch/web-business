@@ -14,7 +14,9 @@ defineProps<{
 			:height="1080"
 			sizes="lg:1920px md:700px sm:400px"
 			class="rounded-lg aspect-video shadow-lg w-full duration-150"
-			:src="imageMain ?? 'https://placehold.co/1920x1080'"
+			:src="
+				imageMain === '' ? 'https://placehold.co/1920x1080' : imageMain
+			"
 			alt="VSCode screenshot" />
 	</div>
 </template>

@@ -1,12 +1,33 @@
+<script setup lang="ts">
+import PrimaryContainer from "~/components/layout/PrimaryContainer.vue";
+
+defineProps<{
+	editable: boolean;
+	textHeader?: string;
+	textSecondary?: string;
+	grid?: {
+		id: string;
+		name: string;
+		type: string;
+		experience: string;
+		image: string;
+		padding: boolean;
+	}[];
+}>();
+</script>
+
 <template>
 	<PrimaryContainer>
 		<div class="space-y-12">
 			<div class="space-y-5 sm:space-y-4">
 				<h2
+					data-placeholder="Title here"
 					class="mb-3 text-3xl font-black inline mr-2 text-gray-800 font-poppins sm:text-5xl">
 					{{ textHeader }}
 				</h2>
-				<p class="text-xl text-gray-500 dark:text-gray-300 font-inter">
+				<p
+					data-placeholder="Small text to add"
+					class="text-xl text-gray-500 dark:text-gray-300 font-inter">
 					{{ textSecondary }}
 				</p>
 			</div>
@@ -32,10 +53,14 @@
 					<div
 						class="flex relative flex-col flex-1 justify-between items-start truncate bg-white">
 						<div class="flex-1 px-4 py-2 text-sm truncate">
-							<h3 class="text-lg font-bold text-gray-900">
+							<h3
+								data-placeholder="Element name"
+								class="text-lg font-bold text-gray-900">
 								{{ element.name }}
 							</h3>
-							<p class="text-gray-500">
+							<p
+								data-placeholder="Element subtitle"
+								class="text-gray-500">
 								{{ element.experience }}
 							</p>
 						</div>
@@ -45,21 +70,3 @@
 		</div>
 	</PrimaryContainer>
 </template>
-
-<script setup lang="ts">
-import PrimaryContainer from "~/components/layout/PrimaryContainer.vue";
-
-defineProps<{
-	editable: boolean;
-	textHeader?: string;
-	textSecondary?: string;
-	grid?: {
-		id: string;
-		name: string;
-		type: string;
-		experience: string;
-		image: string;
-		padding: boolean;
-	}[];
-}>();
-</script>

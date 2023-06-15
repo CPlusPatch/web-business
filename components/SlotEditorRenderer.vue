@@ -2,20 +2,71 @@
 // eslint-disable vue/no-use-v-if-with-v-for
 import { Block } from "~/db/entities/Block";
 import { TemplateMetadata, InputType } from "~/types/types";
+import { generateIds } from "~/utils/utils";
 
-defineProps<{
+const props = defineProps<{
 	importedMeta: TemplateMetadata["inputs"];
+	defaults: TemplateMetadata["defaults"];
 	slots: Block["slots"];
 }>();
 
 const emit = defineEmits(["editSlot"]);
 
 // const log = (...props: any[]) => console.log(...props);
+
+const moveUp = (index: number, name: string) => {
+	const tempSlots = props.slots[name];
+	const temp = tempSlots[index - 1];
+	tempSlots[index - 1] = tempSlots[index];
+	tempSlots[index] = temp;
+
+	emit("editSlot", {
+		...props.slots,
+		[name]: tempSlots,
+	});
+};
+
+const moveDown = (index: number, name: string) => {
+	const tempSlots = props.slots[name];
+	const temp = tempSlots[index + 1];
+	tempSlots[index + 1] = tempSlots[index];
+	tempSlots[index] = temp;
+
+	emit("editSlot", {
+		...props.slots,
+		[name]: tempSlots,
+	});
+};
+
+const addItem = (index: number, name: string) => {
+	const tempSlots = [
+		...(props.slots[name] as any[]).slice(0, index + 1),
+		generateIds(props.defaults[name][0]),
+		...(props.slots[name] as any[]).slice(index + 1),
+	];
+
+	emit("editSlot", {
+		...props.slots,
+		[name]: tempSlots,
+	});
+};
+
+const deleteItem = (index: number, name: string) => {
+	const tempSlots = [
+		...(props.slots[name] as any[]).slice(0, index),
+		...(props.slots[name] as any[]).slice(index + 1),
+	];
+
+	emit("editSlot", {
+		...props.slots,
+		[name]: tempSlots,
+	});
+};
 </script>
 
 <template>
 	<div v-for="[name, inputType] in Object.entries(importedMeta)" :key="name">
-		<template v-if="inputType === InputType.String">
+		<template v-if="inputType === InputType.String && name !== 'id'">
 			<label
 				for="project-name"
 				class="block text-sm font-medium text-gray-900">
@@ -66,17 +117,58 @@ const emit = defineEmits(["editSlot"]);
 				class="block text-sm font-medium text-gray-900">
 				{{ name }}
 			</label>
-			<div class="mt-1">
-				<SlotEditorRenderer
+			<TransitionGroup
+				tag="div"
+				name="block-list"
+				class="border-l-2 px-2 pb-2">
+				<div
 					v-for="(element, index) of slots[name]"
 					:key="element.id"
-					:slots="element"
-					:imported-meta="importedMeta[name][0]"
-					@edit-slot="(newSlots: Block['slots']) => emit('editSlot', {
-						...slots,
-						[name]: slots[name].toSpliced(index, 1, newSlots),
-					})" />
-			</div>
+					class="mt-2 flex flex-col gap-1">
+					<SlotEditorRenderer
+						:slots="element"
+						:imported-meta="importedMeta[name][0]"
+						:defaults="defaults[name][0]"
+						@edit-slot="(newSlots: Block['slots']) => emit('editSlot', {
+							...slots,
+							[name]: slots[name].toSpliced(index, 1, newSlots),
+						})" />
+					<div class="flex gap-2 mt-1">
+						<Button
+							v-if="!(index === 0)"
+							theme="gray"
+							class="!px-2 !py-2"
+							@click="moveUp(index, name)">
+							<Icon name="ic:round-keyboard-arrow-up" />
+						</Button>
+						<Button
+							v-if="!(index === slots[name].length - 1)"
+							theme="gray"
+							class="!px-2 !py-2"
+							@click="moveDown(index, name)">
+							<Icon name="ic:round-keyboard-arrow-down" />
+						</Button>
+						<Button
+							theme="gray"
+							class="!px-2 !py-2"
+							@click="addItem(index, name)">
+							<Icon name="ic:round-add" />
+						</Button>
+						<Button
+							theme="gray"
+							class="!px-2 !py-2 !text-red-600"
+							@click="deleteItem(index, name)">
+							<Icon name="ic:round-delete" />
+						</Button>
+					</div>
+				</div>
+			</TransitionGroup>
 		</template>
 	</div>
 </template>
+
+<style scoped>
+.block-list-move {
+	transition: transform 0.2s ease-in-out;
+}
+</style>

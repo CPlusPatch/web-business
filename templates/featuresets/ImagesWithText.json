@@ -15,5 +15,26 @@
 				"linkText": "string"
 			}
 		]
+	},
+	"defaults": {
+		"text-header": "",
+		"list": [
+			{
+				"id": "#ID#",
+				"title": "",
+				"desc": "string",
+				"image": "",
+				"linkHref": "",
+				"linkText": ""
+			},
+			{
+				"id": "#ID#",
+				"title": "",
+				"desc": "string",
+				"image": "",
+				"linkHref": "",
+				"linkText": ""
+			}
+		]
 	}
 }

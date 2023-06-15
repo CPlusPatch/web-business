@@ -10,8 +10,6 @@ defineProps<{
 		answer: string;
 	}[];
 }>();
-
-const emit = defineEmits(["editField"]);
 </script>
 
 <template>
@@ -19,15 +17,7 @@ const emit = defineEmits(["editField"]);
 		<div class="mx-auto max-w-3xl flex flex-col gap-y-10">
 			<h2
 				data-placeholder="Header"
-				:contenteditable="editable"
-				class="text-3xl inline mx-auto font-extrabold text-center text-gray-900 dark:text-gray-200 sm:text-4xl font-poppins"
-				@focusout="
-					emit(
-						'editField',
-						($event.target as HTMLSpanElement).innerText,
-						'text-header'
-					)
-				">
+				class="text-3xl inline mx-auto font-extrabold text-center text-gray-900 dark:text-gray-200 sm:text-4xl font-poppins">
 				{{ textHeader }}
 			</h2>
 			<div class="gap-y-3 flex flex-col">
@@ -42,6 +32,7 @@ const emit = defineEmits(["editField"]);
 							<HeadlessDisclosureButton
 								class="flex justify-between items-start w-full text-left text-gray-400 font-inter">
 								<span
+									data-placeholder="Element title here"
 									class="font-medium text-gray-900 dark:text-gray-300">
 									{{ element.question }}
 								</span>
@@ -66,6 +57,7 @@ const emit = defineEmits(["editField"]);
 							<HeadlessDisclosurePanel>
 								<div class="pr-12 mt-2">
 									<p
+										data-placeholder="Element to reveal here"
 										class="text-base text-gray-600 whitespace-pre-line font-inter">
 										{{ element.answer }}
 									</p>

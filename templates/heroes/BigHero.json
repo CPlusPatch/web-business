@@ -5,5 +5,8 @@
 	"description": "Big banner for showing off an image",
 	"inputs": {
 		"image-main": "string"
+	},
+	"defaults": {
+		"image-main": ""
 	}
 }

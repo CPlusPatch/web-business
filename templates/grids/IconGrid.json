@@ -16,5 +16,43 @@
 				"padding": "boolean"
 			}
 		]
+	},
+	"defaults": {
+		"text-header": "",
+		"text-secondary": "",
+		"grid": [
+			{
+				"id": "#ID#",
+				"name": "",
+				"type": "",
+				"experience": "",
+				"image": "",
+				"padding": false
+			},
+			{
+				"id": "#ID#",
+				"name": "",
+				"type": "",
+				"experience": "",
+				"image": "",
+				"padding": false
+			},
+			{
+				"id": "#ID#",
+				"name": "",
+				"type": "",
+				"experience": "",
+				"image": "",
+				"padding": false
+			},
+			{
+				"id": "#ID#",
+				"name": "",
+				"type": "",
+				"experience": "",
+				"image": "",
+				"padding": false
+			}
+		]
 	}
 }

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { TemplateMetadata } from "~/types/types";
+import { generateIds } from "~/utils/utils";
 
 const props = defineProps<{
 	blockMeta: TemplateMetadata[];
@@ -88,6 +89,15 @@ watch(
 					leave-to-class="opacity-0 sm:scale-95">
 					<component
 						:is="importedComponent"
+						v-bind="
+							selectedComponent.defaults
+								? generateIds(selectedComponent.defaults)
+								: Object.fromEntries(
+										Object.entries(
+											selectedComponent.inputs
+										).map(obj => [obj[0], null])
+								  )
+						"
 						:editable="false"></component>
 				</Transition>
 			</div>

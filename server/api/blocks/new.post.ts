@@ -6,6 +6,7 @@ import { AppDataSource } from "~~/db/data-source";
 import { getUserByToken } from "~/utils/tokens";
 import { Block } from "~/db/entities/Block";
 import { TemplateMetadata } from "~/types/types";
+import { generateIds } from "~/utils/utils";
 
 /**
  * Define the event handler.
@@ -64,9 +65,14 @@ export default defineEventHandler(async event => {
 				).toString()
 			) as TemplateMetadata;
 
-			block.slots = meta.inputs.map(i => ({
-				name: i.name,
-			}));
+			if (meta.defaults) {
+				block.slots = generateIds(meta.defaults);
+			} else {
+				// Replaces all keys with null
+				block.slots = Object.fromEntries(
+					Object.entries(meta.inputs).map(obj => [obj[0], null])
+				);
+			}
 
 			await AppDataSource.getRepository(Block)
 				.createQueryBuilder("block")

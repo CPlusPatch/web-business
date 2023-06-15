@@ -6,5 +6,9 @@
 	"inputs": {
 		"text-primary": "string",
 		"text-typewriter": "string"
+	},
+	"defaults": {
+		"text-primary": "",
+		"text-typewriter": ""
 	}
 }

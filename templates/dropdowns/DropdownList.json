@@ -12,5 +12,25 @@
 				"answer": "string"
 			}
 		]
+	},
+	"defaults": {
+		"text-header": "",
+		"list": [
+			{
+				"id": "#ID#",
+				"question": "",
+				"answer": ""
+			},
+			{
+				"id": "#ID#",
+				"question": "",
+				"answer": ""
+			},
+			{
+				"id": "#ID#",
+				"question": "",
+				"answer": ""
+			}
+		]
 	}
 }

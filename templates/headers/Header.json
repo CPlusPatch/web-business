@@ -5,7 +5,12 @@
 	"description": "Large header with configurable size",
 	"inputs": {
 		"text-header": "string",
-		"size": "string",
-		"align": "number"
+		"size": "number",
+		"align": "string"
+	},
+	"defaults": {
+		"text-header": "",
+		"size": 1.875,
+		"align": "center"
 	}
 }
