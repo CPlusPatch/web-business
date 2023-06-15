@@ -124,7 +124,7 @@ const addNewBlock = async (index: number) => {
 		// inserted item
 		blockResult.data.value as unknown as Block,
 		// part of the array after the specified index
-		...data.value.slice(index),
+		...data.value.slice(index + 1),
 	];
 
 	// Recalculate indexes
@@ -132,6 +132,8 @@ const addNewBlock = async (index: number) => {
 		...d,
 		index,
 	}));
+
+	saveAll();
 };
 
 const deleteBlock = async (index: number) => {
