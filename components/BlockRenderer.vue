@@ -125,7 +125,7 @@ const open = ref(false);
 		<component :is="importedComp" v-bind="_block.slots" :editable="edit">
 		</component>
 
-		<HeadlessTransitionRoot as="template" :show="open">
+		<HeadlessTransitionRoot v-if="edit" as="template" :show="open">
 			<HeadlessDialog
 				as="div"
 				class="fixed inset-0 overflow-hidden z-100"
