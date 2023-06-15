@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { InputHTMLAttributes } from "nuxt/dist/app/compat/capi";
 
-interface InputProps extends InputHTMLAttributes {
+interface InputProps extends /* @vue-ignore */ InputHTMLAttributes {
 	loading?: boolean;
 	name: string;
 	icon?: string;

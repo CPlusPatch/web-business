@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { TemplateMetadata } from "~/types/types";
-import { generateIds } from "~/utils/utils";
+import { generateIds } from "~/utils/utilities";
 
 const props = defineProps<{
 	blockMeta: TemplateMetadata[];

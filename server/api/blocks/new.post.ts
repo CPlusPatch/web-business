@@ -6,7 +6,7 @@ import { AppDataSource } from "~~/db/data-source";
 import { getUserByToken } from "~/utils/tokens";
 import { Block } from "~/db/entities/Block";
 import { TemplateMetadata } from "~/types/types";
-import { generateIds } from "~/utils/utils";
+import { generateIds } from "~/utils/utilities";
 
 /**
  * Define the event handler.

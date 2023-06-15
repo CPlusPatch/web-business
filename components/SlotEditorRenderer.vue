@@ -2,7 +2,7 @@
 // eslint-disable vue/no-use-v-if-with-v-for
 import { Block } from "~/db/entities/Block";
 import { TemplateMetadata, InputType } from "~/types/types";
-import { generateIds } from "~/utils/utils";
+import { generateIds } from "~/utils/utilities";
 
 const props = defineProps<{
 	importedMeta: TemplateMetadata["inputs"];
