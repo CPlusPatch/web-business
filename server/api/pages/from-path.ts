@@ -19,12 +19,14 @@ export default defineEventHandler(async event => {
 			AppDataSource.destroy();
 		});
 
-	if (page) {
+	return page;
+
+	/* if (page) {
 		return page;
 	} else {
 		throw createError({
 			statusCode: 404,
 			statusMessage: "Page not found",
 		});
-	}
+	} */
 });
