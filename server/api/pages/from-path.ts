@@ -17,7 +17,7 @@ export default defineEventHandler(async event => {
 				path: body.path === "" ? "index" : body.path,
 			});
 
-			return pageResult;
+			return body.path === "" ? "index" : body.path;
 		})
 		.finally(() => {
 			AppDataSource.destroy();
