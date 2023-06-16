@@ -38,65 +38,56 @@ export default defineEventHandler(async event => {
 		});
 
 	// Initialize the AppDataSource and retrieve the block with the specified ID.
-	const block = await AppDataSource.initialize()
-		.then(async AppDataSource => {
-			const block = new Block();
+	if (!AppDataSource.isInitialized) {
+		await AppDataSource.initialize();
+	}
 
-			// Sanitize and update the slots of the block.
-			/* if (body.slots)
+	const block = new Block();
+
+	// Sanitize and update the slots of the block.
+	/* if (body.slots)
 				block.slots = body.slots.map(s => ({
 					name: DOMPurify.sanitize(s.name),
 					value: s.value ? DOMPurify.sanitize(s.value) : undefined,
 				})); */
-			if (body.component)
-				block.component = DOMPurify.sanitize(body.component);
-			if (body.category)
-				block.category = DOMPurify.sanitize(body.category);
-			block.page_id = Number(body.page_id);
-			block.index = Number(body.index);
+	if (body.component) block.component = DOMPurify.sanitize(body.component);
+	if (body.category) block.category = DOMPurify.sanitize(body.category);
+	block.page_id = Number(body.page_id);
+	block.index = Number(body.index);
 
-			// Parse the meta of blocks
-			const meta = JSON.parse(
-				readFileSync(
-					path.resolve(
-						path.dirname(""),
-						`./templates/${block.category}/${block.component}.json`
-					)
-				).toString()
-			) as TemplateMetadata;
+	// Parse the meta of blocks
+	const meta = JSON.parse(
+		readFileSync(
+			path.resolve(
+				path.dirname(""),
+				`./templates/${block.category}/${block.component}.json`
+			)
+		).toString()
+	) as TemplateMetadata;
 
-			if (meta.defaults) {
-				block.slots = generateIds(meta.defaults);
-			} else {
-				// Replaces all keys with null
-				block.slots = Object.fromEntries(
-					Object.entries(meta.inputs).map(obj => [obj[0], null])
-				);
-			}
+	if (meta.defaults) {
+		block.slots = generateIds(meta.defaults);
+	} else {
+		// Replaces all keys with null
+		block.slots = Object.fromEntries(
+			Object.entries(meta.inputs).map(obj => [obj[0], null])
+		);
+	}
 
-			await AppDataSource.getRepository(Block)
-				.createQueryBuilder("block")
-				.update()
-				.set({ index: () => "`index` + 1" })
-				.where("`index` >= :newIndex", { newIndex: block.index })
-				.andWhere("`page_id` >= :page_id", { page_id: block.page_id })
-				.execute();
+	await AppDataSource.getRepository(Block)
+		.createQueryBuilder("block")
+		.update()
+		.set({ index: () => '"index" + 1' })
+		.where('"index" >= :newIndex', { newIndex: block.index })
+		.andWhere("page_id >= :page_id", { page_id: block.page_id })
+		.execute();
 
-			// Save the updated block.
-			const newBlock = await AppDataSource.getRepository(Block).save(
-				block
-			);
-
-			return newBlock;
-		})
-		.finally(() => {
-			// Destroy the AppDataSource connection.
-			AppDataSource.destroy();
-		});
+	// Save the updated block.
+	const newBlock = await AppDataSource.getRepository(Block).save(block);
 
 	// If the block is found, return it. Otherwise, throw an error.
-	if (block) {
-		return block;
+	if (newBlock) {
+		return newBlock;
 	} else {
 		throw createError({
 			statusCode: 500,

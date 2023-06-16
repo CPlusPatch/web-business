@@ -18,33 +18,29 @@ export default defineEventHandler(async event => {
 
 	const slug = event.context.params?.slug ?? "";
 
-	const post = await AppDataSource.initialize()
-		.then(async AppDataSource => {
-			const post = await AppDataSource.getRepository(Post).findOneBy({
-				slug,
-			});
+	if (!AppDataSource.isInitialized) {
+		await AppDataSource.initialize();
+	}
 
-			if (!post) return false;
+	const post = await AppDataSource.getRepository(Post).findOneBy({
+		slug,
+	});
 
-			const body = (await readBody(event)) as Partial<Post>;
+	if (!post) return false;
 
-			if (body.content) post.content = DOMPurify.sanitize(body.content);
-			if (body.description)
-				post.description = DOMPurify.sanitize(body.description);
-			if (body.title) post.title = DOMPurify.sanitize(body.title);
-			if (body.banner) post.banner = DOMPurify.sanitize(body.banner);
-			if (body.slug) post.slug = DOMPurify.sanitize(body.slug);
-			if (body.visibility)
-				post.visibility = DOMPurify.sanitize(
-					body.visibility
-				) as Visibility;
+	const body = (await readBody(event)) as Partial<Post>;
 
-			await AppDataSource.getRepository(Post).save(post);
-			return post;
-		})
-		.finally(() => {
-			AppDataSource.destroy();
-		});
+	if (body.content) post.content = DOMPurify.sanitize(body.content);
+	if (body.description)
+		post.description = DOMPurify.sanitize(body.description);
+	if (body.title) post.title = DOMPurify.sanitize(body.title);
+	if (body.banner) post.banner = DOMPurify.sanitize(body.banner);
+	if (body.slug) post.slug = DOMPurify.sanitize(body.slug);
+	if (body.visibility)
+		post.visibility = DOMPurify.sanitize(body.visibility) as Visibility;
+
+	await AppDataSource.getRepository(Post).save(post);
+	return post;
 
 	if (post) {
 		return post;

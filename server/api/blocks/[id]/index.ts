@@ -4,17 +4,15 @@ import { Block } from "~/db/entities/Block";
 export default defineEventHandler(async event => {
 	const id = event.context.params?.id ?? "";
 
-	const blocks = await AppDataSource.initialize()
-		.then(async AppDataSource => {
-			return (
-				await AppDataSource.getRepository(Block).findBy({
-					page_id: Number(id),
-				})
-			).sort((a, b) => a.index - b.index);
+	if (!AppDataSource.isInitialized) {
+		await AppDataSource.initialize();
+	}
+
+	const blocks = (
+		await AppDataSource.getRepository(Block).findBy({
+			page_id: Number(id),
 		})
-		.finally(() => {
-			AppDataSource.destroy();
-		});
+	).sort((a, b) => a.index - b.index);
 
 	if (blocks) {
 		return blocks;

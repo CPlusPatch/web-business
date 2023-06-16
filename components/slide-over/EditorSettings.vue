@@ -65,6 +65,9 @@ const upload = async (e: Event) => {
 	fetch("/api/media/upload", {
 		method: "POST",
 		body: formData,
+		headers: {
+			Authorization: `Bearer ${token.value}`,
+		},
 	})
 		.then(async res => {
 			if (res.ok) {
@@ -160,7 +163,7 @@ const save = (e: Event) => {
 							id="bannerUploadForm"
 							action="#"
 							class="flex overflow-y-scroll relative flex-col pt-6 h-full bg-white shadow-xl no-scroll px-4 sm:px-6"
-							@submit="save">
+							@submit.prevent="save">
 							<div class="flex justify-between items-center">
 								<HeadlessDialogTitle
 									class="text-lg font-bold text-gray-900">

@@ -24,6 +24,6 @@ export class Token {
 	})
 	client_name: string;
 
-	@Column("datetime")
+	@Column("timestamp")
 	expireDate: Date; // In UTC time, should be 7 days by default
 }

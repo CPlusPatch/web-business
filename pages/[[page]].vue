@@ -22,7 +22,6 @@ const page = (
 		body: JSON.stringify({
 			path: pagePath,
 		}),
-		server: false,
 	})
 ).data as unknown as Ref<Page>;
 
@@ -40,7 +39,7 @@ const createNewPage = async () => {
 				Authorization: `Bearer ${token.value}`,
 			},
 			body: JSON.stringify({
-				path: pagePath,
+				path: pagePath === "" ? "index" : "pagePath",
 			}),
 		})
 	).data.value;

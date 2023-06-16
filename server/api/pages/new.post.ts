@@ -32,25 +32,20 @@ export default defineEventHandler(async event => {
 			statusMessage: "Missing field: path",
 		});
 
+	if (!AppDataSource.isInitialized) {
+		await AppDataSource.initialize();
+	}
+
 	// Initialize the AppDataSource and save the page with the asked path
-	const page = await AppDataSource.initialize()
-		.then(async AppDataSource => {
-			const page = new Page();
-			page.path = body.path ?? "";
+	const page = new Page();
+	page.path = body.path ?? "";
 
-			// Save the updated block.
-			const newPage = await AppDataSource.getRepository(Page).save(page);
-
-			return newPage;
-		})
-		.finally(() => {
-			// Destroy the AppDataSource connection.
-			AppDataSource.destroy();
-		});
+	// Save the updated block.
+	const newPage = await AppDataSource.getRepository(Page).save(page);
 
 	// If the block is found, return it. Otherwise, throw an error.
-	if (page) {
-		return page;
+	if (newPage) {
+		return newPage;
 	} else {
 		throw createError({
 			statusCode: 500,

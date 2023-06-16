@@ -50,8 +50,6 @@ export default defineEventHandler(async event => {
 		})
 	);
 
-	AppDataSource.destroy();
-
 	if (blocks) {
 		return blocks;
 	} else {

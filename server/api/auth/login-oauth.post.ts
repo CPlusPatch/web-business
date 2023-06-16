@@ -57,28 +57,22 @@ export default defineEventHandler(async event => {
 		}
 	}
 
-	const user = await AppDataSource.initialize()
-		.then(async AppDataSource => {
-			const user = await AppDataSource.getRepository(User)
-				.createQueryBuilder("user")
-				.where(
-					`EXISTS(
+	if (!AppDataSource.isInitialized) {
+		await AppDataSource.initialize();
+	}
+
+	const user = await AppDataSource.getRepository(User)
+		.createQueryBuilder("user")
+		.where(
+			`EXISTS(
 						SELECT *
 						FROM json_each(user.oauthAccounts)
 						WHERE json_extract(value, '$.provider') = :provider
 						AND json_extract(value, '$.id') = :userId
 					)`,
-					{ provider: body.provider, userId: id }
-				)
-				.getOne();
-
-			if (!user) return false;
-
-			return user;
-		})
-		.finally(() => {
-			AppDataSource.destroy();
-		});
+			{ provider: body.provider, userId: id }
+		)
+		.getOne();
 
 	if (!user)
 		throw createError({
@@ -86,29 +80,16 @@ export default defineEventHandler(async event => {
 			statusMessage: "Incorrect username or password",
 		});
 
-	const token = await AppDataSource.initialize()
-		.then(async AppDataSource => {
-			const token = new Token();
+	const token = new Token();
 
-			token.user = user;
-			token.token = randomBytes(128).toString("base64");
-			token.expireDate = new Date(
-				Date.now() +
-					1000 /* sec */ *
-						60 /* min */ *
-						60 /* hour */ *
-						24 /* day */ *
-						7
-			);
+	token.user = user;
+	token.token = randomBytes(128).toString("base64");
+	token.expireDate = new Date(
+		Date.now() +
+			1000 /* sec */ * 60 /* min */ * 60 /* hour */ * 24 /* day */ * 7
+	);
 
-			await AppDataSource.getRepository(Token).save(token);
-
-			if (!token) return false;
-			return token;
-		})
-		.finally(() => {
-			AppDataSource.destroy();
-		});
+	await AppDataSource.getRepository(Token).save(token);
 
 	if (token) {
 		return {

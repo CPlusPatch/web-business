@@ -26,23 +26,16 @@ export default defineEventHandler(async event => {
 		});
 	}
 
-	// Initialize the AppDataSource and retrieve the block with the specified ID.
-	const isDeleted = await AppDataSource.initialize()
-		.then(async AppDataSource => {
-			// Delete the block.
-			const result = await AppDataSource.getRepository(Block).delete({
-				id: Number(id),
-			});
+	if (!AppDataSource.isInitialized) {
+		await AppDataSource.initialize();
+	}
 
-			return (result.affected ?? 0) > 0;
-		})
-		.finally(() => {
-			// Destroy the AppDataSource connection.
-			AppDataSource.destroy();
-		});
+	const result = await AppDataSource.getRepository(Block).delete({
+		id: Number(id),
+	});
 
 	// If the block is deleted, return it. Otherwise, throw an error.
-	if (isDeleted) {
+	if ((result.affected ?? 0) > 0) {
 		return true;
 	} else {
 		throw createError({

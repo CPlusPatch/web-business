@@ -19,28 +19,25 @@ export default defineEventHandler(async event => {
 
 	const body = (await readBody(event)) as Partial<User>;
 
-	const outputUser = await AppDataSource.initialize()
-		.then(async AppDataSource => {
-			const user = await AppDataSource.getRepository(User).findOneBy({
-				id: Number.parseInt(id),
-			});
+	if (!AppDataSource.isInitialized) {
+		await AppDataSource.initialize();
+	}
 
-			if (!user) return false;
+	const dbUser = await AppDataSource.getRepository(User).findOneBy({
+		id: Number.parseInt(id),
+	});
 
-			if (body.display_name)
-				user.display_name = DOMPurify.sanitize(body.display_name);
+	if (!dbUser) return false;
 
-			await AppDataSource.getRepository(User).save(user);
-			return user;
-		})
-		.finally(() => {
-			AppDataSource.destroy();
-		});
+	if (body.display_name)
+		dbUser.display_name = DOMPurify.sanitize(body.display_name);
 
-	if (outputUser) {
+	await AppDataSource.getRepository(User).save(dbUser);
+
+	if (dbUser) {
 		return {
-			...user,
-			display_name: body.display_name ?? user.display_name,
+			...dbUser,
+			display_name: body.display_name ?? dbUser.display_name,
 		};
 	} else {
 		throw createError({

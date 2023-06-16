@@ -11,49 +11,46 @@ export default defineEventHandler(async event => {
 
 	const isAdmin = user?.role === Role.ADMIN;
 
-	const post = await AppDataSource.initialize()
-		.then(async AppDataSource => {
-			const post = await AppDataSource.getRepository(Post).findOne({
-				relations: {
-					creator: true,
-				},
-				select: {
-					creator: {
-						avatar: true,
-						banner: true,
-						created_at: true,
-						edited_at: true,
-						id: true,
-						role: true,
-						username: true,
-						display_name: true,
-					},
-				},
-				where: {
-					slug,
-				},
-			});
+	if (!AppDataSource.isInitialized) {
+		await AppDataSource.initialize();
+	}
 
-			if (
-				post?.visibility === Visibility.PRIVATE ||
-				post?.visibility === Visibility.HIDDEN
-			) {
-				if (!isAdmin) return false;
-			}
-			return {
-				...post,
-				creator: {
-					...post?.creator,
-					password: undefined, // Don't leak password hashes to client, even if they're secure
-				},
-			};
-		})
-		.finally(() => {
-			AppDataSource.destroy();
-		});
+	const post = await AppDataSource.getRepository(Post).findOne({
+		relations: {
+			creator: true,
+		},
+		select: {
+			creator: {
+				avatar: true,
+				banner: true,
+				created_at: true,
+				edited_at: true,
+				id: true,
+				role: true,
+				username: true,
+				display_name: true,
+			},
+		},
+		where: {
+			slug,
+		},
+	});
+
+	if (
+		post?.visibility === Visibility.PRIVATE ||
+		post?.visibility === Visibility.HIDDEN
+	) {
+		if (!isAdmin) return false;
+	}
 
 	if (post) {
-		return post;
+		return {
+			...post,
+			creator: {
+				...post?.creator,
+				password: undefined, // Don't leak password hashes to client, even if they're secure
+			},
+		};
 	} else {
 		throw createError({
 			statusCode: 404,

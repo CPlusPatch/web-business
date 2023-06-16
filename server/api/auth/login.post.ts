@@ -16,55 +16,38 @@ export default defineEventHandler(async event => {
 			statusMessage: "Missing fields: username and/or password",
 		});
 
-	const user = await AppDataSource.initialize()
-		.then(async AppDataSource => {
-			const user = await AppDataSource.getRepository(User).findOneBy({
-				username: body.username,
-			});
+	if (!AppDataSource.isInitialized) {
+		await AppDataSource.initialize();
+	}
 
-			if (!user) return false;
+	const user = await AppDataSource.getRepository(User).findOneBy({
+		username: body.username,
+	});
 
-			if (
-				(await createPasswordHash(
-					body.password,
-					user.password.split(":")[1]
-				)) === user.password
-			)
-				return user;
-		})
-		.finally(() => {
-			AppDataSource.destroy();
-		});
-
-	if (!user)
+	if (
+		!(
+			user &&
+			(await createPasswordHash(
+				body.password,
+				user.password.split(":")[1]
+			)) === user.password
+		)
+	)
 		throw createError({
 			statusCode: 401,
 			statusMessage: "Incorrect username or password",
 		});
 
-	const token = await AppDataSource.initialize()
-		.then(async AppDataSource => {
-			const token = new Token();
+	const token = new Token();
 
-			token.user = user;
-			token.token = randomBytes(128).toString("base64");
-			token.expireDate = new Date(
-				Date.now() +
-					1000 /* sec */ *
-						60 /* min */ *
-						60 /* hour */ *
-						24 /* day */ *
-						7
-			);
+	token.user = user;
+	token.token = randomBytes(128).toString("base64");
+	token.expireDate = new Date(
+		Date.now() +
+			1000 /* sec */ * 60 /* min */ * 60 /* hour */ * 24 /* day */ * 7
+	);
 
-			await AppDataSource.getRepository(Token).save(token);
-
-			if (!token) return false;
-			return token;
-		})
-		.finally(() => {
-			AppDataSource.destroy();
-		});
+	await AppDataSource.getRepository(Token).save(token);
 
 	if (token) {
 		return {
