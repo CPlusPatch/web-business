@@ -9,17 +9,17 @@ export default defineEventHandler(async event => {
 
 	// const isAdmin = user?.role === Role.ADMIN;
 
-	const page = await AppDataSource.initialize()
+	/* const page = await AppDataSource.initialize()
 		.then(async AppDataSource => {
 			return await AppDataSource.getRepository(Page).findOneBy({
-				path: body.path,
+				path: body.path === "" ? "index" : body.path,
 			});
 		})
 		.finally(() => {
 			AppDataSource.destroy();
-		});
+		}); */
 
-	return page;
+	return body;
 
 	/* if (page) {
 		return page;
