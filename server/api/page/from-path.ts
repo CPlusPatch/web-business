@@ -14,8 +14,7 @@ export default defineEventHandler(async event => {
 	}
 
 	const page = await AppDataSource.getRepository(Page).findOneBy({
-		// path: body.path === "" ? "index" : body.path,
-		id: 1,
+		path: body.path === "" ? "index" : body.path,
 	});
 
 	if (page) {

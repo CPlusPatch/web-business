@@ -17,7 +17,7 @@ const route = useRoute();
 const pagePath = route.params.page as string;
 
 const page = (
-	await useFetch("/api/pages/from-path", {
+	await useFetch("/api/page/from-path", {
 		method: "POST",
 		body: JSON.stringify({
 			path: pagePath,
@@ -32,7 +32,7 @@ const createNewPage = async () => {
 	loading.value = true;
 
 	const page = (
-		await useFetch(`/api/pages/new`, {
+		await useFetch(`/api/page/new`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
