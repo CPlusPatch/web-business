@@ -11,11 +11,11 @@ export default defineEventHandler(async event => {
 
 	const page = await AppDataSource.initialize()
 		.then(async AppDataSource => {
-			const pageResult = await AppDataSource.getRepository(
-				Page
-			).findOneBy({
-				path: "projects",
-			});
+			const pageResult = await AppDataSource.getRepository(Page)
+				.createQueryBuilder()
+				.select()
+				.where("path = :path", { path: "projects" })
+				.execute();
 			return pageResult;
 			//return body.path === "" ? "index" : body.path;
 		})
