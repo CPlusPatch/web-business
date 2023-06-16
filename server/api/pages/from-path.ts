@@ -11,23 +11,24 @@ export default defineEventHandler(async event => {
 
 	const page = await AppDataSource.initialize()
 		.then(async AppDataSource => {
-			const pageResult = await AppDataSource.getRepository(Page).find();
+			const pageResult = await AppDataSource.getRepository(
+				Page
+			).findOneBy({
+				path: body.path === "" ? "index" : body.path,
+			});
 
 			return pageResult;
-			// return body.path === "" ? "index" : body.path;
 		})
 		.finally(() => {
 			AppDataSource.destroy();
 		});
 
-	return page;
-
-	/* if (page) {
+	if (page) {
 		return page;
 	} else {
 		throw createError({
 			statusCode: 404,
 			statusMessage: "Page not found",
 		});
-	} */
+	}
 });

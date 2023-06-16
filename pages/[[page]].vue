@@ -15,7 +15,7 @@ const loading = ref(false);
 
 const route = useRoute();
 const pagePath = route.params.page as string;
-console.log(pagePath);
+
 const page = (
 	await useFetch("/api/pages/from-path", {
 		method: "POST",
@@ -54,7 +54,6 @@ const createNewPage = async () => {
 
 <template>
 	<div class="h-full w-full grow">
-		{{ JSON.stringify(page) }}
 		<div
 			v-if="page === null"
 			class="mt-40 max-w-7xl mx-auto w-full flex items-center justify-center flex-col gap-4 grow">
@@ -67,6 +66,6 @@ const createNewPage = async () => {
 				>Create new page</Button
 			>
 		</div>
-		<!-- <PagesPageViewer v-else :page="page" /> -->
+		<PagesPageViewer v-else :page="page" />
 	</div>
 </template>
