@@ -9,9 +9,9 @@ export default defineEventHandler(async event => {
 
 	// const isAdmin = user?.role === Role.ADMIN;
 
-	if (!AppDataSource.isInitialized) {
+	/* if (!AppDataSource.isInitialized) {
 		await AppDataSource.initialize();
-	}
+	} */
 
 	switch (body.path) {
 		case "":
@@ -38,12 +38,12 @@ export default defineEventHandler(async event => {
 		},
 	}); */
 
-	if (page) {
+	/* if (page) {
 		return page;
 	} else {
 		throw createError({
 			statusCode: 404,
 			statusMessage: "Page not found",
 		});
-	}
+	} */
 });
