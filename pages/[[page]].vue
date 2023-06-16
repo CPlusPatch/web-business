@@ -15,13 +15,13 @@ const loading = ref(false);
 
 const route = useRoute();
 const pagePath = route.params.page as string;
+console.log(pagePath);
 const page = (
 	await useFetch("/api/pages/id", {
 		method: "POST",
 		body: JSON.stringify({
 			path: pagePath,
 		}),
-		key: `page_${pagePath}`,
 	})
 ).data.value as unknown as Page;
 
