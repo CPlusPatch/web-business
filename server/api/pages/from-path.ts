@@ -14,10 +14,10 @@ export default defineEventHandler(async event => {
 			const pageResult = await AppDataSource.getRepository(
 				Page
 			).findOneBy({
-				path: body.path === "" ? "index" : body.path,
+				path: "projects",
 			});
-
-			return body.path === "" ? "index" : body.path;
+			return pageResult;
+			//return body.path === "" ? "index" : body.path;
 		})
 		.finally(() => {
 			AppDataSource.destroy();
