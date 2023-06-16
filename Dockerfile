@@ -1,4 +1,4 @@
-FROM docker.io/node:18-alpine AS builder
+FROM docker.io/node:18.15.0-alpine AS builder
 
 RUN apk add --update \
   python3 \
