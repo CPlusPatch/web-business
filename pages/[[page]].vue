@@ -21,6 +21,7 @@ const page = (
 		body: JSON.stringify({
 			path: pagePath,
 		}),
+		key: `page_${pagePath}`,
 	})
 ).data.value as unknown as Page;
 
