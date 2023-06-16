@@ -17,7 +17,7 @@ const route = useRoute();
 const pagePath = route.params.page as string;
 console.log(pagePath);
 const page = (
-	await useFetch("/api/pages/id", {
+	await useFetch("/api/pages/from-path", {
 		method: "POST",
 		body: JSON.stringify({
 			path: pagePath,
