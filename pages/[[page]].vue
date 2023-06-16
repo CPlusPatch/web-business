@@ -23,7 +23,7 @@ const page = (
 			path: pagePath,
 		}),
 	})
-).data.value as unknown as Page;
+).data as unknown as Ref<Page>;
 
 const isAdmin = (await useFetch("/api/user/admin")).data.value;
 const token = useCookie("token");
