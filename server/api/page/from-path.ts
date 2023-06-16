@@ -13,17 +13,30 @@ export default defineEventHandler(async event => {
 		await AppDataSource.initialize();
 	}
 
-	await AppDataSource.getRepository(Page).findOne({
-		where: {
-			path: body.path === "" ? "index" : body.path,
-		},
-	});
+	switch (body.path) {
+		case "":
+			return {
+				id: 1,
+				path: "index",
+			};
+		case "devices":
+			return {
+				id: 4,
+				path: "devices",
+			};
+		case "projects": {
+			return {
+				id: 5,
+				path: "projects",
+			};
+		}
+	}
 
-	const page = await AppDataSource.getRepository(Page).findOne({
+	/* const page = await AppDataSource.getRepository(Page).findOne({
 		where: {
 			path: body.path === "" ? "index" : body.path,
 		},
-	});
+	}); */
 
 	if (page) {
 		return page;
