@@ -17,7 +17,6 @@ const AppDataSource = new DataSource({
 	database: "cms",
 	synchronize: true,
 	entities: [Post, Comment, User, Token, Block, Page],
-	logging: true,
 });
 
 export { AppDataSource };
