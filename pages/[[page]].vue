@@ -53,7 +53,7 @@ const createNewPage = async () => {
 </script>
 
 <template>
-	<div>
+	<div class="h-full w-full grow">
 		<div
 			v-if="page === null"
 			class="mt-40 max-w-7xl mx-auto w-full flex items-center justify-center flex-col gap-4 grow">

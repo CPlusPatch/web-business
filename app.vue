@@ -26,11 +26,13 @@ useSchemaOrg([me, myOrg]);
 </script>
 
 <template>
-	<SeoKit />
-	<OgImageScreenshot />
-	<OgImageStatic />
-	<NuxtLayout>
-		<NuxtLoadingIndicator />
-		<NuxtPage />
-	</NuxtLayout>
+	<div>
+		<SeoKit />
+		<OgImageScreenshot />
+		<OgImageStatic />
+		<NuxtLayout>
+			<NuxtLoadingIndicator />
+			<NuxtPage />
+		</NuxtLayout>
+	</div>
 </template>
