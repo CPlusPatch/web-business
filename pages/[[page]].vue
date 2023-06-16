@@ -22,6 +22,7 @@ const page = (
 		body: JSON.stringify({
 			path: pagePath,
 		}),
+		server: false,
 	})
 ).data as unknown as Ref<Page>;
 
