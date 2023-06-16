@@ -1,8 +1,22 @@
 <script setup lang="ts">
-import { me } from "~/app.vue";
-import PrimaryContainer from "~~/components/layout/PrimaryContainer.vue";
+import PrimaryContainer from "~/components/layout/PrimaryContainer.vue";
 
-const projects = [
+defineProps<{
+	textHeader: string;
+	grid: {
+		name: string;
+		href: string;
+		description: string;
+		tags: {
+			name: string;
+			color: string;
+			textColor: string;
+		}[];
+	}[];
+	editable: boolean;
+}>();
+
+/* const projects = [
 	{
 		name: "Fedibase",
 		href: "https://codeberg.org/CPlusPatch/fedibase",
@@ -149,47 +163,39 @@ const projects = [
 				color: "bg-indigo-100",
 				textColor: "text-indigo-800",
 			},
-		],
+		],	
 	},
-];
-
-useSchemaOrg([me]);
-
-useServerSeoMeta({
-	title: "CPlusPatch",
-	description: "My list of projects that I have completed",
-	ogImage: "/static/servers.webp",
-	twitterCard: "summary_large_image",
-	author: "Gaspard Wierzbinski",
-});
+]; */
 </script>
 
 <template>
 	<PrimaryContainer class="flex flex-col gap-y-10 mt-20">
 		<h1
 			class="mb-3 text-3xl font-black text-gray-800 font-poppins sm:text-5xl">
-			Projects
+			{{ textHeader }}
 		</h1>
 		<div>
 			<h2
 				class="text-xs font-medium tracking-wide text-gray-500 uppercase">
-				Pinned Projects
+				Pinned
 			</h2>
 			<ul
 				role="list"
 				class="grid grid-cols-1 gap-5 mt-3 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
 				<li
-					v-for="project of projects"
+					v-for="project of grid"
 					:key="project.name"
-					class="flex col-span-1 rounded-md shadow-sm font-inter duration-200 ease-in-out hover:shadow-xl hover:ring-2 ring-orange-400">
+					class="flex rounded-md shadow-sm font-inter duration-200 ease-in-out hover:shadow-xl hover:ring-2 ring-orange-400">
 					<a
 						:href="project.href"
-						class="flex flex-col justify-between items-start p-3 max-w-full bg-white rounded-md border border-gray-200">
+						class="flex flex-col w-full justify-between items-start p-3 max-w-full bg-white rounded-md border border-gray-200">
 						<h3
 							class="pb-4 text-lg font-bold text-gray-900 hover:text-gray-600">
 							{{ project.name }}
 						</h3>
-						<p class="text-gray-500">{{ project.description }}</p>
+						<p class="text-gray-500 mb-auto">
+							{{ project.description }}
+						</p>
 						<div
 							class="flex flex-wrap flex-row gap-2 mt-3 max-w-full no-scroll">
 							<span

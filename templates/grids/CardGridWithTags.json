@@ -1,0 +1,44 @@
+{
+	"category": "grids",
+	"name": "CardGridWithTags",
+	"displayName": "Card Grid with Tags",
+	"description": "Grid of small cards with tags",
+	"inputs": {
+		"text-header": "string",
+		"grid": [
+			{
+				"id": "string",
+				"tags": [
+					{
+						"id": "string",
+						"name": "string",
+						"color": "string",
+						"text-color": "string"
+					}
+				],
+				"description": "string",
+				"name": "string",
+				"href": "string"
+			}
+		]
+	},
+	"defaults": {
+		"text-header": "",
+		"grid": [
+			{
+				"id": "#ID#",
+				"tags": [
+					{
+						"id": "#ID#",
+						"name": "",
+						"color": "",
+						"text-color": ""
+					}
+				],
+				"description": "",
+				"name": "",
+				"href": "#"
+			}
+		]
+	}
+}
