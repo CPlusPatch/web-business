@@ -53,17 +53,19 @@ const createNewPage = async () => {
 </script>
 
 <template>
-	<div
-		v-if="page === null"
-		class="mt-40 max-w-7xl mx-auto w-full flex items-center justify-center flex-col gap-4 grow">
-		<h1 class="font-mono text-8xl">404</h1>
-		<Button
-			v-if="isAdmin ?? false"
-			:loading="loading"
-			theme="orange"
-			@click="createNewPage"
-			>Create new page</Button
-		>
+	<div>
+		<div
+			v-if="page === null"
+			class="mt-40 max-w-7xl mx-auto w-full flex items-center justify-center flex-col gap-4 grow">
+			<h1 class="font-mono text-8xl">404</h1>
+			<Button
+				v-if="isAdmin ?? false"
+				:loading="loading"
+				theme="orange"
+				@click="createNewPage"
+				>Create new page</Button
+			>
+		</div>
+		<PagesPageViewer v-else :page="page" />
 	</div>
-	<PagesPageViewer v-else :page="page" />
 </template>
