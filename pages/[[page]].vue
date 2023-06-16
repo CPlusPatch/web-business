@@ -39,7 +39,7 @@ const createNewPage = async () => {
 				Authorization: `Bearer ${token.value}`,
 			},
 			body: JSON.stringify({
-				path: pagePath === "" ? "index" : "pagePath",
+				path: pagePath === "" ? "index" : pagePath,
 			}),
 		})
 	).data.value;

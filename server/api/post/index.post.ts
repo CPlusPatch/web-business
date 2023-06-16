@@ -27,5 +27,5 @@ export default defineEventHandler(async event => {
 	post.creator = user;
 	post.slug = Math.floor(Math.random() * 10000000).toString();
 
-	return await AppDataSource.manager.save(post);
+	return await AppDataSource.getRepository(Post).save(post);
 });

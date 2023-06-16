@@ -10,38 +10,34 @@ export default defineEventHandler(async event => {
 
 	const isAdmin = user?.role === Role.ADMIN;
 
-	return await AppDataSource.initialize()
-		.then(async AppDataSource => {
-			const posts = isAdmin
-				? await AppDataSource.getRepository(Post).find({
-						relations: {
-							creator: true,
-						},
-						select: {
-							creator: {
-								avatar: true,
-								banner: true,
-								created_at: true,
-								edited_at: true,
-								id: true,
-								role: true,
-								username: true,
-								display_name: true,
-							},
-						},
-				  })
-				: await AppDataSource.getRepository(Post).find({
-						relations: {
-							creator: true,
-						},
-						where: {
-							visibility: Visibility.PUBLIC,
-						},
-				  });
+	if (!AppDataSource.isInitialized) {
+		await AppDataSource.initialize();
+	}
 
-			return posts;
-		})
-		.finally(() => {
-			AppDataSource.destroy();
-		});
+	return isAdmin
+		? await AppDataSource.getRepository(Post).find({
+				relations: {
+					creator: true,
+				},
+				select: {
+					creator: {
+						avatar: true,
+						banner: true,
+						created_at: true,
+						edited_at: true,
+						id: true,
+						role: true,
+						username: true,
+						display_name: true,
+					},
+				},
+		  })
+		: await AppDataSource.getRepository(Post).find({
+				relations: {
+					creator: true,
+				},
+				where: {
+					visibility: Visibility.PUBLIC,
+				},
+		  });
 });
