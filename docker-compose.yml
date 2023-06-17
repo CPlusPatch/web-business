@@ -1,0 +1,28 @@
+version: '3.3'
+services:
+    webbusiness:
+        image: 'codeberg.org/cpluspatch/web-business:latest'
+        container_name: web-business
+        networks:
+            - internal
+        restart: unless-stopped
+        env_file: .env  
+        links:
+            - db
+    db:
+        image: postgres:13-alpine
+        restart: unless-stopped
+        init: true
+        networks:
+            - internal
+        environment: {
+            POSTGRES_DB: cms,
+            POSTGRES_USER: cms,
+            POSTGRES_PASSWORD: password123,
+        }
+        volumes:
+            - ./data:/var/lib/postgresql/data   
+
+networks:
+    internal:
+        attachable: true
