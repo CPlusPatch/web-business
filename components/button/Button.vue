@@ -24,7 +24,6 @@ defineProps<ButtonProps>();
 		:class="[
 			'inline-flex justify-center relative ease-in-out items-center no-bad-scale rounded-md px-3 py-1.5 text-sm font-semibold leading-6 shadow-sm duration-200 font-inter focus:outline-none',
 			theme && themes[theme],
-			loading && '!text-transparent',
 		]"
 		:disabled="disabled || loading"
 		type="button">
@@ -32,6 +31,7 @@ defineProps<ButtonProps>();
 			v-if="loading"
 			:theme="theme"
 			:class="[spinnerClasses, 'absolute']" />
-		<slot />
+		<span v-if="loading">&nbsp;</span>
+		<slot v-else />
 	</button>
 </template>

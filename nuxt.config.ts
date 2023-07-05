@@ -8,8 +8,6 @@ export default defineNuxtConfig({
 		"@nuxt/image-edge",
 		"@formkit/nuxt",
 		"@unocss/nuxt",
-		"@nuxtjs/eslint-module",
-		"nuxt-delay-hydration",
 		"nuxt-headlessui",
 		"nuxt-icon",
 		"@vueuse/nuxt",
@@ -43,18 +41,6 @@ export default defineNuxtConfig({
 	image: {
 		ipx: {
 			maxAge: 60 * 60 * 24 * 365,
-		},
-	},
-	eslint: {
-		baseConfig: {
-			parser: "vue-eslint-parser",
-			parserOptions: {
-				parser: "@typescript-eslint/parser",
-			},
-			extends: [
-				"@nuxtjs/eslint-config-typescript",
-				"plugin:prettier/recommended",
-			],
 		},
 	},
 	runtimeConfig: {

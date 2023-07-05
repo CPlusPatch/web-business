@@ -201,7 +201,7 @@ onMounted(async () => {
 						<Icon name="logos:mastodon-icon" class="mr-2 w-4 h-4" />
 						Mastodon
 					</Button>
-					<Button
+					<!-- <Button
 						:loading="loading"
 						theme="gray"
 						class="w-full"
@@ -213,7 +213,7 @@ onMounted(async () => {
 						">
 						<Icon name="MisskeyIcon" class="mr-2 w-4 h-4" />
 						Misskey
-					</Button>
+					</Button> -->
 					<Button
 						:disabled="true"
 						class="w-full !opacity-40"

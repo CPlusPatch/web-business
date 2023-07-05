@@ -165,7 +165,7 @@ onUnmounted(() => {
 						<div class="py-1">
 							<HeadlessMenuItem v-slot="{ active }">
 								<a
-									href="#"
+									href="/account/"
 									:class="[
 										active
 											? 'bg-gray-100 text-gray-900'
