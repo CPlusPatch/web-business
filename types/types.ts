@@ -17,3 +17,18 @@ export interface TemplateMetadata {
 		[key: string]: any;
 	};
 }
+
+export enum SettingType {
+	Image = "image",
+	Text = "text",
+}
+
+export interface Setting {
+	id: string;
+	name: string;
+	type: SettingType;
+	value: string;
+	title: string;
+	text: string;
+	icon?: string;
+}
