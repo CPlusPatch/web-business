@@ -14,6 +14,11 @@ export default defineNuxtConfig({
 	],
 	extends: ["nuxt-seo-kit"],
 	components: ["~/templates", "~/components"],
+	hooks: {
+		"nitro:build:before": nitro => {
+			nitro.options.moduleSideEffects.push("reflect-metadata");
+		},
+	},
 	app: {
 		head: {
 			link: [
