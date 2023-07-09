@@ -6,7 +6,7 @@ import {
 	UpdateDateColumn,
 } from "typeorm";
 
-import { Setting as TypeSetting } from "~/types/types";
+import { UISetting } from "~/types/types";
 
 @Entity({
 	name: "settings",
@@ -16,14 +16,11 @@ export class Setting {
 	id: number;
 
 	@Column("varchar")
-	category: string;
-
-	@Column("varchar")
 	name: string;
 
 	@Column("simple-json")
 	value: {
-		[key: string]: TypeSetting[];
+		[key: UISetting["name"]]: UISetting["value"];
 	};
 
 	@CreateDateColumn()

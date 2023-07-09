@@ -6,6 +6,7 @@ import "reflect-metadata";
 import { Token } from "./entities/Token";
 import { Block } from "./entities/Block";
 import { Page } from "./entities/Page";
+import { Setting } from "./entities/Setting";
 
 const AppDataSource = new DataSource({
 	type: "postgres",
@@ -16,7 +17,7 @@ const AppDataSource = new DataSource({
 	// database: "./web.sqlite",
 	database: "cms",
 	synchronize: true,
-	entities: [Post, Comment, User, Token, Block, Page],
+	entities: [Post, Comment, User, Token, Block, Page, Setting],
 });
 
 export { AppDataSource };

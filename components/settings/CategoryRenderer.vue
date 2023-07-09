@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { Setting, SettingType } from '~/types/types';
+import { UISetting, UISettingType } from '~/types/types';
 
 const props = defineProps<{
-	category: Setting[];
+	category: UISetting[];
 	isLoading: boolean;
 }>();
 
@@ -10,8 +10,8 @@ const emit = defineEmits<{
 	(event: "update", category: typeof props.category): any
 }>();
 
-const update = (id: string, value: string) => {
-	const updatedCategory = props.category.map(s => s.id === id ? {
+const update = (name: string, value: string) => {
+	const updatedCategory = props.category.map(s => s.name === name ? {
 		...s,
 		value,
 	} : s);
@@ -25,14 +25,14 @@ const clickFileInput = (setting: any) => {
 </script>
 
 <template>
-	<div v-for="setting in category" :key="setting.id">
-		<div v-if="setting.type === SettingType.Text" class="sm:col-span-4">
+	<div v-for="setting in category" :key="setting.name">
+		<div v-if="setting.type === UISettingType.Text" class="sm:col-span-4">
 			<label :for="setting.name" class="block text-sm font-medium leading-6 text-gray-900 font-semibold">{{ setting.title }}</label>
-			<Input @change="update(setting.id, ($event.target as HTMLInputElement).value)" :value="setting.value" :loading="isLoading" :name="setting.name"
+			<Input @change="update(setting.name, ($event.target as HTMLInputElement).value)" :value="setting.value" :loading="isLoading" :name="setting.name"
 				:icon="setting.icon" placeholder="Text input"
 				class="mt-2 w-full md:!w-96" />
 		</div>
-		<div v-if="setting.type === SettingType.Image" class="col-span-full">
+		<div v-if="setting.type === UISettingType.Image" class="col-span-full">
 			<label :for="setting.name" class="block text-sm font-medium leading-6 text-gray-900 font-semibold">{{ setting.title }}</label>
 			<div class="mt-2 flex items-center gap-x-3 relative h-15 w-15 rounded overflow-hidden group">
 				<input type="file" :name="setting.name" class="hidden" />

@@ -1,57 +1,87 @@
 <script setup lang="ts">
 import PrimaryContainer from "~/components/layout/PrimaryContainer.vue";
-import { Setting, SettingType } from "~/types/types";
+import { UISetting, UISettingType } from "~/types/types";
+import { Setting } from "~/db/entities/Setting";
 
 const user = (await useFetch("/api/user/get")).data.value;
 const token = useCookie("token");
 const loading = ref(false);
 
-const infoSettings: Setting[] = [
+definePageMeta({
+	middleware: "auth",
+})
+
+
+const receivedSettings = (await useFetch<Setting>("/api/admin/settings")).data.value?.value ?? {};
+
+const getValue = (name: string) => {
+	return receivedSettings[name]
+}
+
+const infoSettings: UISetting[] = [
 	{
-		id: "yZkEOijkF3Z-A1sn8MfuS",
 		name: "logo",
-		type: SettingType.Image,
+		type: UISettingType.Image,
 		title: "Site logo",
 		text: "Your site's logo here",
-		value: "http://localhost:3000/_ipx/_/images/icons/logo.svg",
+		value: getValue("logo"),
 	},
 	{
-		id: "sSDRSf-Ou_nBjw3ooqmAg",
 		name: "siteName",
-		type: SettingType.Text,
+		type: UISettingType.Text,
 		title: "Site name",
-		value: "",
+		value: getValue("siteName"),
 		text: "",
 		icon: "ic:round-drive-file-rename-outline",
 	}
 ]
 
-const categories = ref<{
-	[key: string]: Setting[],
-}>({
-	info: infoSettings
-})
+const categories = ref([
+	{
+		name: "Info",
+		description: "Information about your website, like logos and description",
+		settings: infoSettings,
+	}
+])
 
-const saveSettings = (newCategory: Setting[], name: string | number) => {
-	categories.value[name] = newCategory;
+const saveSettings = async (newCategory: UISetting[], index: number) => {
+	categories.value[index].settings = newCategory;
+
+	const response = await useFetch("/api/admin/settings", {
+		method: "PUT",
+		headers: {
+			Authorization: `Bearer ${token.value}`
+		},
+		body: categories.value.map(cat => {
+			return cat.settings.map(setting => ({
+				[setting.name]: setting.value
+			})).reduce((previous, current) => ({
+				...previous,
+				...current
+			}))
+		}).reduce((previous, current) => ({
+			...previous,
+			...current
+		}))
+	})
 }
 
 </script>
 
 <template>
-	<PrimaryContainer class="mt-20">
+	<PrimaryContainer class="mt-30">
 		<form @submit.prevent="">
 			<div class="space-y-12">
-				<div v-for="(category, name) in categories" class="border-b border-gray-900/10 pb-12">
+				<div v-for="(category, index) in categories" class="border-b border-gray-900/10 pb-12">
 					<h2 class="text-xl font-bold leading-7 text-gray-900">
-						Profile
+						{{ category.name }}
 					</h2>
 					<p class="mt-1 text-sm leading-6 text-gray-600">
-						Fill out your profile and personal details here!
+						{{ category.description }}
 					</p>
 
 					<div class="mt-10 flex flex-col gap-8">
-						<SettingsCategoryRenderer :category="category" :is-loading="loading" @update="newCategory => saveSettings(newCategory, name)" />
+						<SettingsCategoryRenderer :category="category.settings" :is-loading="loading" @update="newCategory => saveSettings(newCategory, index)" />
 					</div>
 				</div>
 			</div>

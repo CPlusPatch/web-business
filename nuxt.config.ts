@@ -52,7 +52,7 @@ export default defineNuxtConfig({
 		public: {
 			siteUrl:
 				process.env.NUXT_PUBLIC_SITE_URL || "https://cpluspatch.com",
-			siteName: "CPlusPatch",
+			siteName: "",
 			siteDescription: "My blog, about me and how you can contact me!",
 			language: "en-US", // prefer more explicit language codes like `en-AU` over `en`,
 			titleSeparator: "·",

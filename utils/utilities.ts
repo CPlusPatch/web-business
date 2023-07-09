@@ -1,4 +1,5 @@
 import { nanoid } from "nanoid";
+import { Setting } from "~/db/entities/Setting";
 
 export interface AnyObject {
 	[key: string]: any;
@@ -23,3 +24,5 @@ export function generateIds(obj: AnyObject): AnyObject {
 
 	return newObj;
 }
+
+export const getSettings = async () => (await useFetch<Setting>("/api/admin/settings")).data.value?.value ?? {}

@@ -18,15 +18,14 @@ export interface TemplateMetadata {
 	};
 }
 
-export enum SettingType {
+export enum UISettingType {
 	Image = "image",
 	Text = "text",
 }
 
-export interface Setting {
-	id: string;
+export interface UISetting {
 	name: string;
-	type: SettingType;
+	type: UISettingType;
 	value: string;
 	title: string;
 	text: string;

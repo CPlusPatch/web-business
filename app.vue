@@ -1,6 +1,7 @@
 <script lang="ts">
 import "./styles/index.css";
 import "@unocss/reset/tailwind.css";
+import { getSettings } from "./utils/utilities";
 
 export const me = definePerson({
 	name: "Gaspard Wierzbinski",
@@ -23,6 +24,12 @@ export const myOrg = defineOrganization({
 
 <script setup lang="ts">
 useSchemaOrg([me, myOrg]);
+
+const settings = await getSettings();
+
+useServerSeoMeta({
+	titleTemplate: (titleChunk) => titleChunk ? `${titleChunk} · ${settings?.siteName}` : settings?.siteName ?? "",
+})
 </script>
 
 <template>

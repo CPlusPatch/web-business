@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { Page } from "~/db/entities/Page";
+import { getSettings } from "~/utils/utilities";
+
+const settings = await getSettings();
 
 useServerSeoMeta({
-	title: "CPlusPatch",
+	title: "My website",
 	ogTitle: "Website for CPlusPatch, aka Gaspard Wierzbinski",
 	description: "My blog, about me and how you can contact me!",
 	ogDescription: "My blog, about me and how you can contact me!",
