@@ -21,12 +21,13 @@ export interface TemplateMetadata {
 export enum UISettingType {
 	Image = "image",
 	Text = "text",
+	Toggle = "toggle",
 }
 
 export interface UISetting {
 	name: string;
 	type: UISettingType;
-	value: string;
+	value: any;
 	title: string;
 	text: string;
 	icon?: string;

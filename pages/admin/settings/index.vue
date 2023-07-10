@@ -33,17 +33,6 @@ const infoSettings: UISetting[] = [
 		value: getValue("siteName"),
 		text: "",
 		icon: "ic:round-drive-file-rename-outline",
-	}
-]
-
-const brandSettings: UISetting[] = [
-	{
-		name: "brandName",
-		type: UISettingType.Text,
-		title: "Brand Name",
-		value: getValue("brandName"),
-		text: "Used in big logos next to your logo image",
-		icon: "ic:round-account-balance",
 	},
 	{
 		name: "authorFirstName",
@@ -60,6 +49,46 @@ const brandSettings: UISetting[] = [
 		value: getValue("authorLastName"),
 		text: "Your last name, which will be included near footers and on page metadata",
 		icon: "ic:round-account-box",
+	},
+	{
+		name: "authorAvatar",
+		type: UISettingType.Image,
+		title: "Author Avatar",
+		text: "Max: 2 MiB",
+		value: getValue("authorAvatar"),
+	},
+]
+
+const brandSettings: UISetting[] = [
+	{
+		name: "brandName",
+		type: UISettingType.Text,
+		title: "Brand Name",
+		value: getValue("brandName"),
+		text: "Used in big logos next to your logo image",
+		icon: "ic:round-account-balance",
+	},
+	{
+		name: "organizationEnabled",
+		type: UISettingType.Toggle,
+		title: "Enable Organization",
+		value: getValue("organizationEnabled"),
+		text: "",
+		icon: "ic:round-account-balance",
+	},
+	{
+		name: "organizationName",
+		type: UISettingType.Text,
+		title: "Organization Name",
+		text: "",
+		value: getValue("organizationName")
+	},
+	{
+		name: "organizationLogo",
+		type: UISettingType.Image,
+		title: "Organization Logo",
+		text: "",
+		value: getValue("organizationLogo")
 	}
 ]
 

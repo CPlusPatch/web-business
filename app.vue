@@ -9,7 +9,7 @@ const settings = await getSettings();
 
 const me = definePerson({
 	name: `${settings.authorFirstName ?? "John"} ${settings.authorLastName ?? "Doe"}`,
-	image: "/images/avatars/with_background.webp",
+	image: settings.authorAvatar ?? "/images/avatars/with_background.webp",
 	sameAs: [
 		"https://codeberg.org/CPlusPatch",
 		"mailto:contact@cpluspatch.com",
@@ -21,11 +21,11 @@ const me = definePerson({
 });
 
 const myOrg = defineOrganization({
-	name: "CPlusPatch Development",
-	logo: "/public/images/icons/logo.svg",
+	name: settings.organizationName ?? "CPlusPatch Development",
+	logo: settings.organizationLogo ?? "/public/images/icons/logo.svg",
 });
 
-useSchemaOrg([me, myOrg]);
+useSchemaOrg(settings.organizationEnabled ? [me, myOrg] : [me]);
 
 useServerSeoMeta({
 	titleTemplate: (titleChunk) => titleChunk ? `${titleChunk} · ${settings?.siteName}` : settings?.siteName ?? "",
