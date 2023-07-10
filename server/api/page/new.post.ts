@@ -8,7 +8,7 @@ import { Page } from "~/db/entities/Page";
  *
  * @param {H3Event} event - The event object.
  * @returns {Promise<Block>} - A Promise that resolves to the block object.
- * @throws {NuxtError} - Throws an error if the user is not authorized or if the block is not found.
+ * @throws {NuxtError} - Throws an error if the user is not authorized or if the request body is invalid
  */
 export default defineEventHandler(async event => {
 	// Get the user by token.

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { me } from "~/app.vue";
 import { Page } from "~/db/entities/Page";
 import { getSettings } from "~/utils/utilities";
 

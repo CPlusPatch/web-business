@@ -2,10 +2,12 @@
 import "./styles/index.css";
 import "@unocss/reset/tailwind.css";
 import { getSettings } from "./utils/utilities";
+</script>
 
+<script setup lang="ts">
 const settings = await getSettings();
 
-export const me = definePerson({
+const me = definePerson({
 	name: `${settings.authorFirstName ?? "John"} ${settings.authorLastName ?? "Doe"}`,
 	image: "/images/avatars/with_background.webp",
 	sameAs: [
@@ -18,13 +20,11 @@ export const me = definePerson({
 	url: "/",
 });
 
-export const myOrg = defineOrganization({
+const myOrg = defineOrganization({
 	name: "CPlusPatch Development",
 	logo: "/public/images/icons/logo.svg",
 });
-</script>
 
-<script setup lang="ts">
 useSchemaOrg([me, myOrg]);
 
 useServerSeoMeta({

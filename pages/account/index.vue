@@ -7,6 +7,10 @@ const token = useCookie("token");
 const loading = ref(false);
 const displayName = ref();
 
+definePageMeta({
+	middleware: "auth",
+})
+
 onMounted(() => {
 	displayName.value = user?.display_name ?? "";
 });
@@ -149,28 +153,6 @@ const save = (e: Event) => {
 											).length > 0
 												? "Linked!"
 												: "Mastodon"
-										}}</span
-									>
-									<Icon name="ic:round-plus" />
-								</Button>
-								<Button
-									theme="gray"
-									:disabled="
-										(user?.oauthAccounts ?? []).filter(
-											a => a.provider === 'misskey'
-										).length > 0
-									"
-									class="w-full disabled:opacity-50 justify-between">
-									<span
-										><Icon
-											name="MisskeyIcon"
-											class="mr-2 w-4 h-4" />
-										{{
-											(user?.oauthAccounts ?? []).filter(
-												a => a.provider === "misskey"
-											).length > 0
-												? "Linked!"
-												: "misskey"
 										}}</span
 									>
 									<Icon name="ic:round-plus" />

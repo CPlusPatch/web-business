@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { me } from "~/app.vue";
 import Button from "~/components/button/Button.vue";
 import SmallSelect, {
 	SelectDirection,

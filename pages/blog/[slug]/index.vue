@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { marked } from "marked";
-import { me } from "~/app.vue";
 import PrimaryContainer from "~~/components/layout/PrimaryContainer.vue";
 import { Post } from "~~/db/entities/Post";
 
 const route = useRoute();
 const token = useCookie("token");
+const settings = await getSettings();
 
 const post = await useFetch<Post>(`/api/post/${route.params.slug}`, {
 	headers: {
@@ -39,13 +39,13 @@ useSchemaOrg([
 		description: post.data.value.description,
 		wordCount: post.data.value?.content.split(" ").length,
 		"@type": "BlogPosting",
-	}),
-	me,
+	})
 ]);
 
+const name = `${settings.authorFirstName ?? "John"} ${settings.authorLastName ?? "Doe"}`;
 useServerSeoMeta({
-	title: () => `${post.data.value?.title}` ?? `Article by ${me.name}`,
-	description: () => post.data.value?.description ?? `Article by ${me.name}`,
+	title: () => `${post.data.value?.title}` ?? `Article by ${name}`,
+	description: () => post.data.value?.description ?? `Article by ${name}`,
 	ogImage: () => post.data.value?.banner ?? "/static/servers.webp",
 });
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { signInWithMastodon, signInWithMisskey } from "~/utils/oauth";
+import { signInWithMastodon } from "~/utils/oauth";
 
 const token = useCookie("token", {
 	sameSite: "strict",
@@ -47,7 +47,9 @@ definePageMeta({
 
 onMounted(async () => {
 	if (route.query.token) {
-		// Initiate sign in with Mastodon
+		/* DEPRECATED, sign in with Misskey is no longer supported due to lack of OAuth compliance */
+		// TODO: Remove Misskey login and add proper OAuth support
+		// Initiate sign in with Misskey
 		loading.value = true;
 
 		const response = await fetch("/api/auth/login-oauth", {
