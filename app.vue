@@ -3,8 +3,10 @@ import "./styles/index.css";
 import "@unocss/reset/tailwind.css";
 import { getSettings } from "./utils/utilities";
 
+const settings = await getSettings();
+
 export const me = definePerson({
-	name: "Gaspard Wierzbinski",
+	name: `${settings.authorFirstName ?? "John"} ${settings.authorLastName ?? "Doe"}`,
 	image: "/images/avatars/with_background.webp",
 	sameAs: [
 		"https://codeberg.org/CPlusPatch",
@@ -25,10 +27,9 @@ export const myOrg = defineOrganization({
 <script setup lang="ts">
 useSchemaOrg([me, myOrg]);
 
-const settings = await getSettings();
-
 useServerSeoMeta({
 	titleTemplate: (titleChunk) => titleChunk ? `${titleChunk} · ${settings?.siteName}` : settings?.siteName ?? "",
+	author: me.name
 })
 </script>
 

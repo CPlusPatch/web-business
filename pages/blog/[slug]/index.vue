@@ -44,10 +44,9 @@ useSchemaOrg([
 ]);
 
 useServerSeoMeta({
-	title: () => `${post.data.value?.title}` ?? "Article by CPlusPatch",
-	description: () => post.data.value?.description ?? "Article by CPlusPatch",
+	title: () => `${post.data.value?.title}` ?? `Article by ${me.name}`,
+	description: () => post.data.value?.description ?? `Article by ${me.name}`,
 	ogImage: () => post.data.value?.banner ?? "/static/servers.webp",
-	author: "Gaspard Wierzbinski",
 });
 
 definePageMeta({

@@ -23,7 +23,7 @@ const infoSettings: UISetting[] = [
 		name: "logo",
 		type: UISettingType.Image,
 		title: "Site logo",
-		text: "Your site's logo here",
+		text: "Max: 2 MiB",
 		value: getValue("logo"),
 	},
 	{
@@ -36,11 +36,43 @@ const infoSettings: UISetting[] = [
 	}
 ]
 
+const brandSettings: UISetting[] = [
+	{
+		name: "brandName",
+		type: UISettingType.Text,
+		title: "Brand Name",
+		value: getValue("brandName"),
+		text: "Used in big logos next to your logo image",
+		icon: "ic:round-account-balance",
+	},
+	{
+		name: "authorFirstName",
+		type: UISettingType.Text,
+		title: "Author First Name",
+		value: getValue("authorFirstName"),
+		text: "Your first name, which will be included near footers and on page metadata",
+		icon: "ic:round-account-box",
+	},
+	{
+		name: "authorLastName",
+		type: UISettingType.Text,
+		title: "Author Last Name",
+		value: getValue("authorLastName"),
+		text: "Your last name, which will be included near footers and on page metadata",
+		icon: "ic:round-account-box",
+	}
+]
+
 const categories = ref([
 	{
 		name: "Info",
 		description: "Information about your website, like logos and description",
 		settings: infoSettings,
+	},
+	{
+		name: "Brand",
+		description: "Brand settings: name, info, logo",
+		settings: brandSettings,
 	}
 ])
 

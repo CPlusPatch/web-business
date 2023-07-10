@@ -1,17 +1,17 @@
 <script setup lang="ts">
+import { me } from "~/app.vue";
 import { Page } from "~/db/entities/Page";
 import { getSettings } from "~/utils/utilities";
 
 const settings = await getSettings();
 
 useServerSeoMeta({
-	title: "My website",
-	ogTitle: "Website for CPlusPatch, aka Gaspard Wierzbinski",
+	title: "Home",
+	ogTitle: `${settings.authorFirstName ?? "John"} ${settings.authorLastName ?? "Doe"}'s Website'`,
 	description: "My blog, about me and how you can contact me!",
 	ogDescription: "My blog, about me and how you can contact me!",
 	ogImage: "/static/servers.webp",
 	twitterCard: "summary_large_image",
-	author: "Gaspard Wierzbinski",
 });
 
 const loading = ref(false);

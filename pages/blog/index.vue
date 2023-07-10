@@ -38,14 +38,11 @@ const createNew = () => {
 	});
 };
 
-useSchemaOrg([me]);
-
 useServerSeoMeta({
 	title: "Blog",
 	description: "CPlusPatch's personal blog with articles",
 	ogImage: "/static/servers.webp",
 	twitterCard: "summary_large_image",
-	author: "Gaspard Wierzbinski",
 });
 </script>
 

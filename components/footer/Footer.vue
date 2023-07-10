@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { getSettings } from "~/utils/utilities";
+
+const settings = await getSettings();
+
 const socials = [
 	{
 		name: "GitHub",
@@ -49,7 +53,7 @@ const socials = [
 					<Icon
 						name="tabler:copyleft"
 						class="h-[1em] inline mb-0.5" />
-					{{ new Date().getFullYear() }}&nbsp; Gaspard Wierzbinski.
+					{{ new Date().getFullYear() }} {{ settings.authorFirstName ?? "John" }} {{ settings.authorLastName ?? "Doe" }}.
 					Licensed under GPLv3
 				</p>
 			</div>
