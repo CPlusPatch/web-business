@@ -42,6 +42,15 @@ export default defineNuxtConfig({
 				},
 			},
 		},
+		esbuild: {
+			options: {
+				tsconfigRaw: {
+					compilerOptions: {
+						experimentalDecorators: true,
+					},
+				},
+			},
+		},
 	},
 	image: {
 		ipx: {
