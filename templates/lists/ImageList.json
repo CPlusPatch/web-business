@@ -5,13 +5,13 @@
 	"description": "A list of images",
 	"inputs": {
 		"text-header": "string",
-		"text-secondary": "string",
+		"text-secondary": "paragraph",
 		"image-main": "string",
 		"list": [
 			{
 				"id": "string",
 				"name": "string",
-				"description": "string"
+				"description": "paragraph"
 			}
 		]
 	},

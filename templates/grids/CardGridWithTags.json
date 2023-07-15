@@ -16,7 +16,7 @@
 						"text-color": "string"
 					}
 				],
-				"description": "string",
+				"description": "paragraph",
 				"name": "string",
 				"href": "string"
 			}

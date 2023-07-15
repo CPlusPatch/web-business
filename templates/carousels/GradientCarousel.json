@@ -10,7 +10,7 @@
 				"name": "string",
 				"profession": "string",
 				"avatar": "string",
-				"text": "string"
+				"text": "paragraph"
 			}
 		]
 	},
