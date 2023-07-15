@@ -98,7 +98,9 @@ onUnmounted(() => {
 		:class="[
 			!inline && 'fixed inset-x-0 top-0',
 			'z-30 backdrop-blur-lg duration-200 font-poppins',
-			shrunk && !inline ? 'bg-gray-50/30 px-5 py-4' : 'bg-transparent p-8',
+			shrunk && !inline
+				? 'bg-gray-50/30 px-5 py-4'
+				: 'bg-transparent p-8',
 		]">
 		<div
 			:class="[
@@ -113,7 +115,7 @@ onUnmounted(() => {
 
 			<nav class="hidden justify-center items-center md:flex">
 				<ul class="flex flex-row gap-8 justify-between">
-					<li v-for="n of (elements ?? nav)" :key="n.title">
+					<li v-for="n of elements ?? nav" :key="n.title">
 						<NuxtLink :to="n.href" class="text-lg text-gray-800">
 							{{ n.title }}
 						</NuxtLink>

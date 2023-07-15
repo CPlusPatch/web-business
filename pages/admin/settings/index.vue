@@ -9,14 +9,14 @@ const loading = ref(false);
 
 definePageMeta({
 	middleware: "auth",
-})
+});
 
-
-const receivedSettings = (await useFetch<Setting>("/api/admin/settings")).data.value?.value ?? {};
+const receivedSettings =
+	(await useFetch<Setting>("/api/admin/settings")).data.value?.value ?? {};
 
 const getValue = (name: string) => {
-	return receivedSettings[name]
-}
+	return receivedSettings[name];
+};
 
 const infoSettings: UISetting[] = [
 	{
@@ -57,7 +57,7 @@ const infoSettings: UISetting[] = [
 		text: "Max: 2 MiB",
 		value: getValue("authorAvatar"),
 	},
-]
+];
 
 const brandSettings: UISetting[] = [
 	{
@@ -89,7 +89,7 @@ const brandSettings: UISetting[] = [
 		title: "Organization Logo",
 		text: "",
 		value: getValue("organizationLogo"),
-	}
+	},
 ];
 
 const navbarSettings: UISetting[] = [
@@ -99,13 +99,14 @@ const navbarSettings: UISetting[] = [
 		title: "Navbar Items",
 		text: "Navbar items",
 		value: getValue("navbarItems"),
-	}
-]
+	},
+];
 
 const categories = ref([
 	{
 		name: "Info",
-		description: "Information about your website, like logos and description",
+		description:
+			"Information about your website, like logos and description",
 		settings: infoSettings,
 	},
 	{
@@ -117,8 +118,8 @@ const categories = ref([
 		name: "Navbar",
 		description: "Navbar settings",
 		settings: navbarSettings,
-	}
-])
+	},
+]);
 
 const saveSettings = async (newCategory: UISetting[], index: number) => {
 	categories.value[index].settings = newCategory;
@@ -126,30 +127,33 @@ const saveSettings = async (newCategory: UISetting[], index: number) => {
 	const response = await useFetch("/api/admin/settings", {
 		method: "PUT",
 		headers: {
-			Authorization: `Bearer ${token.value}`
+			Authorization: `Bearer ${token.value}`,
 		},
 		// Convert to big object with name: value instead
 		// of lots of smaller objects with name/value attributes
-		body: categories.value.map(cat => {
-			return cat.settings.map(setting => ({
-				[setting.name]: setting.value
-			})).reduce((previous, current) => ({
+		body: categories.value
+			.map(cat => {
+				return cat.settings
+					.map(setting => ({
+						[setting.name]: setting.value,
+					}))
+					.reduce((previous, current) => ({
+						...previous,
+						...current,
+					}));
+			})
+			.reduce((previous, current) => ({
 				...previous,
-				...current
-			}))
-		}).reduce((previous, current) => ({
-			...previous,
-			...current
-		}))
-	})
-}
+				...current,
+			})),
+	});
+};
 
 const saveNavbar = async (newNavbar: UISetting[]) => {
-
 	const response = await useFetch("/api/admin/settings", {
 		method: "PUT",
 		headers: {
-			Authorization: `Bearer ${token.value}`
+			Authorization: `Bearer ${token.value}`,
 		},
 		// Convert to big object with name: value instead
 		// of lots of smaller objects with name/value attributes
@@ -158,28 +162,33 @@ const saveNavbar = async (newNavbar: UISetting[]) => {
 				name: "",
 				description: "",
 				settings: newNavbar,
-			}
-		].map(cat => {
-			return cat.settings.map(setting => ({
-				[setting.name]: setting.value
-			})).reduce((previous, current) => ({
+			},
+		]
+			.map(cat => {
+				return cat.settings
+					.map(setting => ({
+						[setting.name]: setting.value,
+					}))
+					.reduce((previous, current) => ({
+						...previous,
+						...current,
+					}));
+			})
+			.reduce((previous, current) => ({
 				...previous,
-				...current
-			}))
-		}).reduce((previous, current) => ({
-			...previous,
-			...current
-		}))
-	})
-}
-
+				...current,
+			})),
+	});
+};
 </script>
 
 <template>
 	<PrimaryContainer class="mt-30">
 		<form @submit.prevent="">
 			<div class="space-y-12">
-				<div v-for="(category, index) in categories" class="border-b border-gray-900/10 pb-12">
+				<div
+					v-for="(category, index) in categories"
+					class="border-b border-gray-900/10 pb-12">
 					<h2 class="text-xl font-bold leading-7 text-gray-900">
 						{{ category.name }}
 					</h2>
@@ -188,13 +197,24 @@ const saveNavbar = async (newNavbar: UISetting[]) => {
 					</p>
 
 					<div class="mt-10 flex flex-col gap-8">
-						<SettingsCategoryRenderer :category="category.settings" :is-loading="loading" @update="newCategory => saveSettings(newCategory, index)" />
+						<SettingsCategoryRenderer
+							:category="category.settings"
+							:is-loading="loading"
+							@update="
+								newCategory => saveSettings(newCategory, index)
+							" />
 					</div>
 				</div>
 			</div>
 
 			<div class="mt-6 flex items-center justify-end gap-x-2">
-				<Button :loading="loading" type="submit" theme="orange" class="w-full md:w-auto">Save</Button>
+				<Button
+					:loading="loading"
+					type="submit"
+					theme="orange"
+					class="w-full md:w-auto"
+					>Save</Button
+				>
 			</div>
 		</form>
 	</PrimaryContainer>

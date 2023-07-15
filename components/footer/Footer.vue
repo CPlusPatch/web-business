@@ -53,8 +53,9 @@ const socials = [
 					<Icon
 						name="tabler:copyleft"
 						class="h-[1em] inline mb-0.5" />
-					{{ new Date().getFullYear() }} {{ settings.authorFirstName ?? "John" }} {{ settings.authorLastName ?? "Doe" }}.
-					Licensed under GPLv3
+					{{ new Date().getFullYear() }}
+					{{ settings.authorFirstName ?? "John" }}
+					{{ settings.authorLastName ?? "Doe" }}. Licensed under GPLv3
 				</p>
 			</div>
 		</div>

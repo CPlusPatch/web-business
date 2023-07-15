@@ -6,11 +6,9 @@ export default defineEventHandler(async event => {
 		await AppDataSource.initialize();
 	}
 
-	const settings = (
-		await AppDataSource.getRepository(Setting).findOneBy({
-			name: "main"
-		})
-	)
+	const settings = await AppDataSource.getRepository(Setting).findOneBy({
+		name: "main",
+	});
 
 	if (settings) {
 		return settings;

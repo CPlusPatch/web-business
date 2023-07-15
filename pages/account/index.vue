@@ -9,7 +9,7 @@ const displayName = ref();
 
 definePageMeta({
 	middleware: "auth",
-})
+});
 
 onMounted(() => {
 	displayName.value = user?.display_name ?? "";

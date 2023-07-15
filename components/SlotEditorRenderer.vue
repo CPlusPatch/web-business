@@ -91,27 +91,27 @@ const deleteItem = (index: number, name: string) => {
 		</template>
 
 		<template v-if="inputType === InputType.Paragraph">
-				<label
-					for="project-name"
-					class="block text-sm font-medium text-gray-900">
-					{{ name }}
-				</label>
-				<div class="mt-1">
-					<textarea
-						id="project-name"
-						:value="slots[name]"
-						type="text"
-						name="project-name"
-						rows="3"
-						class="!ring-orange-500 focus:!border-orange-500 block peer pr-3 py-1.5 focus:ring-2 border border-gray-300 placeholder:text-gray-400 w-full pl-3 bg-white rounded-md shadow-sm duration-200 outline-none disabled:bg-gray-100 focus:outline-none text-sm leading-6"
-						@input="
-							emit('editSlot', {
-								...slots,
-								[name]: ($event as any).target.value,
-							})
-							"></textarea>
-				</div>
-			</template>
+			<label
+				for="project-name"
+				class="block text-sm font-medium text-gray-900">
+				{{ name }}
+			</label>
+			<div class="mt-1">
+				<textarea
+					id="project-name"
+					:value="slots[name]"
+					type="text"
+					name="project-name"
+					rows="3"
+					class="!ring-orange-500 focus:!border-orange-500 block peer pr-3 py-1.5 focus:ring-2 border border-gray-300 placeholder:text-gray-400 w-full pl-3 bg-white rounded-md shadow-sm duration-200 outline-none disabled:bg-gray-100 focus:outline-none text-sm leading-6"
+					@input="
+						emit('editSlot', {
+							...slots,
+							[name]: ($event as any).target.value,
+						})
+					"></textarea>
+			</div>
+		</template>
 
 		<template v-if="inputType === InputType.Boolean">
 			<label
@@ -142,7 +142,12 @@ const deleteItem = (index: number, name: string) => {
 				for="project-name"
 				class="block text-sm font-medium text-gray-900">
 				{{ name }}
-				<Icon :name="expanded ? 'material-symbols:collapse-all-rounded' : 'material-symbols:expand-all-rounded'" />
+				<Icon
+					:name="
+						expanded
+							? 'material-symbols:collapse-all-rounded'
+							: 'material-symbols:expand-all-rounded'
+					" />
 			</label>
 			<TransitionGroup
 				tag="div"
