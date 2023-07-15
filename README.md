@@ -5,6 +5,12 @@ A fast, sleek and beautiful website + full content management system developed w
 It is designed to be minimal but efficient, secure and lightweight.
 
 CPlusPatch CMS is a customizable system for making blogs and personal pages with a dynamic Vue-based templating engine. This is a project in **beta**, and as such should be treated as unstable.
+
+<img src="assets/readme/devices-editor.webp" />
+<img src="assets/readme/cms.webp" />
+<img src="assets/readme/admin-panel.webp" />
+<img src="assets/readme/cms-editor.png" />
+<img src="assets/readme/login-page.webp" />
 ## Requirements
 
 - A system that can run Node.js (Linux is HEAVILY recommended), or Docker on Linux
