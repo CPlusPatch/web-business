@@ -1,10 +1,14 @@
 <script setup lang="ts">
+import { getSettings } from "~/utils/utilities";
+
 const isOnline = useOnline();
+
+const settings = await getSettings();
 </script>
 
 <template>
 	<div class="bg-gray-50 font-inter bg-gradient-light">
-		<Navbar />
+		<Navbar :elements="settings.navbarItems" />
 		<TransitionsScaleFadeSlide>
 			<div
 				v-if="!isOnline"

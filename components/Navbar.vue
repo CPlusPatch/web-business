@@ -5,25 +5,32 @@ import { onUnmounted, ref } from "vue";
 import WideLogo from "./logos/WideLogo.vue";
 import SmallLogo from "./logos/SmallLogo.vue";
 import Button from "./button/Button.vue";
+import { nanoid } from "nanoid";
+import { NavbarUISetting } from "types/types";
 
 const nav = [
 	{
+		id: nanoid(),
 		title: "Home",
 		href: "/",
 	},
 	{
+		id: nanoid(),
 		title: "Skills",
 		href: "/#skills",
 	},
 	{
+		id: nanoid(),
 		title: "Devices",
 		href: "/devices",
 	},
 	{
+		id: nanoid(),
 		title: "CMS",
 		href: "/blog",
 	},
 	{
+		id: nanoid(),
 		title: "Projects",
 		href: "/projects",
 	},
@@ -34,6 +41,11 @@ const user = (await useFetch("/api/user/get")).data.value;
 const route = useRoute();
 const shrunk = ref<boolean>(!!route.meta.smallNavbar);
 const open = ref(false);
+
+defineProps<{
+	inline?: boolean;
+	elements?: NavbarUISetting[];
+}>();
 
 type DebounceFunc<T extends any[]> = (...args: T) => void;
 
@@ -84,8 +96,9 @@ onUnmounted(() => {
 <template>
 	<header
 		:class="[
-			'fixed inset-x-0 top-0 z-30 backdrop-blur-lg duration-200 font-poppins',
-			shrunk ? 'bg-gray-50/30 px-5 py-4' : 'bg-transparent p-8',
+			!inline && 'fixed inset-x-0 top-0',
+			'z-30 backdrop-blur-lg duration-200 font-poppins',
+			shrunk && !inline ? 'bg-gray-50/30 px-5 py-4' : 'bg-transparent p-8',
 		]">
 		<div
 			:class="[
@@ -100,7 +113,7 @@ onUnmounted(() => {
 
 			<nav class="hidden justify-center items-center md:flex">
 				<ul class="flex flex-row gap-8 justify-between">
-					<li v-for="n of nav" :key="n.title">
+					<li v-for="n of (elements ?? nav)" :key="n.title">
 						<NuxtLink :to="n.href" class="text-lg text-gray-800">
 							{{ n.title }}
 						</NuxtLink>

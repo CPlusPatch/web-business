@@ -81,14 +81,24 @@ const brandSettings: UISetting[] = [
 		type: UISettingType.Text,
 		title: "Organization Name",
 		text: "",
-		value: getValue("organizationName")
+		value: getValue("organizationName"),
 	},
 	{
 		name: "organizationLogo",
 		type: UISettingType.Image,
 		title: "Organization Logo",
 		text: "",
-		value: getValue("organizationLogo")
+		value: getValue("organizationLogo"),
+	}
+];
+
+const navbarSettings: UISetting[] = [
+	{
+		name: "navbarItems",
+		type: UISettingType.Navbar,
+		title: "Navbar Items",
+		text: "Navbar items",
+		value: getValue("navbarItems"),
 	}
 ]
 
@@ -102,6 +112,11 @@ const categories = ref([
 		name: "Brand",
 		description: "Brand settings: name, info, logo",
 		settings: brandSettings,
+	},
+	{
+		name: "Navbar",
+		description: "Navbar settings",
+		settings: navbarSettings,
 	}
 ])
 
@@ -113,7 +128,38 @@ const saveSettings = async (newCategory: UISetting[], index: number) => {
 		headers: {
 			Authorization: `Bearer ${token.value}`
 		},
+		// Convert to big object with name: value instead
+		// of lots of smaller objects with name/value attributes
 		body: categories.value.map(cat => {
+			return cat.settings.map(setting => ({
+				[setting.name]: setting.value
+			})).reduce((previous, current) => ({
+				...previous,
+				...current
+			}))
+		}).reduce((previous, current) => ({
+			...previous,
+			...current
+		}))
+	})
+}
+
+const saveNavbar = async (newNavbar: UISetting[]) => {
+
+	const response = await useFetch("/api/admin/settings", {
+		method: "PUT",
+		headers: {
+			Authorization: `Bearer ${token.value}`
+		},
+		// Convert to big object with name: value instead
+		// of lots of smaller objects with name/value attributes
+		body: [
+			{
+				name: "",
+				description: "",
+				settings: newNavbar,
+			}
+		].map(cat => {
 			return cat.settings.map(setting => ({
 				[setting.name]: setting.value
 			})).reduce((previous, current) => ({
