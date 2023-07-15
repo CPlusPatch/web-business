@@ -176,7 +176,7 @@ onUnmounted(() => {
 					leave-from-class="transform opacity-100 scale-100"
 					leave-to-class="transform opacity-0 scale-95">
 					<HeadlessMenuItems
-						class="absolute font-inter outline-none focus:outline-none right-0 z-10 mt-2 top-[100%] w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+						class="absolute font-inter outline-none right-0 z-10 mt-2 top-[100%] w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 						<div class="py-1">
 							<HeadlessMenuItem v-slot="{ active }">
 								<a
