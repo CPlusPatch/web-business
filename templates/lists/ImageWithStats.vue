@@ -22,7 +22,7 @@ defineProps<{
 				reversed ? 'flex-row-reverse' : 'flex-row',
 			]">
 			<div
-				class="px-4 sm:px-6 lg:py-16 lg:mx-0 lg:px-0 grow flex flex flex-col gap-y-4">
+				class="px-4 sm:px-6 lg:py-16 lg:mx-0 lg:px-0 grow flex flex-col gap-y-4">
 				<h2
 					data-placeholder="Empty title"
 					class="text-3xl font-extrabold tracking-tight text-gray-900 font-inter">

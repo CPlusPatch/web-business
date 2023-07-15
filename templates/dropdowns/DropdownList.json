@@ -9,7 +9,7 @@
 			{
 				"id": "string",
 				"question": "string",
-				"answer": "string"
+				"answer": "paragraph"
 			}
 		]
 	},
