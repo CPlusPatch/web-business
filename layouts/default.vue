@@ -3,7 +3,7 @@ const isOnline = useOnline();
 </script>
 
 <template>
-	<div class="bg-gray-50 font-inter">
+	<div class="bg-gray-50 font-inter bg-gradient-light">
 		<Navbar />
 		<TransitionsScaleFadeSlide>
 			<div
