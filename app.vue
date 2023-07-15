@@ -36,8 +36,6 @@ useServerSeoMeta({
 <template>
 	<div>
 		<SeoKit />
-		<OgImageScreenshot />
-		<OgImageStatic />
 		<NuxtLayout>
 			<NuxtLoadingIndicator />
 			<NuxtPage />

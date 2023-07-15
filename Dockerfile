@@ -1,13 +1,15 @@
-FROM docker.io/node:18.15.0-alpine AS builder
+FROM docker.io/node:18-alpine AS builder
 
 RUN apk add --update \
-  python3 \
-  make \
-  build-base
+  git
+#  python3 \
+#  make \
+#  build-base
 
 RUN npm install --global pnpm
 
-COPY . /app
+RUN git clone https://codeberg.org/CPlusPatch/web-business.git /app
+#COPY . /app
 
 RUN cd ./app && pnpm install
 RUN cd ./app && pnpm build

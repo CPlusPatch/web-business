@@ -51,6 +51,14 @@ export default defineNuxtConfig({
 				},
 			},
 		},
+		prerender: {
+			ignore: [
+				"/devices",
+				"/projects",
+				"/blog",
+				"/",
+			]
+		}
 	},
 	image: {
 		ipx: {
