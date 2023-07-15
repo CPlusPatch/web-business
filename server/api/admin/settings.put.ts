@@ -31,7 +31,10 @@ export default defineEventHandler(async event => {
 		})) ?? new Setting();
 
 	settings.name = "main";
-	settings.value = body;
+	settings.value = {
+		...settings.value,
+		...body
+	};
 
 	console.log(settings);
 

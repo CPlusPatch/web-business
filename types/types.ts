@@ -22,6 +22,7 @@ export enum UISettingType {
 	Image = "image",
 	Text = "text",
 	Toggle = "toggle",
+	Navbar = "navbar",
 }
 
 export interface UISetting {
@@ -32,3 +33,9 @@ export interface UISetting {
 	text: string;
 	icon?: string;
 }
+
+export interface NavbarUISetting {
+	href: string;
+	title: string;
+	id: string;
+};

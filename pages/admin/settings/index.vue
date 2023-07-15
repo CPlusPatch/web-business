@@ -81,14 +81,24 @@ const brandSettings: UISetting[] = [
 		type: UISettingType.Text,
 		title: "Organization Name",
 		text: "",
-		value: getValue("organizationName")
+		value: getValue("organizationName"),
 	},
 	{
 		name: "organizationLogo",
 		type: UISettingType.Image,
 		title: "Organization Logo",
 		text: "",
-		value: getValue("organizationLogo")
+		value: getValue("organizationLogo"),
+	}
+];
+
+const navbarSettings: UISetting[] = [
+	{
+		name: "navbarItems",
+		type: UISettingType.Navbar,
+		title: "Navbar Items",
+		text: "Navbar items",
+		value: getValue("navbarItems"),
 	}
 ]
 
@@ -113,7 +123,38 @@ const saveSettings = async (newCategory: UISetting[], index: number) => {
 		headers: {
 			Authorization: `Bearer ${token.value}`
 		},
+		// Convert to big object with name: value instead
+		// of lots of smaller objects with name/value attributes
 		body: categories.value.map(cat => {
+			return cat.settings.map(setting => ({
+				[setting.name]: setting.value
+			})).reduce((previous, current) => ({
+				...previous,
+				...current
+			}))
+		}).reduce((previous, current) => ({
+			...previous,
+			...current
+		}))
+	})
+}
+
+const saveNavbar = async (newNavbar: UISetting[]) => {
+
+	const response = await useFetch("/api/admin/settings", {
+		method: "PUT",
+		headers: {
+			Authorization: `Bearer ${token.value}`
+		},
+		// Convert to big object with name: value instead
+		// of lots of smaller objects with name/value attributes
+		body: [
+			{
+				name: "",
+				description: "",
+				settings: newNavbar,
+			}
+		].map(cat => {
 			return cat.settings.map(setting => ({
 				[setting.name]: setting.value
 			})).reduce((previous, current) => ({
@@ -145,6 +186,18 @@ const saveSettings = async (newCategory: UISetting[], index: number) => {
 						<SettingsCategoryRenderer :category="category.settings" :is-loading="loading" @update="newCategory => saveSettings(newCategory, index)" />
 					</div>
 				</div>
+				<div class="border-b border-gray-900/10 pb-12">
+						<h2 class="text-xl font-bold leading-7 text-gray-900">
+							Navbar
+						</h2>
+						<p class="mt-1 text-sm leading-6 text-gray-600">
+							_____
+						</p>
+
+						<div class="mt-10 flex flex-col gap-8">
+							<SettingsNavbarEditor :setting="navbarSettings[0]" :is-loading="loading" @update="newCategory => saveNavbar(newCategory)" />
+						</div>
+					</div>
 			</div>
 
 			<div class="mt-6 flex items-center justify-end gap-x-2">
