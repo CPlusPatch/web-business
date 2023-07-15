@@ -74,6 +74,7 @@ const editRawSlot = async () => {
 };
 
 const open = ref(false);
+const createModalOpen = ref(false);
 
 // const log = (...props: any[]) => console.log(...props);
 </script>
@@ -214,6 +215,93 @@ const open = ref(false);
 			</HeadlessDialog>
 		</HeadlessTransitionRoot>
 
+		<!-- <TransitionRoot as="template" :show="createModalOpen">
+			<Dialog
+				as="div"
+				class="relative z-10"
+				@close="createModalOpen = false">
+				<TransitionChild
+					as="template"
+					enter="ease-out duration-300"
+					enter-from="opacity-0"
+					enter-to="opacity-100"
+					leave="ease-in duration-200"
+					leave-from="opacity-100"
+					leave-to="opacity-0">
+					<div
+						class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+				</TransitionChild>
+
+				<div class="fixed inset-0 z-10 overflow-y-auto">
+					<div
+						class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+						<TransitionChild
+							as="template"
+							enter="ease-out duration-300"
+							enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+							enter-to="opacity-100 translate-y-0 sm:scale-100"
+							leave="ease-in duration-200"
+							leave-from="opacity-100 translate-y-0 sm:scale-100"
+							leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+							<DialogPanel
+								class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+								<div
+									class="sm:flex sm:items-start px-4 pb-4 pt-5 sm:p-6 sm:pb-4 w-full">
+									<div
+										class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-md bg-orange-100 sm:mx-0 sm:h-10 sm:w-10">
+										<Icon
+											class="h-6 w-6"
+											name="ic:round-code"
+											aria-hidden="true" />
+									</div>
+									<div
+										class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left grow overflow-hidden">
+										<h3
+											class="text-base font-semibold leading-6 text-gray-900">
+											Edit the raw text
+										</h3>
+										<div
+											class="mt-1 max-w-full overflow-hidden">
+											<codemirror
+												v-model="code"
+												placeholder="JSON code goes here..."
+												:style="{
+													height: '22rem',
+												}"
+												:indent-with-tab="true"
+												:tab-size="4"
+												:extensions="[
+													json(),
+													linter(jsonParseLinter()),
+												]" />
+											<textarea
+								rows="14"
+								name="text"
+								class="shadow-sm focus:ring-orange-500 focus:border-orange-500 block w-full sm:text-sm border-gray-300 rounded-md p-3 w-full" />
+										</div>
+									</div>
+								</div>
+								<div
+									class="bg-gray-50 px-4 py-3 flex md:flex-row sm:px-6 gap-2 flex-col">
+									<Button
+										type="submit"
+										value="submit"
+										theme="orange">
+										Submit
+									</Button>
+									<Button
+										value="cancel"
+										theme="gray"
+										type="submit">
+										Cancel
+									</Button>
+								</div>
+							</DialogPanel>
+						</TransitionChild>
+					</div>
+				</div>
+			</Dialog>
+		</TransitionRoot> -->
 		<dialog
 			ref="dialog"
 			class="open:backdrop:backdrop-blur-md open:opacity-100 opacity-0 duration-200 relative rounded-lg bg-white text-left shadow-xl transition-all w-full sm:max-w-3xl p-0">
@@ -254,7 +342,7 @@ const open = ref(false);
 					</div>
 				</div>
 				<div
-					class="bg-gray-50 px-4 py-3 flex md:flex-row-reverse md:flex-row sm:px-6 gap-2 flex-col">
+					class="bg-gray-50 px-4 py-3 flex md:flex-row sm:px-6 gap-2 flex-col">
 					<Button type="submit" value="submit" theme="orange">
 						Submit
 					</Button>
