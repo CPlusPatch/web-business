@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { nanoid } from 'nanoid';
 import { arrayBufferToWebP } from 'webp-converter-browser';
-import { NavbarUISetting, UISetting, UISettingType } from '~/types/types';
+import { UISetting, UISettingType } from '~/types/types';
 
 const props = defineProps<{
 	category: UISetting[];
@@ -100,6 +100,10 @@ const uploadFile = async (e: Event, setting: UISetting) => {
 				<label :for="setting.name" class="inline text-sm leading-6 text-gray-900 font-semibold">{{ setting.title }}</label>
 			</div>
 			<div class="text-xs mt-1 text-gray-500">{{ setting.text }}</div>
+		</div>
+
+		<div v-if="setting.type === UISettingType.Navbar">
+			<SettingsNavbarEditor :setting="setting" :is-loading="isLoading" @update="newValue => update(setting.name, newValue.value)" />
 		</div>
 	</div>
 </template>

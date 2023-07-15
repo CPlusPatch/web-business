@@ -112,6 +112,11 @@ const categories = ref([
 		name: "Brand",
 		description: "Brand settings: name, info, logo",
 		settings: brandSettings,
+	},
+	{
+		name: "Navbar",
+		description: "Navbar settings",
+		settings: navbarSettings,
 	}
 ])
 
@@ -186,18 +191,6 @@ const saveNavbar = async (newNavbar: UISetting[]) => {
 						<SettingsCategoryRenderer :category="category.settings" :is-loading="loading" @update="newCategory => saveSettings(newCategory, index)" />
 					</div>
 				</div>
-				<div class="border-b border-gray-900/10 pb-12">
-						<h2 class="text-xl font-bold leading-7 text-gray-900">
-							Navbar
-						</h2>
-						<p class="mt-1 text-sm leading-6 text-gray-600">
-							_____
-						</p>
-
-						<div class="mt-10 flex flex-col gap-8">
-							<SettingsNavbarEditor :setting="navbarSettings[0]" :is-loading="loading" @update="newCategory => saveNavbar(newCategory)" />
-						</div>
-					</div>
 			</div>
 
 			<div class="mt-6 flex items-center justify-end gap-x-2">

@@ -8,7 +8,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-	(event: "update", setting: UISetting[]): void;
+	(event: "update", setting: UISetting): void;
 }>();
 
 const value = ref(props.setting.value as NavbarUISetting[] ?? [
@@ -47,12 +47,10 @@ const updateValue = (id: NavbarUISetting["id"], attrs: any) => {
 		...attrs
 	};
 
-	emit("update", [
-		{
-			...props.setting,
-			value: value.value,
-		}
-	])
+	emit("update", {
+		...props.setting,
+		value: value.value,
+	})
 }
 </script>
 
