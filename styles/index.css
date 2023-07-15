@@ -34,7 +34,7 @@ a {
 }
 
 [data-placeholder]:empty:before {
-    content: attr(data-placeholder);
+	content: attr(data-placeholder);
 	border-bottom: 2px dashed black;
 }
 
@@ -102,13 +102,14 @@ a {
 .prose :where(img):not(:where([class~=\"not-prose\"] *)) {
 	margin-top: 0;
 	margin-bottom: 0;
-	@apply rounded-md border border-gray-300 shadow-md
+	@apply rounded-md border border-gray-300 shadow-md;
 }
 
 .prose :where(h1, h2, h3, h4, h5, h6):not(:where([class~=\"not-prose\"] *)) {
 	color: inherit;
 }
 
-.prose :where(code):not(:where([class~="not-prose"] *))::before, .prose :where(code):not(:where([class~="not-prose"] *))::after {
-  content: "";
+.prose :where(code):not(:where([class~="not-prose"] *))::before,
+.prose :where(code):not(:where([class~="not-prose"] *))::after {
+	content: "";
 }

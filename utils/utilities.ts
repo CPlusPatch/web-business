@@ -25,4 +25,5 @@ export function generateIds(obj: AnyObject): AnyObject {
 	return newObj;
 }
 
-export const getSettings = async () => (await useFetch<Setting>("/api/admin/settings")).data.value?.value ?? {}
+export const getSettings = async () =>
+	(await useFetch<Setting>("/api/admin/settings")).data.value?.value ?? {};

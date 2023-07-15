@@ -6,7 +6,9 @@ const settings = await getSettings();
 
 useServerSeoMeta({
 	title: "Home",
-	ogTitle: `${settings.authorFirstName ?? "John"} ${settings.authorLastName ?? "Doe"}'s Website'`,
+	ogTitle: `${settings.authorFirstName ?? "John"} ${
+		settings.authorLastName ?? "Doe"
+	}'s Website'`,
 	description: "My blog, about me and how you can contact me!",
 	ogDescription: "My blog, about me and how you can contact me!",
 	ogImage: "/static/servers.webp",
