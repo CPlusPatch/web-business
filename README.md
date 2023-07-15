@@ -1,13 +1,10 @@
-# Web Business
+# CPlusPatch CMS
 
 A fast, sleek and beautiful website + full content management system developed with NuxtJS.
 
 It is designed to be minimal but efficient, secure and lightweight.
 
-This application is heavily branded for my usage as a personal website, but you are free to fork it under GPL and modify the branding to your preferences.
-
-Theming options will likely be added later on in this project's development history.
-
+CPlusPatch CMS is a customizable system for making blogs and personal pages with a dynamic Vue-based templating engine. This is a project in **beta**, and as such should be treated as unstable.
 ## Requirements
 
 - A system that can run Node.js (Linux is HEAVILY recommended), or Docker on Linux
@@ -46,6 +43,8 @@ pm2 start ecosystem.config.js # For production deployment with PM2
 ## Administration
 
 ### Adding new users (for now)
+
+**NOTE: These instructions are temporary, an admin panel for adding users is coming soon**
 
 You may use the following JS scripts to generate a hashed password with Node's `crypto` library:
 
@@ -113,7 +112,7 @@ Resize all images to 250x250 (when adding languages to `/public/static/languages
 mogrify -path . -auto-orient -thumbnail 250x *.png
 ```
 
-## Writing custom templates (outdated)
+## Writing custom templates
 
 To add custom templates to the CMS block system, open the `templates/` directory, then create two files inside a category folder: `TemplateName.vue` and `TemplateName.json`. You may also create new folders, the location doesn't matter as long as it's inside `templates/`.
 
@@ -123,15 +122,102 @@ Inside the `.vue` file you may write a new Vue component. You will need to add t
 <script setup lang="ts">
 defineProps<{
 	editable: boolean;
+	// You may add arbitrary props here
 }>();
-
-const emit = defineEmits(["editField"]);
 </script>
 ```
+You may use TypeScript and all classes provided by [https://unocss.dev/](UnoCSS), as well as NuxtJS 3.6 utilities and any package that is included in `package.json` (such as `nuxt-img`).
 
-After this, you may add whatever parameters you want such as `textHeader` for a heading, `list` for a list and more. Please refer to other existing components for more.
+Here is an example for a big hero header:
 
-You will need to write the contents of the `.js` file according to how the other files are written, please look at those examples.
+```vue
+<script setup lang="ts">
+defineProps<{
+	imageMain?: string;
+	editable: boolean;
+}>();
+</script>
+
+<template>
+	<!-- Main hero -->
+	<div class="relative px-4 mx-auto max-w-7xl w-full sm:px-6">
+		<nuxt-img
+			preload
+			:width="1920"
+			:height="1080"
+			sizes="lg:1920px md:700px sm:400px"
+			class="rounded-lg aspect-video shadow-lg w-full duration-150"
+			:src="
+				imageMain === '' ? 'https://placehold.co/1920x1080' : imageMain
+			"
+			alt="VSCode screenshot" />
+	</div>
+</template>
+
+```
+
+It is recommended that you look at other files inside `templates` to get a hang of the syntax.
+
+### Syntax for the metadata
+
+Once your component is written, you may add your template metadata to `TemplateName.json`, like this:
+
+```json
+{
+	"category": "heroes",
+	"name": "BigHero",
+	"displayName": "Big Banner",
+	"description": "Big banner for showing off an image",
+	"inputs": {
+		"image-main": "string"
+	},
+	"defaults": {
+		"image-main": ""
+	}
+}
+```
+
+This will allow you to auto-generate the configuration panel for your component.
+
+The syntax for `inputs` goes as follow:
+
+**Input types**
+```json
+"inputs": {
+	"header-image": "image",
+	"large-text": "paragraph",
+	"text-input": "string",
+	"invert-order": "boolean",
+}
+```
+
+**Arrays**
+
+Arrays can be declared with an array of a single object, which will be the type of all objects in the array. You can nest arrays inside arrays at will.
+```json
+"inputs": {
+	"grid": [
+		{
+			"id": "string",
+			"tags": [
+				{
+					"id": "string",
+					"name": "string",
+					"color": "string",
+					"text-color": "string"
+				}
+			],
+			"description": "string",
+			"name": "string",
+			"href": "string"
+		}
+	]
+},
+```
+
+> **Note**: These `input` attributes will be passed to the Vue component as props, so their name will be converted to camelCase (e.g. `image-main` will be converted to `imageMain`)
+
+
 ## Attributions
 
 I will add more attributions when I find the image sources (mostly logos)
