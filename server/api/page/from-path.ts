@@ -1,4 +1,4 @@
-// import { AppDataSource } from "~~/db/data-source";
+import { AppDataSource } from "~/db/data-source";
 import { Page } from "~/db/entities/Page";
 
 export default defineEventHandler(async event => {
@@ -9,9 +9,9 @@ export default defineEventHandler(async event => {
 
 	// const isAdmin = user?.role === Role.ADMIN;
 
-	/* if (!AppDataSource.isInitialized) {
+	if (!AppDataSource.isInitialized) {
 		await AppDataSource.initialize();
-	} */
+	}
 
 	switch (body.path) {
 		case "":
@@ -19,7 +19,7 @@ export default defineEventHandler(async event => {
 				id: 1,
 				path: "index",
 			};
-		case "devices":
+		/* case "devices":
 			return {
 				id: 4,
 				path: "devices",
@@ -29,6 +29,13 @@ export default defineEventHandler(async event => {
 				id: 5,
 				path: "projects",
 			};
+		} */
+		default: {
+			return await AppDataSource.getRepository(Page).findOne({
+				where: {
+					path: body.path === "" ? "index" : body.path,
+				},
+			});
 		}
 	}
 
