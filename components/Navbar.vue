@@ -7,32 +7,13 @@ import SmallLogo from "./logos/SmallLogo.vue";
 import Button from "./button/Button.vue";
 import { nanoid } from "nanoid";
 import { NavbarUISetting } from "types/types";
+import { Role } from "~/db/entities/User";
 
 const nav = [
 	{
 		id: nanoid(),
-		title: "Home",
+		title: "Navbar Link",
 		href: "/",
-	},
-	{
-		id: nanoid(),
-		title: "Skills",
-		href: "/#skills",
-	},
-	{
-		id: nanoid(),
-		title: "Devices",
-		href: "/devices",
-	},
-	{
-		id: nanoid(),
-		title: "CMS",
-		href: "/blog",
-	},
-	{
-		id: nanoid(),
-		title: "Projects",
-		href: "/projects",
 	},
 ];
 
@@ -141,12 +122,10 @@ onUnmounted(() => {
 						theme="gray"
 						class="flex flex-row gap-x-2 py-2 text-left">
 						<div class="flex items-center">
-							<div>
-								<img
-									class="inline-block h-9 w-9 rounded"
-									:src="user.avatar"
-									alt="" />
-							</div>
+							<img
+								class="inline-block h-9 w-9 rounded"
+								:src="user.avatar"
+								alt="" />
 							<div class="ml-3">
 								<p
 									class="text-sm font-medium text-gray-700 group-hover:text-gray-900">
@@ -170,14 +149,25 @@ onUnmounted(() => {
 
 				<transition
 					enter-active-class="transition ease-out duration-100"
-					enter-from-class="transform opacity-0 scale-95"
-					enter-to-class="transform opacity-100 scale-100"
-					leave-active-class="transition ease-in duration-75"
-					leave-from-class="transform opacity-100 scale-100"
-					leave-to-class="transform opacity-0 scale-95">
+					enter-from-class="transform opacity-0 -translate-y-5"
+					enter-to-class="transform opacity-100 translate-y-0">
 					<HeadlessMenuItems
 						class="absolute font-inter outline-none right-0 z-10 mt-2 top-[100%] w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 						<div class="py-1">
+							<HeadlessMenuItem v-if="user.role === Role.ADMIN" v-slot="{ active }">
+									<a
+										href="/admin/settings/"
+										:class="[
+											active
+												? 'bg-gray-100 text-gray-900'
+												: 'text-gray-700',
+											'block px-3 py-1 text-sm',
+										]"
+										><Icon
+											name="material-symbols:admin-panel-settings-rounded"
+											class="mr-3" />Admin settings</a
+									>
+								</HeadlessMenuItem>
 							<HeadlessMenuItem v-slot="{ active }">
 								<a
 									href="/account/"
@@ -185,10 +175,10 @@ onUnmounted(() => {
 										active
 											? 'bg-gray-100 text-gray-900'
 											: 'text-gray-700',
-										'block px-3 py-1 text-sm opacity-50 hover:bg-transparent',
+										'block px-3 py-1 text-sm',
 									]"
 									><Icon
-										name="ic:round-manage-accounts"
+										name="material-symbols:manage-accounts-rounded"
 										class="mr-3" />Account settings</a
 								>
 							</HeadlessMenuItem>

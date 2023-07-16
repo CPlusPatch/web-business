@@ -102,6 +102,16 @@ const navbarSettings: UISetting[] = [
 	},
 ];
 
+const footerSettings: UISetting[] = [
+	{
+		name: "footerSocials",
+		type: UISettingType.Footer,
+		title: "Footer Socials",
+		text: "Footer socials",
+		value: getValue("footerSocials"),
+	},
+];
+
 const categories = ref([
 	{
 		name: "Info",
@@ -119,12 +129,21 @@ const categories = ref([
 		description: "Navbar settings",
 		settings: navbarSettings,
 	},
+	{
+		name: "Footer",
+		description: "Footer settings",
+		settings: footerSettings,
+	},
 ]);
 
 const saveSettings = async (newCategory: UISetting[], index: number) => {
 	categories.value[index].settings = newCategory;
+};
 
-	const response = await useFetch("/api/admin/settings", {
+const sendChanges = () => {
+	loading.value = true;
+
+	useFetch("/api/admin/settings", {
 		method: "PUT",
 		headers: {
 			Authorization: `Bearer ${token.value}`,
@@ -146,40 +165,11 @@ const saveSettings = async (newCategory: UISetting[], index: number) => {
 				...previous,
 				...current,
 			})),
+	}).finally(() => {
+		loading.value = false;
 	});
-};
 
-const saveNavbar = async (newNavbar: UISetting[]) => {
-	const response = await useFetch("/api/admin/settings", {
-		method: "PUT",
-		headers: {
-			Authorization: `Bearer ${token.value}`,
-		},
-		// Convert to big object with name: value instead
-		// of lots of smaller objects with name/value attributes
-		body: [
-			{
-				name: "",
-				description: "",
-				settings: newNavbar,
-			},
-		]
-			.map(cat => {
-				return cat.settings
-					.map(setting => ({
-						[setting.name]: setting.value,
-					}))
-					.reduce((previous, current) => ({
-						...previous,
-						...current,
-					}));
-			})
-			.reduce((previous, current) => ({
-				...previous,
-				...current,
-			})),
-	});
-};
+}
 </script>
 
 <template>
@@ -210,6 +200,7 @@ const saveNavbar = async (newNavbar: UISetting[]) => {
 			<div class="mt-6 flex items-center justify-end gap-x-2">
 				<Button
 					:loading="loading"
+					@click="sendChanges"
 					type="submit"
 					theme="orange"
 					class="w-full md:w-auto"
