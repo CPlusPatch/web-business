@@ -8,7 +8,7 @@ RUN apk add --update \
 
 RUN npm install --global pnpm
 
-RUN git clone https://codeberg.org/CPlusPatch/web-business.git /app
+RUN git clone https://github.com/CPlusPatch/web-business.git /app
 #COPY . /app
 
 RUN cd ./app && pnpm install
