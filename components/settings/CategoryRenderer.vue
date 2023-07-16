@@ -171,5 +171,12 @@ const uploadFile = async (e: Event, setting: UISetting) => {
 				:is-loading="isLoading"
 				@update="newValue => update(setting.name, newValue.value)" />
 		</div>
+
+		<div v-if="setting.type === UISettingType.Footer">
+			<SettingsFooterEditor
+				:setting="setting"
+				:is-loading="isLoading"
+				@update="newValue => update(setting.name, newValue.value)" />
+		</div>
 	</div>
 </template>

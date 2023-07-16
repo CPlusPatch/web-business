@@ -18,9 +18,9 @@ const settings = await getSettings();
 				You are offline
 			</div>
 		</TransitionsScaleFadeSlide>
-		<main class="relative overflow-hidden flex min-h-screen flex-col">
+		<main class="relative overflow-hidden flex min-h-screen flex-col gap-7">
 			<slot />
-			<Footer />
+			<Footer :author-first-name="settings.authorFirstName" :author-last-name="settings.authorLastName" :footer-socials="settings.footerSocials" />
 		</main>
 	</div>
 </template>

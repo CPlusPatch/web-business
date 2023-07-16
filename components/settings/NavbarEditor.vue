@@ -57,10 +57,7 @@ const updateValue = (id: NavbarUISetting["id"], attrs: any) => {
 </script>
 
 <template>
-	<div v-for="item in value">
-		<label class="block text-sm leading-6 text-gray-900 font-semibold"
-			>Navbar Element</label
-		>
+	<div v-for="item in value" class="grid grid-cols-3">
 		<Input
 			:loading="isLoading"
 			name=""
