@@ -84,7 +84,8 @@ const updateValue = (id: NavbarUISetting["id"], attrs: any) => {
 			class="mt-2 w-full md:!w-96" />
 	</div>
 
-	Preview:
+	<div class="mt-6 rounded ring-2 ring-orange-500 overflow-hidden">
+		<Navbar :inline="true" :elements="value" />
+	</div>
 
-	<Navbar :inline="true" :elements="value" />
 </template>

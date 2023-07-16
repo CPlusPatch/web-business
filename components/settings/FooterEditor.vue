@@ -82,7 +82,7 @@ const updateValue = (id: FooterUISetting["id"], attrs: any) => {
 			" class="mt-2 w-full md:!w-96" />
 	</div>
 
-	Preview:
-
-	<Footer :author-first-name="settings.authorFirstName" :author-last-name="settings.authorLastName" :footer-socials="value" />
+	<div class="mt-6 rounded ring-2 ring-orange-500 overflow-hidden">
+		<Footer :author-first-name="settings.authorFirstName" :author-last-name="settings.authorLastName" :footer-socials="value" />
+	</div>
 </template>
