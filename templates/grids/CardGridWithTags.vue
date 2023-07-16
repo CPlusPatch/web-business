@@ -44,7 +44,9 @@ defineProps<{
 							class="pb-4 text-lg font-bold text-gray-900 hover:text-gray-600">
 							{{ project.name }}
 						</h3>
-						<p data-placeholder="Description of the card" class="text-gray-500 mb-auto">
+						<p
+							data-placeholder="Description of the card"
+							class="text-gray-500 mb-auto">
 							{{ project.description }}
 						</p>
 						<div

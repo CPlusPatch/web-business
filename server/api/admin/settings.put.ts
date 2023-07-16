@@ -33,7 +33,7 @@ export default defineEventHandler(async event => {
 	settings.name = "main";
 	settings.value = {
 		...settings.value,
-		...body
+		...body,
 	};
 
 	console.log(settings);

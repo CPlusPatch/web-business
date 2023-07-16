@@ -1,9 +1,16 @@
 <script setup lang="ts">
-import { getSettings } from "~/utils/utilities";
+defineProps<{
+	authorFirstName: string;
+	authorLastName: string;
+	footerSocials: {
+		id: string;
+		name: string;
+		href: string;
+		icon: string;
+	}[]
+}>();
 
-const settings = await getSettings();
-
-const socials = [
+/* const socials = [
 	{
 		name: "GitHub",
 		href: "https://github.com/CPlusPatch",
@@ -29,19 +36,19 @@ const socials = [
 		href: "https://matrix.to/#/@jesse:cpluspatch.dev",
 		icon: "tabler:brand-matrix",
 	},
-];
+]; */
 </script>
 
 <template>
-	<footer class="">
+	<footer>
 		<div
 			class="px-4 py-12 mx-auto max-w-7xl sm:px-6 md:flex md:items-center md:justify-between lg:px-8 font-inter">
 			<div
 				id="contact"
 				class="flex justify-center space-x-6 ring-blue-500 md:order-2 focus:ring-1">
 				<a
-					v-for="item of socials"
-					:key="item.name"
+					v-for="item of footerSocials"
+					:key="item.id"
 					:href="item.href"
 					class="text-gray-400 hover:text-gray-500">
 					<span class="sr-only">{{ item.name }}</span>
@@ -53,8 +60,9 @@ const socials = [
 					<Icon
 						name="tabler:copyleft"
 						class="h-[1em] inline mb-0.5" />
-					{{ new Date().getFullYear() }} {{ settings.authorFirstName ?? "John" }} {{ settings.authorLastName ?? "Doe" }}.
-					Licensed under GPLv3
+					{{ new Date().getFullYear() }}
+					{{ authorFirstName ?? "John" }}
+					{{ authorLastName ?? "Doe" }}. Licensed under GPLv3
 				</p>
 			</div>
 		</div>

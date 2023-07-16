@@ -103,14 +103,5 @@ watch(
 			</div>
 		</div>
 	</div>
-	<div
-		class="bg-gray-50 px-4 py-3 flex md:flex-row-reverse md:flex-row sm:px-6 gap-2 flex-col">
-		<Button theme="gray" type="submit"> Cancel </Button>
-		<Button
-			theme="orange"
-			type="submit"
-			:value="JSON.stringify(selectedComponent)">
-			Confirm
-		</Button>
-	</div>
+	<input type="hidden" :value="JSON.stringify(selectedComponent)" name="value" />
 </template>

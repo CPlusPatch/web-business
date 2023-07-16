@@ -39,10 +39,12 @@ useSchemaOrg([
 		description: post.data.value.description,
 		wordCount: post.data.value?.content.split(" ").length,
 		"@type": "BlogPosting",
-	})
+	}),
 ]);
 
-const name = `${settings.authorFirstName ?? "John"} ${settings.authorLastName ?? "Doe"}`;
+const name = `${settings.authorFirstName ?? "John"} ${
+	settings.authorLastName ?? "Doe"
+}`;
 useServerSeoMeta({
 	title: () => `${post.data.value?.title}` ?? `Article by ${name}`,
 	description: () => post.data.value?.description ?? `Article by ${name}`,
