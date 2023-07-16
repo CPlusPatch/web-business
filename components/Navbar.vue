@@ -234,7 +234,7 @@ onUnmounted(() => {
 			leave-from-class="opacity-100 translate-y-0 sm:scale-100"
 			leave-to-class="opacity-0 -translate-y-4 sm:translate-y-0 sm:scale-95">
 			<ul v-if="open" class="flex flex-col gap-4 justify-between mt-4">
-				<li v-for="n of nav" :key="n.title">
+				<li v-for="n of elements ?? nav" :key="n.title">
 					<NuxtLink :to="n.href" class="text-lg text-gray-800">
 						{{ n.title }}
 					</NuxtLink>
