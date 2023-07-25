@@ -1,0 +1,14 @@
+{
+	"category": "headers",
+	"name": "BannerHeader1",
+	"displayName": "Large Banner Header",
+	"description": "Large banner header",
+	"inputs": {
+		"text-header": "string",
+		"image-main": "image"
+	},
+	"defaults": {
+		"text-header": "",
+		"image-main": ""
+	}
+}
