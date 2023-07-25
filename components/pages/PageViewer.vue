@@ -18,12 +18,10 @@ const data = ref(
 ) as Ref<Block[] | null>;
 
 if (!data.value) {
-	throw createError("No blocks returned!");
+	data.value = [];
 }
 
 const valueToUpdate = ref(nanoid());
-
-const createModalOpen = ref(false);
 
 const isAdmin = (await useFetch("/api/user/admin")).data.value;
 
@@ -184,6 +182,7 @@ const updateBlock = (newBlock: Block, index: number) => {
 	<div class="w-full h-40"></div>
 	<TransitionGroup
 		:key="valueToUpdate"
+		v-if="(data?.length ?? 0) > 0"
 		tag="div"
 		name="block-list"
 		class="flex flex-col gap-30">

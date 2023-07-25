@@ -31,11 +31,19 @@ export default defineEventHandler(async event => {
 			};
 		} */
 		default: {
-			return await AppDataSource.getRepository(Page).findOne({
+			const response = await AppDataSource.getRepository(Page).findOne({
 				where: {
 					path: body.path === "" ? "index" : body.path,
 				},
 			});
+
+			if (!response) {
+				throw createError({
+					statusCode: 404,
+					statusMessage: "Page not found",
+				});
+			}
+			return response;
 		}
 	}
 
