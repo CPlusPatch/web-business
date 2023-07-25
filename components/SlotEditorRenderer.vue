@@ -2,7 +2,7 @@
 // eslint-disable vue/no-use-v-if-with-v-for
 import { Block } from "~/db/entities/Block";
 import { TemplateMetadata, InputType } from "~/types/types";
-import { generateIds } from "~/utils/utilities";
+import { generateIds, uploadFile } from "~/utils/utilities";
 
 const props = defineProps<{
 	importedMeta: TemplateMetadata["inputs"];
@@ -13,6 +13,9 @@ const props = defineProps<{
 const emit = defineEmits(["editSlot"]);
 
 const expanded = ref(false);
+const token = useCookie("token");
+
+const isUploading = ref(false);
 
 // const log = (...props: any[]) => console.log(...props);
 
@@ -64,6 +67,13 @@ const deleteItem = (index: number, name: string) => {
 		[name]: tempSlots,
 	});
 };
+
+const fileInput = ref<HTMLInputElement | null>(null);
+
+const clickFileInput = () => {
+	// I have no idea why it needs the [0]
+	(fileInput.value as any)[0].click();
+};
 </script>
 
 <template>
@@ -89,6 +99,50 @@ const deleteItem = (index: number, name: string) => {
 					" />
 			</div>
 		</template>
+
+
+		<template v-if="inputType === InputType.Image">
+				<label
+					for="project-name"
+					class="block text-sm font-medium text-gray-900">
+					{{ name }}
+				</label>
+				<div
+					class="mt-1 ring-1 ring-gray-200 flex items-center justify-center gap-x-3 relative h-15 w-15 rounded overflow-hidden group">
+					<input
+						accept="image/*"
+						@change="(e: Event) => {
+							uploadFile(e, token ?? '', (val) => isUploading = val).then(res => {
+								emit('editSlot', {
+									...slots,
+									[name]: res,
+								})
+							});
+						}"
+						ref="fileInput"
+						type="file"
+						class="hidden" />
+					<div
+						@click="!isUploading && clickFileInput()"
+						class="absolute inset-0 bg-gray-300 bg-opacity-50 backdrop-blur-sm text-gray-800 group-hover:opacity-100 opacity-0 flex duration-200 items-center justify-center">
+						<Icon name="ic:round-upload" class="w-8 h-8" />
+					</div>
+					<div
+						v-if="isUploading"
+						class="absolute inset-0 bg-gray-500 text-gray-800 flex duration-200 items-center justify-center">
+						<Spinner theme="gray" class="w-6 h-6" />
+					</div>
+					<img
+						v-if="slots[name]"
+						:src="slots[name]"
+						class="h-full w-full object-cover"
+						aria-hidden="true" />
+					<Icon
+						v-else
+						name="ic:round-hide-image"
+						class="text-gray-400 w-6 h-6" />
+				</div>
+			</template>
 
 		<template v-if="inputType === InputType.Paragraph">
 			<label
