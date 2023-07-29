@@ -121,17 +121,17 @@ const deleteItem = (index: number) => {
 	<div class="flex flex-col gap-2">
 		<TransitionGroup move-class="duration-200 ease-in-out">
 			<div v-for="(item, index) in value" :key="item.id" class="grid grid-cols-4 gap-3 justify-center">
-				<Input :loading="isLoading" name="" :value="item.name" @input="
+				<InputCMInput :loading="isLoading" name="" :value="item.name" @input="
 					updateValue(item.id, {
 						name: ($event.target as HTMLInputElement).value,
 					})
 					" placeholder="Social Title" class="w-full" />
-				<Input :value="item.icon" :loading="isLoading" name="" placeholder="Social Icon" @input="
+				<InputCMInput :value="item.icon" :loading="isLoading" name="" placeholder="Social Icon" @input="
 					updateValue(item.id, {
 						icon: ($event.target as HTMLInputElement).value,
 					})
 					" class="w-full" />
-				<Input :value="item.href" :loading="isLoading" name="" placeholder="Social URL (relative)" @input="
+				<InputCMInput :value="item.href" :loading="isLoading" name="" placeholder="Social URL (relative)" @input="
 					updateValue(item.id, {
 						href: ($event.target as HTMLInputElement).value,
 					})

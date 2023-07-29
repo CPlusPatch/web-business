@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { UserManager } from "oidc-client-ts";
 import { signInWithMastodon } from "~/utils/oauth";
 
 const token = useCookie("token", {
@@ -108,6 +109,31 @@ onMounted(async () => {
 
 	loading.value = false;
 });
+
+const userManager = new UserManager({
+	authority: useRuntimeConfig().public.OIDC_AUTHORITY,
+	client_id: useRuntimeConfig().public.OIDC_CLIENT_ID,
+	redirect_uri: `${useRequestURL().origin}/auth/callback`,
+	response_type: useRuntimeConfig().public.OIDC_RESPONSE_TYPE,
+	scope: useRuntimeConfig().public.OIDC_SCOPE,
+});
+
+
+const oidcSignIn = async () => {
+	const user = await userManager.signinPopup();
+
+	const response = await useFetch("/api/auth/login-openid", {
+		method: "POST",
+		body: JSON.stringify(user),
+	});
+
+	if (response.data.value) {
+		token.value = response.data.value.token;
+
+		useRouter().push("/");
+	}
+}
+
 </script>
 
 <template>
@@ -134,7 +160,7 @@ onMounted(async () => {
 						>Username</label
 					>
 					<div class="mt-2">
-						<Input
+						<InputCMInput
 							icon="ic:round-perm-identity"
 							name="username"
 							placeholder="Your username"
@@ -161,7 +187,7 @@ onMounted(async () => {
 						</div>
 					</div>
 					<div class="mt-2">
-						<Input
+						<InputCMInput
 							name="password"
 							:type="showingPassword ? 'text' : 'password'"
 							icon="ic:round-password"
@@ -203,19 +229,14 @@ onMounted(async () => {
 						<Icon name="logos:mastodon-icon" class="mr-2 w-4 h-4" />
 						Mastodon
 					</Button>
-					<!-- <Button
+					<Button
 						:loading="loading"
 						theme="gray"
 						class="w-full"
-						@click="
-							() => {
-								loading = true;
-								signInWithMisskey();
-							}
-						">
-						<Icon name="MisskeyIcon" class="mr-2 w-4 h-4" />
-						Misskey
-					</Button> -->
+						@click="oidcSignIn">
+						<img src="/images/icons/logo.svg" class="mr-2 w-4 h-4" />
+						CPlusPatch ID
+					</Button>
 					<Button
 						:disabled="true"
 						class="w-full !opacity-40"
@@ -232,60 +253,4 @@ onMounted(async () => {
 			</form>
 		</div>
 	</div>
-	<!-- <div
-		class="flex justify-start min-h-screen bg-cover bg-center"
-		:style="{
-			backgroundImage:
-				'url(https://images.unsplash.com/photo-1614728263952-84ea256f9679?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1308&q=80)',
-		}">
-		<div
-			class="flex justify-center py-6 w-110 flex flex-col px-5 bg-gray-100/75 dark:bg-dark-800/75 backdrop-blur-xl shadow-lg">
-			<div class="sm:mx-auto sm:w-full sm:max-w-md">
-				<div class="flex justify-center w-auto"></div>
-				<h2
-					class="mt-6 text-3xl font-extrabold text-center text-gray-900 dark:text-gray-50 font-poppins">
-					Login
-				</h2>
-			</div>
-
-			<div class="mt-12 sm:mx-auto sm:w-full">
-				<div class="py-4 px-6">
-					<form
-						class="space-y-6"
-						action="#"
-						method="POST"
-						@submit.prevent="submit">
-						<div class="flex flex-col gap-2">
-							<Input
-								icon="ic:round-supervised-user-circle"
-								name="username"
-								required
-								placeholder="Username"
-								:loading="loading"
-								:hide-icon="false"
-								class="focus:outline-none" />
-							<Input
-								icon="ic:round-computer"
-								name="password"
-								required
-								placeholder="Password"
-								class="focus:outline-none"
-								:loading="loading" />
-						</div>
-
-						<div>
-							<Button
-								type="submit"
-								ring-color="orange-500"
-								theme="orange"
-								class="w-full hover:!scale-100"
-								:loading="loading">
-								Sign in
-							</Button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div> -->
 </template>

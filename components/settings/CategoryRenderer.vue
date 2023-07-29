@@ -88,7 +88,7 @@ const uploadFile = async (e: Event, setting: UISetting) => {
 				class="block text-sm leading-6 text-gray-900 font-semibold"
 				>{{ setting.title }}</label
 			>
-			<Input
+			<InputCMInput
 				@change="
 					update(
 						setting.name,

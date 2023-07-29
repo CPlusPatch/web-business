@@ -52,13 +52,8 @@ export default defineNuxtConfig({
 			},
 		},
 		prerender: {
-			ignore: [
-				"/devices",
-				"/projects",
-				"/blog",
-				"/",
-			]
-		}
+			ignore: ["/devices", "/projects", "/blog", "/"],
+		},
 	},
 	image: {
 		ipx: {
@@ -73,6 +68,10 @@ export default defineNuxtConfig({
 			siteDescription: "My blog, about me and how you can contact me!",
 			language: "en-US", // prefer more explicit language codes like `en-AU` over `en`,
 			titleSeparator: "·",
+			OIDC_AUTHORITY: process.env.OIDC_AUTHORITY,
+			OIDC_CLIENT_ID: process.env.OIDC_CLIENT_ID,
+			OIDC_SCOPE: process.env.OIDC_SCOPE,
+			OIDC_RESPONSE_TYPE: process.env.OIDC_RESPONSE_TYPE,
 		},
 	},
 	vite: {
