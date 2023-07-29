@@ -118,8 +118,6 @@ const userManager = new UserManager({
 	scope: useRuntimeConfig().public.oidcScope,
 });
 
-console.log(process.env);
-
 
 const oidcSignIn = async () => {
 	const user = await userManager.signinPopup();

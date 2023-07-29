@@ -2,6 +2,8 @@
 import { nodePolyfills } from "vite-plugin-node-polyfills";
 import "reflect-metadata";
 
+console.log(process.env);
+
 export default defineNuxtConfig({
 	modules: [
 		"@nuxtjs/robots",

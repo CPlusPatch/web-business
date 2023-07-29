@@ -36,8 +36,6 @@ export default defineEventHandler(async event => {
 		...body,
 	};
 
-	console.log(settings);
-
 	if (await AppDataSource.getRepository(Setting).save(settings)) {
 		return settings;
 	} else {
