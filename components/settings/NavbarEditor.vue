@@ -113,7 +113,7 @@ const deleteItem = (index: number) => {
 	<div class="flex flex-col gap-2">
 		<TransitionGroup move-class="duration-200 ease-in-out">
 			<div v-for="(item, index) in value" :key="item.id" class="grid grid-cols-3 gap-3">
-				<Input
+				<InputCMInput
 					:loading="isLoading"
 					name=""
 					:value="item.title"
@@ -125,7 +125,7 @@ const deleteItem = (index: number) => {
 					icon=""
 					placeholder="Link title"
 					class="w-full" />
-				<Input
+				<InputCMInput
 					:value="item.href"
 					:loading="isLoading"
 					name=""

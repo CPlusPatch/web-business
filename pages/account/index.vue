@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import PrimaryContainer from "~/components/layout/PrimaryContainer.vue";
-import Input from "~/components/input/Input.vue";
+import Input from "~/components/input/CMInput.vue";
 
 const user = (await useFetch("/api/user/get")).data.value;
 const token = useCookie("token");
@@ -64,7 +64,7 @@ const save = (e: Event) => {
 								class="block text-sm font-medium leading-6 text-gray-900"
 								>Name</label
 							>
-							<Input
+							<InputCMInput
 								id="username"
 								:value="displayName"
 								:loading="loading"

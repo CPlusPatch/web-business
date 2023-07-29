@@ -85,7 +85,7 @@ const clickFileInput = () => {
 				{{ name }}
 			</label>
 			<div class="mt-1">
-				<Input
+				<InputCMInput
 					id="project-name"
 					:value="slots[name]"
 					type="text"

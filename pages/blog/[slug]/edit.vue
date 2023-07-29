@@ -97,7 +97,7 @@ onUnmounted(() => {
 					</NuxtLink>
 					<div
 						class="hidden items-center sm:ml-6 sm:flex sm:space-x-8 font-inter relative">
-						<Input
+						<InputCMInput
 							:value="titleInput"
 							name="title"
 							type="text"
