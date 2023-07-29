@@ -45,11 +45,11 @@ const save = (e: Event) => {
 };
 
 const userManager = new UserManager({
-	authority: useRuntimeConfig().public.OIDC_AUTHORITY,
-	client_id: useRuntimeConfig().public.OIDC_CLIENT_ID,
+	authority: useRuntimeConfig().public.oidcAuthority,
+	client_id: useRuntimeConfig().public.oidcClientId,
 	redirect_uri: `${useRequestURL().origin}/auth/callback`,
-	response_type: useRuntimeConfig().public.OIDC_RESPONSE_TYPE,
-	scope: useRuntimeConfig().public.OIDC_SCOPE,
+	response_type: useRuntimeConfig().public.oidcResponseType,
+	scope: useRuntimeConfig().public.oidcScope,
 });
 
 const linkOIDC = async (provider: string) => {

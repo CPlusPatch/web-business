@@ -42,7 +42,7 @@ export async function validateToken(body: User) {
 	}
 
 	const { jwks_uri } = await (
-		await fetch(useRuntimeConfig().public.OIDC_AUTHORITY)
+		await fetch(useRuntimeConfig().public.oidcAuthority)
 	).json();
 
 	const client = new JwksClient({
