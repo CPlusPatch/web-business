@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import PrimaryContainer from "~/components/layout/PrimaryContainer.vue";
 import Input from "~/components/input/CMInput.vue";
+import { UserManager } from "oidc-client-ts";
 
 const user = (await useFetch("/api/user/get")).data.value;
 const token = useCookie("token");
@@ -42,6 +43,31 @@ const save = (e: Event) => {
 			console.error(err);
 		});
 };
+
+const userManager = new UserManager({
+	authority: useRuntimeConfig().public.OIDC_AUTHORITY,
+	client_id: useRuntimeConfig().public.OIDC_CLIENT_ID,
+	redirect_uri: `${useRequestURL().origin}/auth/callback`,
+	response_type: useRuntimeConfig().public.OIDC_RESPONSE_TYPE,
+	scope: useRuntimeConfig().public.OIDC_SCOPE,
+});
+
+const linkOIDC = async (provider: string) => {
+	if (provider === "cpluspatch-id") {
+		const user = await userManager.signinPopup();
+
+		await useFetch("/api/auth/link-openid", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token.value}`,
+			},
+			body: JSON.stringify(user),
+		});
+
+		window.location.reload();
+	}
+}
 </script>
 
 <template>
@@ -134,7 +160,7 @@ const save = (e: Event) => {
 								class="block text-sm font-medium leading-6 text-gray-900"
 								>Linked Accounts</label
 							>
-							<div class="flex flex-col md:w-50 gap-2 mt-2">
+							<div class="flex flex-col md:w-60 gap-2 mt-2">
 								<Button
 									theme="gray"
 									:disabled="
@@ -153,6 +179,26 @@ const save = (e: Event) => {
 											).length > 0
 												? "Linked!"
 												: "Mastodon"
+										}}</span
+									>
+									<Icon name="ic:round-plus" />
+								</Button>
+								<Button
+									theme="gray"
+									:disabled="(user?.oauthAccounts ?? []).filter(
+										a => a.provider === 'cpluspatch-id'
+									).length > 0
+									"
+									@click="linkOIDC('cpluspatch-id')"
+									class="w-full disabled:opacity-50 justify-between">
+									<span
+										><img src="/images/icons/logo.svg" class="mr-2 w-4 h-4 inline mb-1">
+										{{
+											(user?.oauthAccounts ?? []).filter(
+												a => a.provider === "cpluspatch-id"
+											).length > 0
+											? "Linked!"
+											: "CPlusPatch ID"
 										}}</span
 									>
 									<Icon name="ic:round-plus" />

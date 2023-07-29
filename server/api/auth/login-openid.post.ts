@@ -3,6 +3,7 @@ import { AppDataSource } from "~/db/data-source";
 import { Token } from "~/db/entities/Token";
 import { User } from "~/db/entities/User";
 import { User as OidcUser } from "oidc-client-ts";
+import { validateToken } from "~/utils/tokens";
 
 export default defineEventHandler(async event => {
 	const body = await readBody<OidcUser>(event);
@@ -12,12 +13,15 @@ export default defineEventHandler(async event => {
 		await AppDataSource.initialize();
 	}
 
-	const userId = await useFetch("/api/auth/validate-openid", {
-		body
-	});
+	let userId: string;
 
-	if (!userId.data.value) {
-		throw userId.error.value;
+	try {
+		userId = (await validateToken(body)) ?? "";
+	} catch (err) {
+		throw createError({
+			statusCode: 401,
+			statusMessage: (err as any).message as string,
+		});
 	}
 
 
@@ -26,11 +30,11 @@ export default defineEventHandler(async event => {
 		.where(
 			`EXISTS(
 					SELECT *
-					FROM json_each(user.oauthAccounts)
-					WHERE json_extract(value, '$.provider') = :provider
-					AND json_extract(value, '$.id') = :userId
+					FROM jsonb_array_elements(("user"."oauthAccounts")::jsonb)
+					WHERE (value ->> 'provider') = :provider
+					AND (value ->> 'id') = :userId
 				)`,
-			{ provider: "cpluspatch-id", userId: userId.data.value }
+			{ provider: "cpluspatch-id", userId }
 		)
 		.getOne();
 

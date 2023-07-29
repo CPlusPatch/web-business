@@ -120,8 +120,18 @@ const userManager = new UserManager({
 
 
 const oidcSignIn = async () => {
-	console.log("Test");
-	const user = await userManager.signinRedirect();
+	const user = await userManager.signinPopup();
+
+	const response = await useFetch("/api/auth/login-openid", {
+		method: "POST",
+		body: JSON.stringify(user),
+	});
+
+	if (response.data.value) {
+		token.value = response.data.value.token;
+
+		useRouter().push("/");
+	}
 }
 
 </script>
