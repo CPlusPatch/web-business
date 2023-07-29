@@ -18,5 +18,6 @@ FROM docker.io/node:18-alpine
 
 COPY --from=builder /app/.output/ /app
 COPY --from=builder /app/templates /templates
+COPY --from=builder /app/nuxt.config.ts /nuxt.config.ts
 
 CMD ["/app/server/index.mjs"]
