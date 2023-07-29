@@ -118,7 +118,7 @@ const userManager = new UserManager({
 	scope: useRuntimeConfig().public.oidcScope,
 });
 
-console.log(useRuntimeConfig().public);
+console.log(process.env);
 
 
 const oidcSignIn = async () => {
