@@ -8,6 +8,8 @@ import { Block } from "./entities/Block";
 import { Page } from "./entities/Page";
 import { Setting } from "./entities/Setting";
 
+console.log(process.env);
+
 const AppDataSource = new DataSource({
 	type: "postgres",
 	host: process.env.POSTGRES_HOST || "localhost",
