@@ -6,6 +6,18 @@ import { readFile } from "fs/promises";
 import { readFileSync } from "fs";
 import { Config } from "types/config";
 
+let config: Config = {
+	oidc_providers: []
+};
+
+try {
+	config = parse(
+		readFileSync("./config/config.toml").toString("utf-8")
+	) as unknown as Config;
+} catch {
+
+}
+
 export default defineNuxtConfig({
 	modules: [
 		"@nuxtjs/robots",
@@ -86,8 +98,7 @@ export default defineNuxtConfig({
 			oidcClientId: process.env.OIDC_CLIENT_ID ?? "",
 			oidcScope: process.env.OIDC_SCOPE ?? "",
 			oidcResponseType: process.env.OIDC_RESPONSE_TYPE ?? "",
-			oidc: (parse(readFileSync("./config/config.toml").toString("utf-8")) as unknown as Config)
-				.oidc_providers,
+			oidc: config.oidc_providers ?? [],
 		},
 	},
 	vite: {
