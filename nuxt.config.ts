@@ -34,16 +34,6 @@ export default defineNuxtConfig({
 		"nitro:build:before": nitro => {
 			nitro.options.moduleSideEffects.push("reflect-metadata");
 		},
-		"nitro:init": async _ => {
-			try {
-				parse(
-					(await readFile("./config/config.toml")).toString("utf-8")
-				);
-			} catch (err) {
-				console.error("Invalid config.toml file!");
-				throw err;
-			}
-		},
 	},
 	app: {
 		head: {
