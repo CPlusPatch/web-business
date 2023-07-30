@@ -30,7 +30,7 @@ useSchemaOrg(settings.organizationEnabled ? [me, myOrg] : [me]);
 useServerSeoMeta({
 	titleTemplate: (titleChunk) => titleChunk ? `${titleChunk} · ${settings?.siteName}` : settings?.siteName ?? "",
 	author: me.name
-})
+});
 </script>
 
 <template>

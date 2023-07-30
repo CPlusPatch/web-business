@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { UserManager } from "oidc-client-ts";
+import { Config } from "types/config";
 import { signInWithMastodon } from "~/utils/oauth";
 
 const token = useCookie("token", {
@@ -110,21 +111,26 @@ onMounted(async () => {
 	loading.value = false;
 });
 
-const userManager = new UserManager({
-	authority: useRuntimeConfig().public.oidcAuthority,
-	client_id: useRuntimeConfig().public.oidcClientId,
-	redirect_uri: `${useRequestURL().origin}/auth/callback`,
-	response_type: useRuntimeConfig().public.oidcResponseType,
-	scope: useRuntimeConfig().public.oidcScope,
-});
+const oidc = useRuntimeConfig().public.oidc as Config["oidc_providers"];
 
 
-const oidcSignIn = async () => {
+const oidcSignIn = async (oidcProvider: Config["oidc_providers"][0]) => {
+	const userManager = new UserManager({
+		authority: oidcProvider.authority,
+		client_id: oidcProvider.client_id,
+		redirect_uri: `${useRequestURL().origin}/auth/callback/${oidcProvider.id}/`,
+		response_type: "code",
+		scope: oidcProvider.scopes.join(" "),
+	});
+
 	const user = await userManager.signinPopup();
 
 	const response = await useFetch("/api/auth/login-openid", {
 		method: "POST",
-		body: JSON.stringify(user),
+		body: JSON.stringify({
+			body: user,
+			provider: oidcProvider.id,
+		}),
 	});
 
 	if (response.data.value) {
@@ -230,23 +236,19 @@ const oidcSignIn = async () => {
 						Mastodon
 					</Button>
 					<Button
+						v-for="provider of oidc"
+						:key="provider.id"
 						:loading="loading"
 						theme="gray"
 						class="w-full"
-						@click="oidcSignIn">
-						<img src="/images/icons/logo.svg" class="mr-2 w-4 h-4" />
-						CPlusPatch ID
+						@click="oidcSignIn(provider)">
+						<img :src="provider.icon" class="mr-2 w-4 h-4" />
+						{{ provider.name }}
 					</Button>
 					<Button
 						:disabled="true"
 						class="w-full !opacity-40"
-						theme="gray"
-						@click="
-							() => {
-								loading = true;
-								signInWithMastodon();
-							}
-						">
+						theme="gray">
 						More soon
 					</Button>
 				</div>

@@ -2,6 +2,7 @@
 import PrimaryContainer from "~/components/layout/PrimaryContainer.vue";
 import Input from "~/components/input/CMInput.vue";
 import { UserManager } from "oidc-client-ts";
+import { Config } from "types/config";
 
 const user = (await useFetch("/api/user/get")).data.value;
 const token = useCookie("token");
@@ -44,29 +45,32 @@ const save = (e: Event) => {
 		});
 };
 
-const userManager = new UserManager({
-	authority: useRuntimeConfig().public.oidcAuthority,
-	client_id: useRuntimeConfig().public.oidcClientId,
-	redirect_uri: `${useRequestURL().origin}/auth/callback`,
-	response_type: useRuntimeConfig().public.oidcResponseType,
-	scope: useRuntimeConfig().public.oidcScope,
-});
+const oidc = useRuntimeConfig().public.oidc as Config["oidc_providers"];
 
-const linkOIDC = async (provider: string) => {
-	if (provider === "cpluspatch-id") {
-		const user = await userManager.signinPopup();
+const linkOIDC = async (oidcProvider: typeof oidc[0]) => {
+	const userManager = new UserManager({
+		authority: oidcProvider.authority,
+		client_id: oidcProvider.client_id,
+		redirect_uri: `${useRequestURL().origin}/auth/callback`,
+		response_type: "code",
+		scope: oidcProvider.scopes.join(" "),
+	});
 
-		await useFetch("/api/auth/link-openid", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token.value}`,
-			},
-			body: JSON.stringify(user),
-		});
+	const user = await userManager.signinPopup();
 
-		window.location.reload();
-	}
+	await useFetch("/api/auth/link-openid", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token.value}`,
+		},
+		body: JSON.stringify({
+			body: user,
+			provider: oidcProvider.id,
+		}),
+	});
+
+	window.location.reload();
 }
 </script>
 
@@ -186,19 +190,21 @@ const linkOIDC = async (provider: string) => {
 								<Button
 									theme="gray"
 									:disabled="(user?.oauthAccounts ?? []).filter(
-										a => a.provider === 'cpluspatch-id'
+										a => a.provider === provider.id
 									).length > 0
 									"
-									@click="linkOIDC('cpluspatch-id')"
+									v-for="provider of oidc"
+									:key="provider.id"
+									@click="linkOIDC(provider)"
 									class="w-full disabled:opacity-50 justify-between">
 									<span
-										><img src="/images/icons/logo.svg" class="mr-2 w-4 h-4 inline mb-1">
+										><img :src="provider.icon" class="mr-2 w-4 h-4 inline mb-1">
 										{{
 											(user?.oauthAccounts ?? []).filter(
-												a => a.provider === "cpluspatch-id"
+												a => a.provider === provider.id
 											).length > 0
 											? "Linked!"
-											: "CPlusPatch ID"
+											: provider.name
 										}}</span
 									>
 									<Icon name="ic:round-plus" />

@@ -1,6 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { nodePolyfills } from "vite-plugin-node-polyfills";
 import "reflect-metadata";
+import { parse } from "smol-toml";
+import { readFile } from "fs/promises";
+import { readFileSync } from "fs";
+import { Config } from "types/config";
 
 export default defineNuxtConfig({
 	modules: [
@@ -17,6 +21,16 @@ export default defineNuxtConfig({
 	hooks: {
 		"nitro:build:before": nitro => {
 			nitro.options.moduleSideEffects.push("reflect-metadata");
+		},
+		"nitro:init": async _ => {
+			try {
+				parse(
+					(await readFile("./config/config.toml")).toString("utf-8")
+				);
+			} catch (err) {
+				console.error("Invalid config.toml file!");
+				throw err;
+			}
 		},
 	},
 	app: {
@@ -72,6 +86,8 @@ export default defineNuxtConfig({
 			oidcClientId: process.env.OIDC_CLIENT_ID ?? "",
 			oidcScope: process.env.OIDC_SCOPE ?? "",
 			oidcResponseType: process.env.OIDC_RESPONSE_TYPE ?? "",
+			oidc: (parse(readFileSync("./config/config.toml").toString("utf-8")) as unknown as Config)
+				.oidc_providers,
 		},
 	},
 	vite: {

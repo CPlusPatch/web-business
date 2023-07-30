@@ -56,6 +56,9 @@ dependencies:
   reflect-metadata:
     specifier: ^0.1.13
     version: 0.1.13
+  smol-toml:
+    specifier: ^1.1.1
+    version: 1.1.1
   sqlite3:
     specifier: ^5.1.6
     version: 5.1.6
@@ -8345,6 +8348,11 @@ packages:
   /smob@1.4.0:
     resolution: {integrity: sha512-MqR3fVulhjWuRNSMydnTlweu38UhQ0HXM4buStD/S3mc/BzX3CuM9OmhyQpmtYCvoYdl5ris6TI0ZqH355Ymqg==}
     dev: true
+
+  /smol-toml@1.1.1:
+    resolution: {integrity: sha512-qyYMygHyDKiy82iiKTH/zXr0DZmEpsou0AMZnkXdYhA/0LhPLoZ/xHaOBrbecLbAJ/Gd5KhMWWH8TXtgv1g+DQ==}
+    engines: {node: '>= 18', pnpm: '>= 8'}
+    dev: false
 
   /socks-proxy-agent@6.2.1:
     resolution: {integrity: sha512-a6KW9G+6B3nWZ1yB8G7pJwL3ggLy1uTzKAgCb7ttblwqdz9fMGJUuTy3uFzEP48FAs9FLILlmzDlE2JJhVQaXQ==}

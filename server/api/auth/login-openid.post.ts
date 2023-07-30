@@ -4,10 +4,18 @@ import { Token } from "~/db/entities/Token";
 import { User } from "~/db/entities/User";
 import { User as OidcUser } from "oidc-client-ts";
 import { validateToken } from "~/utils/tokens";
+import { Config } from "types/config";
 
 export default defineEventHandler(async event => {
-	const body = await readBody<OidcUser>(event);
-	
+	const oidc = useRuntimeConfig().public.oidc as Config["oidc_providers"];
+
+	const body = await readBody<{
+		body: OidcUser;
+		provider: string;
+	}>(event);
+
+	if (!oidc.find(o => o.id === body.provider))
+		throw createError("Invalud OIDC provider!");
 
 	if (!AppDataSource.isInitialized) {
 		await AppDataSource.initialize();
@@ -16,7 +24,7 @@ export default defineEventHandler(async event => {
 	let userId: string;
 
 	try {
-		userId = (await validateToken(body)) ?? "";
+		userId = (await validateToken(body.body)) ?? "";
 	} catch (err) {
 		throw createError({
 			statusCode: 401,
@@ -34,7 +42,7 @@ export default defineEventHandler(async event => {
 					WHERE (value ->> 'provider') = :provider
 					AND (value ->> 'id') = :userId
 				)`,
-			{ provider: "cpluspatch-id", userId }
+			{ provider: body.provider, userId }
 		)
 		.getOne();
 
