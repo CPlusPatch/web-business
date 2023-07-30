@@ -3,18 +3,20 @@ import { User } from "~/db/entities/User";
 import { User as OidcUser } from "oidc-client-ts";
 import { getUserByToken } from "~/utils/tokens";
 import { validateToken } from "~/utils/tokens";
-import { Config } from "types/config";
+import { getConfig } from "~/utils/config";
+
 
 export default defineEventHandler(async event => {
-	const oidc = useRuntimeConfig().public.oidc as Config["oidc_providers"];
+	const oidc = getConfig()?.oidc_providers ?? [];
 
 	const body = await readBody<{
 		body: OidcUser;
 		provider: string;
 	}>(event);
 
-	if (!oidc.find(o => o.id === body.provider)) throw createError("Invalud OIDC provider!");
-
+	const provider = oidc.find(o => o.id === body.provider);
+	if (!provider) throw createError("Invalid OIDC provider!");
+	
 	const user = await getUserByToken(
 		event.node.req.headers.authorization?.split(" ")[1] ?? ""
 	);
@@ -26,11 +28,15 @@ export default defineEventHandler(async event => {
 	if (!AppDataSource.isInitialized) {
 		await AppDataSource.initialize();
 	}
-
+	
 	let userId: string;
-
+	
 	try {
-		userId = await validateToken(body.body) ?? "";
+		userId =
+			(await validateToken(
+				body.body,
+				provider
+			)) ?? "";
 	} catch (err) {
 		throw createError({
 			statusCode: 401,

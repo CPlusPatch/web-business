@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { User } from "oidc-client-ts";
 import { AppDataSource } from "~/db/data-source";
 import { Token } from "~/db/entities/Token";
+import { Config } from "types/config";
 
 export async function getUserByToken(value: string) {
 	if (!AppDataSource.isInitialized) {
@@ -36,13 +37,13 @@ export async function getUserByToken(value: string) {
 }
 
 
-export async function validateToken(body: User) {
+export async function validateToken(body: User, provider: Config["oidc_providers"][0]) {
 	if (!AppDataSource.isInitialized) {
 		await AppDataSource.initialize();
 	}
 
 	const { jwks_uri } = await (
-		await fetch(useRuntimeConfig().public.oidcAuthority)
+		await fetch(provider.authority)
 	).json();
 
 	const client = new JwksClient({
