@@ -3,10 +3,14 @@ import { UserManager } from 'oidc-client-ts';
 import { Config } from '~/types/config';
 
 
-const oidc = (useFetch<Config["oidc_providers"]>("/api/internal/oidc-config")).data;
+const oidc = (await useFetch<Config["oidc_providers"]>("/api/internal/oidc-config")).data;
 
 onMounted(() => {
 	const oidcProvider = oidc.value?.find(o => o.id === useRoute().params.provider);
+
+	console.log(useRoute().params.provider);
+	console.log(oidc);
+	console.log(oidcProvider);
 
 	if (!oidcProvider) return false;
 

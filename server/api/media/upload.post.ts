@@ -13,25 +13,27 @@ export default defineEventHandler(async event => {
 		});
 	}
 
+	const config = getConfig();
+
 	if (
-		!process.env.S3_ENDPOINT ||
-		!process.env.S3_ACCESS_KEY ||
-		!process.env.S3_SECRET_ACCESS_KEY ||
-		!process.env.S3_BUCKET_NAME
+		!config.s3.endpoint ||
+		!config.s3.access_key ||
+		!config.s3.secret_access_key ||
+		!config.s3.bucket_name ||
+		!config.s3.public_url
 	) {
 		return abortNavigation({
 			statusCode: 500,
-			statusMessage:
-				"Misconfigured server: S3 environment variables are invalid",
+			statusMessage: "Misconfigured server: S3 config is invalid",
 		});
 	}
 
 	const S3 = new S3Client({
 		region: "auto",
-		endpoint: process.env.S3_ENDPOINT,
+		endpoint: config.s3.endpoint,
 		credentials: {
-			accessKeyId: process.env.S3_ACCESS_KEY ?? "",
-			secretAccessKey: process.env.S3_SECRET_ACCESS_KEY ?? "",
+			accessKeyId: config.s3.access_key ?? "",
+			secretAccessKey: config.s3.secret_access_key ?? "",
 		},
 	});
 
@@ -39,7 +41,7 @@ export default defineEventHandler(async event => {
 	const file = body![0];
 
 	const command = new PutObjectCommand({
-		Bucket: process.env.S3_BUCKET_NAME,
+		Bucket: config.s3.bucket_name,
 		Key: file.filename,
 		Body: file.data,
 		ContentType: file.type,
@@ -48,7 +50,7 @@ export default defineEventHandler(async event => {
 	const response = await S3.send(command);
 
 	if (response.$metadata.httpStatusCode === 200) {
-		return `${process.env.CDN_URL}/${file.filename}`;
+		return `${config.s3.public_url}/${file.filename}`;
 	} else {
 		return abortNavigation({
 			statusCode: 500,
