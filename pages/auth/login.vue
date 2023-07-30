@@ -12,6 +12,10 @@ const showingPassword = ref(false);
 
 const loading = ref(false);
 const route = useRoute();
+const error = ref<{
+	message: string;
+	statusCode: number;
+} | null>(null);
 
 const submit = async (e: Event) => {
 	loading.value = true;
@@ -26,7 +30,7 @@ const submit = async (e: Event) => {
 		}),
 	});
 
-	if (response.status === 200) {
+	if (response.ok) {
 		token.value = (await response.json()).token;
 
 		if (new URLSearchParams(window.location.search).get("next")) {
@@ -38,6 +42,8 @@ const submit = async (e: Event) => {
 		} else {
 			useRouter().push("/");
 		}
+	} else {
+		error.value = await response.json();
 	}
 
 	loading.value = false;
@@ -48,64 +54,38 @@ definePageMeta({
 });
 
 onMounted(async () => {
-	if (route.query.token) {
-		/* DEPRECATED, sign in with Misskey is no longer supported due to lack of OAuth compliance */
-		// TODO: Remove Misskey login and add proper OAuth support
-		// Initiate sign in with Misskey
-		loading.value = true;
-
-		const response = await fetch("/api/auth/login-oauth", {
-			method: "POST",
-			body: JSON.stringify({
-				provider: "misskey",
-				token: route.query.token,
-				oauthData: JSON.parse(
-					localStorage.getItem("oauth_misskey_client") ?? "{}"
-				),
-			}),
-		});
-
-		if (response.status === 200) {
-			token.value = (await response.json()).token;
-
-			if (new URLSearchParams(window.location.search).get("next")) {
-				useRouter().push(
-					new URLSearchParams(window.location.search)
-						.get("next")
-						?.toString() ?? ""
-				);
-			} else {
-				useRouter().push("/");
-			}
-		}
-	} else if (route.query.code) {
+	if (route.query.code) {
 		// Initiate sign in with Mastodon
 		loading.value = true;
 
-		const response = await fetch("/api/auth/login-oauth", {
+		fetch("/api/auth/login-oauth", {
 			method: "POST",
 			body: JSON.stringify({
-				provider: "mastodon",
+				provider: "mastodons",
 				token: route.query.code,
 				oauthData: JSON.parse(
 					localStorage.getItem("oauth_mastodon_client") ?? "{}"
 				),
 			}),
+		}).then(async response => {
+			if (response.ok) {
+				token.value = (await response.json()).token;
+	
+				if (new URLSearchParams(window.location.search).get("next")) {
+					useRouter().push(
+						new URLSearchParams(window.location.search)
+							.get("next")
+							?.toString() ?? ""
+					);
+				} else {
+					useRouter().push("/");
+				}
+			} else {
+				error.value = await response.json();
+				loading.value = false;
+			}
 		});
 
-		if (response.status === 200) {
-			token.value = (await response.json()).token;
-
-			if (new URLSearchParams(window.location.search).get("next")) {
-				useRouter().push(
-					new URLSearchParams(window.location.search)
-						.get("next")
-						?.toString() ?? ""
-				);
-			} else {
-				useRouter().push("/");
-			}
-		}
 	}
 
 	loading.value = false;
@@ -115,6 +95,7 @@ const oidc = (useFetch<Config["oidc_providers"]>("/api/internal/oidc-config")).d
 
 
 const oidcSignIn = async (oidcProvider: Config["oidc_providers"][0]) => {
+	loading.value = true;
 	const userManager = new UserManager({
 		authority: oidcProvider.authority,
 		client_id: oidcProvider.client_id,
@@ -125,7 +106,7 @@ const oidcSignIn = async (oidcProvider: Config["oidc_providers"][0]) => {
 
 	const user = await userManager.signinPopup();
 
-	const response = await useFetch("/api/auth/login-openid", {
+	const response = await fetch("/api/auth/login-openid", {
 		method: "POST",
 		body: JSON.stringify({
 			body: user,
@@ -133,11 +114,15 @@ const oidcSignIn = async (oidcProvider: Config["oidc_providers"][0]) => {
 		}),
 	});
 
-	if (response.data.value) {
-		token.value = response.data.value.token;
+	if (response.ok) {
+		token.value = await response.text();
 
 		useRouter().push("/");
+	} else {
+		error.value = await response.json();
 	}
+
+	loading.value = false;
 }
 
 </script>
@@ -204,6 +189,11 @@ const oidcSignIn = async (oidcProvider: Config["oidc_providers"][0]) => {
 							:loading="loading"
 							class="block w-full rounded-md !ring-orange-500 !border-gray-300" />
 					</div>
+				</div>
+
+				<div v-if="error" class="rounded bg-red-200 ring-1 ring-red-600 p-4 text-sm flex flex-col gap-2">
+					<strong class="font-semibold text-gray-900">An error occured</strong>
+					<span class="text-gray-700">{{ error.message }}</span>
 				</div>
 
 				<div>
