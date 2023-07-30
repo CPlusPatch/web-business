@@ -80,14 +80,5 @@ export async function validateToken(body: User) {
 		throw new Error("Invalid JSON Web Token");
 	}
 
-	// TODO: Add pluggable system with configurable provider names
-	if (
-		decoded.iss == "https://id.cpluspatch.com/application/o/cpluspatch-cms/"
-	) {
-		return decoded.sub;
-	} else {
-		throw new Error(
-			"Invalid OpenID authority, only CPlusPatch ID is supported for the moment"
-		);
-	}
+	return decoded.sub
 }

@@ -1,0 +1,7 @@
+[[oidc_providers]]
+#id = "provider-id"
+#name = "Provider Name"
+#authority = "Authority URL"
+#client_id = ""
+#scopes = [ "openid", "profile", "email" ]
+#icon = "URL of icon"

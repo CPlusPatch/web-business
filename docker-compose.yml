@@ -6,6 +6,8 @@ services:
         networks:
             - internal
         restart: unless-stopped
+        volumes:
+            - ./config.toml:/config.toml
         env_file: .env  
         links:
             - db
