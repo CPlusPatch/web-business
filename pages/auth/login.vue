@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { UserManager } from "oidc-client-ts";
-import { Config } from "types/config";
+import { Config } from "~/types/config";
 import { signInWithMastodon } from "~/utils/oauth";
 
 const token = useCookie("token", {
@@ -111,7 +111,7 @@ onMounted(async () => {
 	loading.value = false;
 });
 
-const oidc = useRuntimeConfig().public.oidc as Config["oidc_providers"];
+const oidc = (useFetch<Config["oidc_providers"]>("/api/internal/oidc-config")).data;
 
 
 const oidcSignIn = async (oidcProvider: Config["oidc_providers"][0]) => {
@@ -170,6 +170,7 @@ const oidcSignIn = async (oidcProvider: Config["oidc_providers"][0]) => {
 							icon="ic:round-perm-identity"
 							name="username"
 							placeholder="Your username"
+							autocomplete="username"
 							required
 							class="block w-full rounded-md"
 							:loading="loading" />
@@ -197,6 +198,7 @@ const oidcSignIn = async (oidcProvider: Config["oidc_providers"][0]) => {
 							name="password"
 							:type="showingPassword ? 'text' : 'password'"
 							icon="ic:round-password"
+							autocomplete="current-password"
 							placeholder="Your password"
 							required
 							:loading="loading"
@@ -244,12 +246,6 @@ const oidcSignIn = async (oidcProvider: Config["oidc_providers"][0]) => {
 						@click="oidcSignIn(provider)">
 						<img :src="provider.icon" class="mr-2 w-4 h-4" />
 						{{ provider.name }}
-					</Button>
-					<Button
-						:disabled="true"
-						class="w-full !opacity-40"
-						theme="gray">
-						More soon
 					</Button>
 				</div>
 			</form>

@@ -45,9 +45,9 @@ const save = (e: Event) => {
 		});
 };
 
-const oidc = useRuntimeConfig().public.oidc as Config["oidc_providers"];
+const oidc = (useFetch<Config["oidc_providers"]>("/api/internal/oidc-config")).data;
 
-const linkOIDC = async (oidcProvider: typeof oidc[0]) => {
+const linkOIDC = async (oidcProvider: Config["oidc_providers"][0]) => {
 	const userManager = new UserManager({
 		authority: oidcProvider.authority,
 		client_id: oidcProvider.client_id,

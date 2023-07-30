@@ -1,4 +1,6 @@
 import { nanoid } from "nanoid";
+import { parse } from "smol-toml";
+import { Config } from "types/config";
 import { arrayBufferToWebP } from "webp-converter-browser";
 import { Setting } from "~/db/entities/Setting";
 
