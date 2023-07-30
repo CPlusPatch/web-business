@@ -36,6 +36,8 @@ cp .env.example .env
 
 For the CDN URL, do not include a trailing slash at the end.
 
+Don't forget to rename `config/config.example.toml` to `config.toml`!
+
 ## Building manually
 
 ```bash
