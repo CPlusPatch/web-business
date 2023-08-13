@@ -10,9 +10,8 @@
 				"id": "string",
 				"title": "string",
 				"desc": "paragraph",
-				"image": "string",
-				"linkHref": "string",
-				"linkText": "string"
+				"image": "image",
+				"link": "link"
 			}
 		]
 	},
@@ -24,17 +23,24 @@
 				"title": "",
 				"desc": "string",
 				"image": "",
-				"linkHref": "",
-				"linkText": ""
+				"link": ""
 			},
 			{
 				"id": "#ID#",
 				"title": "",
 				"desc": "string",
 				"image": "",
-				"linkHref": "",
-				"linkText": ""
+				"link": ""
 			}
 		]
+	},
+	"names": {
+		"text-header": "Text Header",
+		"list": "List",
+		"id": "ID",
+		"title": "Title",
+		"desc": "Description",
+		"image": "Image",
+		"link": "Link"
 	}
 }

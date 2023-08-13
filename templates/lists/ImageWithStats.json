@@ -36,5 +36,13 @@
 			}
 		],
 		"reversed": false
+	},
+	"names": {
+		"text-header": "Header",
+		"image": "Image",
+		"items": "Items",
+		"title": "Title",
+		"value": "Value",
+		"reversed": "Is reversed?"
 	}
 }

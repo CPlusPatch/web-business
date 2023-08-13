@@ -8,7 +8,6 @@ defineProps<{
 	grid?: {
 		id: string;
 		name: string;
-		type: string;
 		experience: string;
 		image: string;
 		padding: boolean;

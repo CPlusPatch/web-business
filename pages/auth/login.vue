@@ -91,8 +91,7 @@ onMounted(async () => {
 	loading.value = false;
 });
 
-const oidc = (useFetch<Config["oidc_providers"]>("/api/internal/oidc-config")).data;
-
+const oidc = (await useFetch("/api/config/oidc")).data;
 
 const oidcSignIn = async (oidcProvider: Config["oidc_providers"][0]) => {
 	loading.value = true;
@@ -100,7 +99,6 @@ const oidcSignIn = async (oidcProvider: Config["oidc_providers"][0]) => {
 		authority: oidcProvider.authority,
 		client_id: oidcProvider.client_id,
 		redirect_uri: `${useRequestURL().origin}/auth/callback/${oidcProvider.id}/`,
-		response_type: "code",
 		scope: oidcProvider.scopes.join(" "),
 	});
 

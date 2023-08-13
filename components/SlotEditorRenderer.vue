@@ -8,6 +8,7 @@ const props = defineProps<{
 	importedMeta: TemplateMetadata["inputs"];
 	defaults: TemplateMetadata["defaults"];
 	slots: Block["slots"];
+	names: TemplateMetadata["names"];
 }>();
 
 const emit = defineEmits(["editSlot"]);
@@ -74,6 +75,17 @@ const clickFileInput = () => {
 	// I have no idea why it needs the [0]
 	(fileInput.value as any)[0].click();
 };
+
+const getDisplayName = (name: string) => {
+	return props.names[name] ?? name;
+}
+
+const decomposeLink = (value?: string) => {
+	if (!value) return ["", ""];
+	// If there is more than 1 pipe, it's not a valid link
+	if (value.split("|").length > 2) return ["", ""];
+	return value.split("|");
+}
 </script>
 
 <template>
@@ -82,7 +94,7 @@ const clickFileInput = () => {
 			<label
 				for="project-name"
 				class="block text-sm font-medium text-gray-900">
-				{{ name }}
+				{{ getDisplayName(name) }}
 			</label>
 			<div class="mt-1">
 				<InputCMInput
@@ -100,12 +112,70 @@ const clickFileInput = () => {
 			</div>
 		</template>
 
+		<template v-if="inputType === InputType.Url">
+			<label
+				for="project-name"
+				class="block text-sm font-medium text-gray-900">
+				{{ getDisplayName(name) }}
+			</label>
+			<div class="mt-1">
+				<InputCMInput
+					id="project-name"
+					:value="slots[name]"
+					type="text"
+					icon="tabler:link"
+					placeholder="URL address"
+					name="project-name"
+					class="!ring-orange-500 focus:!border-orange-500"
+					@input="
+						emit('editSlot', {
+							...slots,
+							[name]: ($event as any).target.value,
+						})
+						" />
+			</div>
+		</template>
+
+		<template v-if="inputType === InputType.Link">
+			<label
+				for="project-name"
+				class="block text-sm font-medium text-gray-900">
+				{{ getDisplayName(name) }}
+			</label>
+			<div class="mt-1">
+				<InputCMInput
+					id="project-name"
+					:value="decomposeLink(slots[name])[0]"
+					type="text"
+					name="project-name"
+					placeholder="Link text"
+					icon="tabler:cursor-text"
+					@input="emit('editSlot', {
+						...slots,
+						[name]: ($event as any).target.value.replace('|', '') + '|' + decomposeLink(slots[name])[1],
+					})"
+					class="!ring-orange-500 focus:!border-orange-500"/>
+				<InputCMInput
+					id="project-name"
+					:value="decomposeLink(slots[name])[1]"
+					type="text"
+					name="project-name"
+					icon="tabler:link"
+					placeholder="Link URL"
+					class="!ring-orange-500 focus:!border-orange-500 mt-1"
+					@input="emit('editSlot', {
+						...slots,
+						[name]: decomposeLink(slots[name])[0] + '|' + ($event as any).target.value.replace('|', ''),
+					})" />
+			</div>
+		</template>
+
 
 		<template v-if="inputType === InputType.Image">
 				<label
 					for="project-name"
 					class="block text-sm font-medium text-gray-900">
-					{{ name }}
+					{{ getDisplayName(name) }}
 				</label>
 				<div
 					class="mt-1 ring-1 ring-gray-200 flex items-center justify-center gap-x-3 relative h-15 w-15 rounded overflow-hidden group">
@@ -148,7 +218,7 @@ const clickFileInput = () => {
 			<label
 				for="project-name"
 				class="block text-sm font-medium text-gray-900">
-				{{ name }}
+				{{ getDisplayName(name) }}
 			</label>
 			<div class="mt-1">
 				<textarea
@@ -171,7 +241,7 @@ const clickFileInput = () => {
 			<label
 				for="project-name"
 				class="block text-sm font-medium text-gray-900">
-				{{ name }}
+				{{ getDisplayName(name) }}
 			</label>
 			<div class="mt-1">
 				<input
@@ -195,7 +265,7 @@ const clickFileInput = () => {
 				@click="expanded = !expanded"
 				for="project-name"
 				class="block text-sm font-medium text-gray-900">
-				{{ name }}
+				{{ getDisplayName(name) }}
 				<Icon
 					:name="
 						expanded
@@ -214,6 +284,7 @@ const clickFileInput = () => {
 					class="mt-2 flex flex-col gap-1">
 					<SlotEditorRenderer
 						:slots="element"
+						:names="names"
 						:imported-meta="importedMeta[name][0]"
 						:defaults="defaults[name][0]"
 						@edit-slot="(newSlots: Block['slots']) => emit('editSlot', {

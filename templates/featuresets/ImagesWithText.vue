@@ -10,8 +10,7 @@ defineProps<{
 		title: string;
 		desc: string;
 		image: string;
-		linkText: string;
-		linkHref: string;
+		link: string;
 	}[];
 }>();
 </script>
@@ -44,13 +43,13 @@ defineProps<{
 					</p>
 
 					<a
-						v-if="element.linkText"
+						v-if="element.link"
 						class="text-lg text-blue-600 font-inter"
-						:href="element.linkHref"
+						:href="element.link.split('|')[1]"
 						target="_blank"
 						data-placeholder="Link text"
 						rel="noreferrer">
-						{{ element.linkText }}
+						{{ element.link.split("|")[0] }}
 						<Icon
 							name="tabler:external-link"
 							class="inline mb-1 w-5 h-5" />

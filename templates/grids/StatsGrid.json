@@ -9,8 +9,8 @@
 		"grid": [
 			{
 				"id": "string",
-				"name": "string",
-				"value": "string"
+				"value": "string",
+				"name": "string"
 			}
 		]
 	},
@@ -34,5 +34,12 @@
 				"value": ""
 			}
 		]
+	},
+	"names": {
+		"text-header": "Header Text",
+		"text-secondary": "Secondary Text",
+		"grid": "Grid",
+		"name": "Subtitle",
+		"value": "Title"
 	}
 }

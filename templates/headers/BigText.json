@@ -7,6 +7,10 @@
 		"text-primary": "string",
 		"text-typewriter": "string"
 	},
+	"names": {
+		"text-primary": "Black text",
+		"text-typewriter": "Gradient text"
+	},
 	"defaults": {
 		"text-primary": "",
 		"text-typewriter": ""

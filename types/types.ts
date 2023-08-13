@@ -4,6 +4,8 @@ export enum InputType {
 	Image = "image",
 	Boolean = "boolean",
 	Array = "array",
+	Link = "link", // Link has text AND url
+	Url = "url",
 }
 export interface TemplateMetadata {
 	name: string;
@@ -16,6 +18,9 @@ export interface TemplateMetadata {
 	defaults: {
 		[key: string]: any;
 	};
+	names: {
+		[key: string]: string;
+	}
 }
 
 export enum UISettingType {

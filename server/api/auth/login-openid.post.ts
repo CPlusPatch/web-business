@@ -14,8 +14,6 @@ export default defineEventHandler(async event => {
 		provider: string;
 	}>(event);
 
-	console.log(oidc);
-
 	const provider = oidc.find(o => o.id === body.provider);
 	if (!provider) throw createError("Invalid OIDC provider!");
 

@@ -32,5 +32,12 @@
 				"answer": ""
 			}
 		]
+	},
+	"names": {
+		"text-header": "Header",
+		"list": "List",
+		"id": "ID",
+		"question": "Dropdown Title",
+		"answer": "Dropdown Content"
 	}
 }

@@ -18,7 +18,7 @@
 				],
 				"description": "paragraph",
 				"name": "string",
-				"href": "string"
+				"href": "url"
 			}
 		]
 	},
@@ -37,8 +37,18 @@
 				],
 				"description": "",
 				"name": "",
-				"href": "#"
+				"href": ""
 			}
 		]
+	},
+	"names": {
+		"text-header": "Header",
+		"grid": "Grid",
+		"tags": "Tags",
+		"name": "Name",
+		"href": "Link",
+		"description": "Description",
+		"color": "Color",
+		"text-color": "Text Color"
 	}
 }

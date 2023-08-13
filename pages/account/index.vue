@@ -45,14 +45,13 @@ const save = (e: Event) => {
 		});
 };
 
-const oidc = (useFetch<Config["oidc_providers"]>("/api/internal/oidc-config")).data;
+const oidc = (await useFetch("/api/config/oidc")).data;
 
 const linkOIDC = async (oidcProvider: Config["oidc_providers"][0]) => {
 	const userManager = new UserManager({
 		authority: oidcProvider.authority,
 		client_id: oidcProvider.client_id,
 		redirect_uri: `${useRequestURL().origin}/auth/callback`,
-		response_type: "code",
 		scope: oidcProvider.scopes.join(" "),
 	});
 

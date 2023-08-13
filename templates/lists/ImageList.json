@@ -6,9 +6,10 @@
 	"inputs": {
 		"text-header": "string",
 		"text-secondary": "paragraph",
-		"image-main": "string",
+		"image-main": "image",
 		"list": [
 			{
+				"icon": "string",
 				"id": "string",
 				"name": "string",
 				"description": "paragraph"
@@ -36,5 +37,15 @@
 				"description": ""
 			}
 		]
+	},
+	"names": {
+		"text-header": "Header",
+		"text-secondary": "Secondary Text",
+		"image-main": "Main Image",
+		"list": "List",
+		"icon": "Icon",
+		"id": "ID",
+		"name": "Subheader",
+		"description": "Text"
 	}
 }

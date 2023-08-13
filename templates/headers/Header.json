@@ -12,5 +12,10 @@
 		"text-header": "",
 		"size": 1.875,
 		"align": "center"
+	},
+	"names": {
+		"text-header": "Header text",
+		"size": "Header Size",
+		"align": "Header Alignment"
 	}
 }

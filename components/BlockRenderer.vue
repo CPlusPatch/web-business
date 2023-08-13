@@ -189,20 +189,16 @@ const createModalOpen = ref(false);
 												:defaults="
 													importedMeta.defaults
 												"
+												:names="importedMeta.names ?? {}"
 												@edit-slot="(slots: Block['slots']) => _block.slots = slots" />
 										</div>
 									</div>
 									<div
-										class="flex flex-shrink-0 justify-end px-4 py-4 gap-3">
-										<Button
-											theme="gray"
-											type="button"
-											@click="open = false">
-											Cancel
-										</Button>
+										class="flex px-4 py-4 gap-3">
 										<Button
 											theme="orange"
 											type="submit"
+											class="w-full"
 											@click="saveAll">
 											Save
 										</Button>

@@ -10,7 +10,6 @@
 			{
 				"id": "string",
 				"name": "string",
-				"type": "string",
 				"experience": "string",
 				"image": "string",
 				"padding": "boolean"
@@ -24,7 +23,6 @@
 			{
 				"id": "#ID#",
 				"name": "",
-				"type": "",
 				"experience": "",
 				"image": "",
 				"padding": false
@@ -32,7 +30,6 @@
 			{
 				"id": "#ID#",
 				"name": "",
-				"type": "",
 				"experience": "",
 				"image": "",
 				"padding": false
@@ -40,7 +37,6 @@
 			{
 				"id": "#ID#",
 				"name": "",
-				"type": "",
 				"experience": "",
 				"image": "",
 				"padding": false
@@ -48,11 +44,19 @@
 			{
 				"id": "#ID#",
 				"name": "",
-				"type": "",
 				"experience": "",
 				"image": "",
 				"padding": false
 			}
 		]
+	},
+	"names": {
+		"text-header": "Header",
+		"text-secondary": "Secondary Text",
+		"grid": "Grid",
+		"id": "ID",
+		"name": "Name",
+		"experience": "Subtitle",
+		"padding": "Has Padding?"
 	}
 }

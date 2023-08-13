@@ -4,9 +4,12 @@
 	"displayName": "Big Banner",
 	"description": "Big banner for showing off an image",
 	"inputs": {
-		"image-main": "string"
+		"image-main": "image"
 	},
 	"defaults": {
 		"image-main": ""
+	},
+	"names": {
+		"image-main": "Large image"
 	}
 }

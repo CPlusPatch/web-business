@@ -3,14 +3,10 @@ import { UserManager } from 'oidc-client-ts';
 import { Config } from '~/types/config';
 
 
-const oidc = (await useFetch<Config["oidc_providers"]>("/api/internal/oidc-config")).data;
+const oidc = (await useFetch("/api/config/oidc")).data;
 
 onMounted(() => {
 	const oidcProvider = oidc.value?.find(o => o.id === useRoute().params.provider);
-
-	console.log(useRoute().params.provider);
-	console.log(oidc);
-	console.log(oidcProvider);
 
 	if (!oidcProvider) return false;
 
@@ -18,7 +14,6 @@ onMounted(() => {
 		authority: oidcProvider.authority,
 		client_id: oidcProvider.client_id,
 		redirect_uri: `${useRequestURL().origin}/auth/callback`,
-		response_type: "code",
 		scope: oidcProvider.scopes.join(" "),
 	});
 

@@ -7,6 +7,10 @@
 		"text-header": "string",
 		"image-main": "image"
 	},
+	"names": {
+		"text-header": "Header text",
+		"image-main": "Large image"
+	},
 	"defaults": {
 		"text-header": "",
 		"image-main": ""

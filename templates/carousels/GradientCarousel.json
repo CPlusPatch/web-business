@@ -2,7 +2,7 @@
 	"category": "carousels",
 	"name": "GradientCarousel",
 	"displayName": "Card Grid",
-	"description": "Grid of cards with an avatars",
+	"description": "Grid of cards with an avatar",
 	"inputs": {
 		"list": [
 			{
@@ -31,5 +31,13 @@
 				"text": ""
 			}
 		]
+	},
+	"names": {
+		"list": "Cards",
+		"id": "ID",
+		"name": "Header",
+		"profession": "Subtext",
+		"avatar": "Avatar",
+		"text": "Text"
 	}
 }
