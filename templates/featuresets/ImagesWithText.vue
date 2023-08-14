@@ -45,11 +45,11 @@ defineProps<{
 					<a
 						v-if="element.link"
 						class="text-lg text-blue-600 font-inter"
-						:href="element.link.split('|')[1]"
+						:href="(typeof element.link == 'string' ? element.link : '|').split('|')[1]"
 						target="_blank"
 						data-placeholder="Link text"
 						rel="noreferrer">
-						{{ element.link.split("|")[0] }}
+						{{ (typeof element.link == 'string' ? element.link : '|').split("|")[0] }}
 						<Icon
 							name="tabler:external-link"
 							class="inline mb-1 w-5 h-5" />
